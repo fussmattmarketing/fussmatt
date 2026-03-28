@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary-50: oklch(0.98 0.02 85);
+  --color-primary-100: oklch(0.95 0.05 85);
+  --color-primary-200: oklch(0.90 0.10 85);
+  --color-primary-300: oklch(0.84 0.15 85);
+  --color-primary-400: oklch(0.78 0.17 85);
+  --color-primary-500: oklch(0.75 0.18 85);
+  --color-primary-600: oklch(0.67 0.18 85);
+  --color-primary-700: oklch(0.55 0.15 85);
+  --color-primary-800: oklch(0.45 0.12 85);
+  --color-primary-900: oklch(0.38 0.10 85);
+
+  /* Font */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.skip-to-content:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 1rem 2rem;
+  background: var(--color-primary-500);
+  color: white;
+  font-weight: 700;
+  z-index: 9999;
+}

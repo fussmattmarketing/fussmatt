@@ -1,0 +1,40 @@
+{
+  "name": "fussmatt-frontend",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "generate-vehicle-cache": "npx tsx scripts/generate-vehicle-cache.ts"
+  },
+  "dependencies": {
+    "@stripe/stripe-js": "^8",
+    "@upstash/ratelimit": "^2",
+    "@upstash/redis": "^1",
+    "clsx": "^2",
+    "csv-parse": "^6",
+    "fast-xml-parser": "^5",
+    "isomorphic-dompurify": "^2",
+    "next": "^16",
+    "react": "^19",
+    "react-dom": "^19",
+    "stripe": "^20",
+    "tailwind-merge": "^3",
+    "zod": "^3",
+    "zustand": "^5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/dompurify": "^3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^16",
+    "tailwindcss": "^4",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}
