@@ -1,75 +1,90 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-950 text-gray-300 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gray-950 text-gray-400">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
+          <div className="lg:col-span-1">
             <Image
               src="/logo.png"
               alt="FussMatt"
-              width={140}
-              height={40}
-              className="h-8 w-auto brightness-0 invert mb-4"
+              width={160}
+              height={48}
+              className="h-12 w-auto brightness-0 invert"
               unoptimized
             />
-            <p className="text-sm text-gray-400">
-              Premium 3D &amp; 5D Auto-Fußmatten. Maßgefertigt für über 44
-              Marken.
+            <p className="mt-4 text-sm leading-relaxed">
+              Premium 3D &amp; 5D Auto-Fussmatten aus TPE-Material. Passgenau
+              für Ihr Fahrzeug.
             </p>
           </div>
 
           {/* Shop */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">Shop</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Shop
+            </h3>
+            <ul className="space-y-3">
               <li>
-                <Link href="/produkte" className="hover:text-amber-400 transition-colors">
-                  Alle Produkte
+                <Link
+                  href="/produkte"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Alle Fussmatten
                 </Link>
               </li>
               <li>
-                <Link href="/kategorie/5d-fussmatten" className="hover:text-amber-400 transition-colors">
-                  5D Fußmatten
+                <Link
+                  href="/kategorie/3d-fussmatten"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  3D Fussmatten
                 </Link>
               </li>
               <li>
-                <Link href="/kategorie/3d-fussmatten" className="hover:text-amber-400 transition-colors">
-                  3D Fußmatten
-                </Link>
-              </li>
-              <li>
-                <Link href="/kategorie/kofferraummatte" className="hover:text-amber-400 transition-colors">
-                  Kofferraummatten
+                <Link
+                  href="/kategorie/5d-fussmatten"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  5D Fussmatten
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Information */}
+          {/* Info */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
               Information
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3">
               <li>
-                <Link href="/versand" className="hover:text-amber-400 transition-colors">
+                <Link
+                  href="/versand"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
                   Versand &amp; Lieferung
                 </Link>
               </li>
               <li>
-                <Link href="/kontakt" className="hover:text-amber-400 transition-colors">
-                  Kontakt
+                <Link
+                  href="/widerruf"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Rückgabe &amp; Umtausch
                 </Link>
               </li>
               <li>
-                <Link href="/ratgeber/faq" className="hover:text-amber-400 transition-colors">
-                  FAQ
+                <Link
+                  href="/kontakt"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Kontakt
                 </Link>
               </li>
             </ul>
@@ -77,47 +92,71 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-3">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
               Rechtliches
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3">
               <li>
-                <Link href="/impressum" className="hover:text-amber-400 transition-colors">
+                <Link
+                  href="/impressum"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
                   Impressum
                 </Link>
               </li>
               <li>
-                <Link href="/datenschutz" className="hover:text-amber-400 transition-colors">
+                <Link
+                  href="/datenschutz"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
                   Datenschutz
                 </Link>
               </li>
               <li>
-                <Link href="/agb" className="hover:text-amber-400 transition-colors">
+                <Link
+                  href="/agb"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
                   AGB
                 </Link>
               </li>
               <li>
-                <Link href="/widerruf" className="hover:text-amber-400 transition-colors">
-                  Widerrufsrecht
-                </Link>
-              </li>
-              <li>
-                <button
-                  onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
-                  className="hover:text-amber-400 transition-colors text-left"
+                <Link
+                  href="/widerruf"
+                  className="text-sm hover:text-amber-500 transition-colors"
                 >
-                  Cookie-Einstellungen
-                </button>
+                  Widerrufsbelehrung
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-6 text-center text-xs text-gray-500">
-          <p>
-            &copy; {new Date().getFullYear()} FussMatt (Royal Road GmbH,
-            Zürich). Alle Rechte vorbehalten.
-          </p>
+        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <p className="text-xs">
+              &copy; {new Date().getFullYear()} FussMatt. Alle Rechte
+              vorbehalten.
+            </p>
+            <button
+              onClick={() =>
+                window.dispatchEvent(new Event("open-cookie-settings"))
+              }
+              className="text-xs text-gray-500 hover:text-amber-500 transition-colors underline"
+            >
+              Cookie-Einstellungen
+            </button>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs">Zahlungsmethoden:</span>
+            <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
+              <span>Stripe</span>
+              <span>&middot;</span>
+              <span>PayPal</span>
+              <span>&middot;</span>
+              <span>Klarna</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

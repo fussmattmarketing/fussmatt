@@ -10,9 +10,9 @@ const CATEGORY_SLUGS = [
   "3d-fussmatten",
   "kofferraummatte",
   "universal-fussmatten",
-  "fussmatten-set",
-  "kofferraummatte-set",
-  "zubehoer",
+  "fuss-und-kofferraummatten-set",
+  "passend-fuer-lkw-truck-fussmatten",
+  "passend-fuer-kleinbus-pickup-fussmatten",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
