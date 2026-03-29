@@ -21,8 +21,8 @@ export default async function HomePage() {
       getProducts({ per_page: 8, orderby: "date", order: "desc" }),
       getCategories(),
     ]);
-  } catch {
-    // Silently handle — page still renders with empty state
+  } catch (error) {
+    console.error("Homepage data fetch failed:", error);
   }
 
   const hierarchy = getVehicleHierarchy();
