@@ -78,11 +78,16 @@ export default async function ProduktPage({
     },
     {
       title: "Eigenschaften",
-      content: product.attributes
-        .filter((a) => a.visible)
-        .map((a) => `${a.name}: ${a.options.join(", ")}`)
-        .join("\n") || "Keine Angaben.",
-      isHtml: false,
+      content: product.attributes.filter((a) => a.visible).length > 0
+        ? `<table class="w-full text-sm"><tbody>${product.attributes
+            .filter((a) => a.visible)
+            .map(
+              (a) =>
+                `<tr class="border-b border-gray-100"><td class="py-2 pr-4 font-medium text-gray-700 whitespace-nowrap">${a.name}</td><td class="py-2 text-gray-600">${a.options.join(", ")}</td></tr>`
+            )
+            .join("")}</tbody></table>`
+        : "Keine Angaben.",
+      isHtml: true,
     },
     {
       title: "Versand",
