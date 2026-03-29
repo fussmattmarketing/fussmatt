@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate-vehicle-cache": "npx tsx scripts/generate-vehicle-cache.ts"
+    "generate-vehicle-cache": "npx tsx scripts/generate-vehicle-cache.ts",
+    "prebuild": "npx tsx scripts/generate-vehicle-cache.ts || true"
   },
   "dependencies": {
     "@stripe/stripe-js": "^8",
