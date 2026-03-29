@@ -213,7 +213,7 @@ export default function Header() {
               Fuss- und Kofferraummatten Set
             </Link>
 
-            <Link href="/ratgeber/faq" className="px-4 h-12 flex items-center text-gray-700 hover:text-amber-600 transition-colors">
+            <Link href="/ratgeber" className="px-4 h-12 flex items-center text-gray-700 hover:text-amber-600 transition-colors">
               Blog
             </Link>
           </nav>
@@ -271,7 +271,7 @@ export default function Header() {
             </Link>
 
             <div className="my-2 border-t border-gray-100" />
-            <Link href="/ratgeber/faq" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/ratgeber" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
               Blog
             </Link>
             <Link href="/produkte" className="block px-3 py-2.5 text-sm font-semibold text-amber-600 hover:bg-amber-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
