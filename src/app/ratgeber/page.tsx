@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 
+// Short revalidate to ensure CDN serves fresh content after deploys
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Ratgeber",
   description:
