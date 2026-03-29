@@ -91,7 +91,7 @@ export default async function ProduktPage({
     },
     {
       title: "Versand",
-      content: `Kostenloser Versand in der Schweiz ab CHF ${SHIPPING_CONFIG.CH.freeAbove}. Deutschland und Österreich: EUR ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab EUR ${SHIPPING_CONFIG.DE.freeAbove}). Lieferzeit: ${SHIPPING_CONFIG.CH.deliveryDays} Werktage (CH).`,
+      content: `Kostenloser Versand in der Schweiz ab CHF ${SHIPPING_CONFIG.CH.freeAbove}. Deutschland und Österreich: CHF ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab CHF ${SHIPPING_CONFIG.DE.freeAbove}). Lieferzeit: ${SHIPPING_CONFIG.CH.deliveryDays} Werktage (CH).`,
       isHtml: false,
     },
   ];
@@ -111,16 +111,18 @@ export default async function ProduktPage({
 
       <Breadcrumbs items={breadcrumbs} />
 
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 overflow-hidden">
         {/* Gallery */}
+        <div className="min-w-0">
         <ProductGallery
           images={product.images}
           productName={product.name}
           onSale={product.on_sale}
         />
+        </div>
 
         {/* Product Info */}
-        <div>
+        <div className="min-w-0">
           <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h1>
 
           {/* Key Attributes — v1 style chips */}
