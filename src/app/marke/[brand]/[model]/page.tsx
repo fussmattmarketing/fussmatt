@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Link from "next/link";
 
 export const revalidate = 3600;
+export const maxDuration = 60;
 
 export async function generateStaticParams() {
   const hierarchy = getVehicleHierarchy();

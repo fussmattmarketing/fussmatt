@@ -9,6 +9,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Link from "next/link";
 
 export const revalidate = 7200;
+export const maxDuration = 60;
 
 export async function generateStaticParams() {
   try {

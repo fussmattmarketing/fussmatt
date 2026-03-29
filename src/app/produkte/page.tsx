@@ -5,6 +5,7 @@ import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
 export const revalidate = 3600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: "Alle Fußmatten",

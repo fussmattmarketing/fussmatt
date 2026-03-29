@@ -11,6 +11,7 @@ import VehicleFilter from "@/components/product/VehicleFilter";
 import Link from "next/link";
 
 export const revalidate = 3600;
+export const maxDuration = 60;
 
 export async function generateStaticParams() {
   try {

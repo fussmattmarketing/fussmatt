@@ -14,6 +14,7 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
 
 export const revalidate = 3600;
+export const maxDuration = 60;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
