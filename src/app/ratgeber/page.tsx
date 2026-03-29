@@ -6,9 +6,9 @@ import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Ratgeber",
+  title: "Ratgeber | Auto-Fussmatten Wissen | FussMatt",
   description:
-    "Alles rund um Auto-Fussmatten: Vergleiche, Materialien, Pflege-Tipps und häufig gestellte Fragen.",
+    "Tipps, Vergleiche und Wissenswertes rund um Auto-Fussmatten. Materialien, Pflege und häufig gestellte Fragen.",
 };
 
 export default function RatgeberIndexPage() {
