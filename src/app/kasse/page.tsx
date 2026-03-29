@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { calculateShipping, COUNTRY_NAMES } from "@/lib/shipping";
-import { SUPPORTED_COUNTRIES } from "@/lib/validations";
+import { SUPPORTED_COUNTRIES, addressSchema } from "@/lib/validations";
 import type { SupportedCountry } from "@/lib/validations";
 
 export default function KassePage() {
@@ -39,6 +39,18 @@ export default function KassePage() {
   function updateField(field: string, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
     setFieldErrors((prev) => ({ ...prev, [field]: "" }));
+  }
+
+  // Real-time onBlur validation per field
+  function validateField(field: string) {
+    const result = addressSchema.safeParse(form);
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      const fieldError = (errors as Record<string, string[] | undefined>)[field];
+      if (fieldError && fieldError.length > 0) {
+        setFieldErrors((prev) => ({ ...prev, [field]: fieldError[0] }));
+      }
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -145,7 +157,8 @@ export default function KassePage() {
                   required
                   value={form.first_name}
                   onChange={(e) => updateField("first_name", e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-amber-500 focus:ring-amber-500"
+                  onBlur={() => validateField("first_name")}
+                  className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:ring-amber-500 ${fieldErrors.first_name ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-amber-500"}`}
                 />
                 {fieldErrors.first_name && <p className="text-red-500 text-xs mt-1">{fieldErrors.first_name}</p>}
               </div>
@@ -159,8 +172,10 @@ export default function KassePage() {
                   required
                   value={form.last_name}
                   onChange={(e) => updateField("last_name", e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-amber-500 focus:ring-amber-500"
+                  onBlur={() => validateField("last_name")}
+                  className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:ring-amber-500 ${fieldErrors.last_name ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-amber-500"}`}
                 />
+                {fieldErrors.last_name && <p className="text-red-500 text-xs mt-1">{fieldErrors.last_name}</p>}
               </div>
             </div>
 
@@ -202,7 +217,8 @@ export default function KassePage() {
                   required
                   value={form.postcode}
                   onChange={(e) => updateField("postcode", e.target.value)}
-                  className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-amber-500 focus:ring-amber-500"
+                  onBlur={() => validateField("postcode")}
+                  className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:ring-amber-500 ${fieldErrors.postcode ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-amber-500"}`}
                 />
                 {fieldErrors.postcode && <p className="text-red-500 text-xs mt-1">{fieldErrors.postcode}</p>}
               </div>
@@ -247,8 +263,10 @@ export default function KassePage() {
                 required
                 value={form.email}
                 onChange={(e) => updateField("email", e.target.value)}
-                className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm focus:border-amber-500 focus:ring-amber-500"
+                onBlur={() => validateField("email")}
+                className={`w-full rounded-xl border px-3 py-2.5 text-sm focus:ring-amber-500 ${fieldErrors.email ? "border-red-400 focus:border-red-500" : "border-gray-300 focus:border-amber-500"}`}
               />
+              {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
             </div>
 
             <div>

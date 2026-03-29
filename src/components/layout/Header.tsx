@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 
 const NAV_CATEGORIES = [
@@ -21,11 +22,23 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mounted = useCartHydration();
   const totalItems = useCartStore((s) => s.totalItems());
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (q) {
+      router.push(`/produkte?suche=${encodeURIComponent(q)}`);
+      setSearchQuery("");
+      setMobileOpen(false);
+    }
+  }
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -89,6 +102,32 @@ export default function Header() {
               priority
             />
           </Link>
+
+          {/* Search bar — desktop */}
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex items-center flex-1 max-w-md mx-6"
+          >
+            <div className="relative w-full">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Fußmatten suchen..."
+                className="w-full rounded-xl border border-gray-300 pl-4 pr-10 py-2 text-sm focus:border-amber-500 focus:ring-amber-500"
+                aria-label="Produkte suchen"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-amber-600"
+                aria-label="Suche starten"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </div>
+          </form>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-6" aria-label="Hauptnavigation">
@@ -181,6 +220,29 @@ export default function Header() {
       {mobileOpen && (
         <nav className="lg:hidden bg-white border-t border-gray-200 py-4" aria-label="Mobile Navigation">
           <div className="max-w-7xl mx-auto px-4 space-y-1">
+            {/* Mobile search */}
+            <form onSubmit={handleSearch} className="mb-3">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Fußmatten suchen..."
+                  className="w-full rounded-xl border border-gray-300 pl-4 pr-10 py-2.5 text-sm focus:border-amber-500 focus:ring-amber-500"
+                  aria-label="Produkte suchen"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400"
+                  aria-label="Suche starten"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+              </div>
+            </form>
+
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-1">
               Kategorien
             </p>
