@@ -52,11 +52,19 @@ export default async function KategoriePage({
   const category = await getCategoryBySlug(slug);
   if (!category) notFound();
 
-  const { products, totalPages } = await getProductsWithTotal({
-    category: category.id,
-    page,
-    per_page: 20,
-  });
+  let products: Awaited<ReturnType<typeof getProductsWithTotal>>["products"] = [];
+  let totalPages = 1;
+  try {
+    const result = await getProductsWithTotal({
+      category: category.id,
+      page,
+      per_page: 20,
+    });
+    products = result.products;
+    totalPages = result.totalPages;
+  } catch (error) {
+    console.error(`Failed to fetch products for category ${slug}:`, error);
+  }
 
   const hierarchy = getVehicleHierarchy();
 

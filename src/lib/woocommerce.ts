@@ -48,19 +48,27 @@ async function wcFetch<T>(
     ...(fetchOptions.headers as Record<string, string>),
   };
 
-  const res = await fetch(url.toString(), {
-    ...fetchOptions,
-    headers,
-    next: { revalidate },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
 
-  if (!res.ok) {
-    const errorBody = await res.text().catch(() => "");
-    console.error(`WC API Error [${res.status}] ${endpoint}: ${errorBody}`);
-    throw new Error(`WooCommerce API error: ${res.status}`);
+  try {
+    const res = await fetch(url.toString(), {
+      ...fetchOptions,
+      headers,
+      signal: controller.signal,
+      next: { revalidate },
+    });
+
+    if (!res.ok) {
+      const errorBody = await res.text().catch(() => "");
+      console.error(`WC API Error [${res.status}] ${endpoint}: ${errorBody}`);
+      throw new Error(`WooCommerce API error: ${res.status}`);
+    }
+
+    return res.json();
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return res.json();
 }
 
 async function wcFetchWithHeaders<T>(
@@ -78,10 +86,19 @@ async function wcFetchWithHeaders<T>(
     Authorization: getAuthHeader(),
   };
 
-  const res = await fetch(url.toString(), {
-    headers,
-    next: { revalidate },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
+  let res: Response;
+  try {
+    res = await fetch(url.toString(), {
+      headers,
+      signal: controller.signal,
+      next: { revalidate },
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 
   if (!res.ok) {
     throw new Error(`WooCommerce API error: ${res.status}`);
