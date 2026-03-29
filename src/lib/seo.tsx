@@ -3,6 +3,7 @@
  */
 
 import type { WCProduct } from "@/types/woocommerce";
+import { stripHtml } from "@/lib/utils";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com";
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "FussMatt";
@@ -61,7 +62,7 @@ export function productSchema(product: WCProduct) {
     "@type": "Product",
     name: product.name,
     description:
-      product.short_description?.replace(/<[^>]*>/g, "") || product.name,
+      stripHtml(product.short_description || "") || product.name,
     image,
     url,
     sku: product.sku,

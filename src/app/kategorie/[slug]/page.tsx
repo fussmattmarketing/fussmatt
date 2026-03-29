@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getCategoryBySlug, getProductsWithTotal, getCategories } from "@/lib/woocommerce";
 import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
+import { stripHtml } from "@/lib/utils";
 import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
@@ -71,7 +72,7 @@ export default async function KategoriePage({
           <h1 className="text-3xl lg:text-4xl font-bold">{category.name}</h1>
           {category.description && (
             <p className="mt-3 text-gray-300 max-w-2xl text-sm leading-relaxed">
-              {category.description.replace(/<[^>]+>/g, "").slice(0, 200)}
+              {stripHtml(category.description).slice(0, 200)}
             </p>
           )}
           <p className="mt-2 text-sm text-gray-400">{category.count} Produkte</p>

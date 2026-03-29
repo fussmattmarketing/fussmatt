@@ -10,16 +10,35 @@ export function formatPrice(
   currency = "CHF"
 ): string {
   const numericPrice = typeof price === "string" ? parseFloat(price) : price;
-  if (isNaN(numericPrice)) return `${currency} 0.00`;
-  return new Intl.NumberFormat("de-CH", {
-    style: "currency",
-    currency,
+  if (isNaN(numericPrice)) return `0.00 ${currency}`;
+  const formatted = new Intl.NumberFormat("de-CH", {
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(numericPrice);
+  return `${formatted} ${currency}`;
+}
+
+export function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&ndash;/g, "–")
+    .replace(/&mdash;/g, "—")
+    .replace(/&uuml;/g, "ü")
+    .replace(/&ouml;/g, "ö")
+    .replace(/&auml;/g, "ä")
+    .replace(/&Uuml;/g, "Ü")
+    .replace(/&Ouml;/g, "Ö")
+    .replace(/&Auml;/g, "Ä")
+    .replace(/&szlig;/g, "ß")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code)));
 }
 
 export function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "");
+  return decodeHtmlEntities(html.replace(/<[^>]*>/g, ""));
 }
 
 export function truncate(str: string, length: number): string {

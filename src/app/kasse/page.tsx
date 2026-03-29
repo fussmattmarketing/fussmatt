@@ -200,7 +200,7 @@ export default function KassePage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-hidden">
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Kasse</h1>
 
       <form onSubmit={handleSubmit}>
@@ -219,7 +219,7 @@ export default function KassePage() {
             <h2 className="text-lg font-semibold">Rechnungsadresse</h2>
 
             {/* Name */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1">
                   Vorname *
@@ -299,8 +299,8 @@ export default function KassePage() {
             </div>
 
             {/* PLZ / City / State */}
-            <div className="grid grid-cols-6 gap-4">
-              <div className="col-span-2">
+            <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
+              <div className="sm:col-span-2">
                 <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">
                   PLZ *
                 </label>
@@ -315,7 +315,7 @@ export default function KassePage() {
                 />
                 {fieldErrors.postcode && <p className="text-red-500 text-xs mt-1">{fieldErrors.postcode}</p>}
               </div>
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
                   Stadt *
                 </label>
@@ -329,7 +329,7 @@ export default function KassePage() {
                 />
                 {fieldErrors.city && <p className="text-red-500 text-xs mt-1">{fieldErrors.city}</p>}
               </div>
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
                   Kanton / Bundesland
                 </label>
@@ -418,7 +418,7 @@ export default function KassePage() {
                 <h2 className="text-lg font-semibold text-gray-900">Lieferadresse</h2>
 
                 {/* Name */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="ship_first_name" className="block text-sm font-medium text-gray-700 mb-1">
                       Vorname *
@@ -497,8 +497,8 @@ export default function KassePage() {
                 </div>
 
                 {/* PLZ / City / State */}
-                <div className="grid grid-cols-6 gap-4">
-                  <div className="col-span-2">
+                <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
+                  <div className="sm:col-span-2">
                     <label htmlFor="ship_postcode" className="block text-sm font-medium text-gray-700 mb-1">
                       PLZ *
                     </label>
@@ -513,7 +513,7 @@ export default function KassePage() {
                     />
                     {shippingErrors.postcode && <p className="text-red-500 text-xs mt-1">{shippingErrors.postcode}</p>}
                   </div>
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <label htmlFor="ship_city" className="block text-sm font-medium text-gray-700 mb-1">
                       Stadt *
                     </label>
@@ -527,7 +527,7 @@ export default function KassePage() {
                     />
                     {shippingErrors.city && <p className="text-red-500 text-xs mt-1">{shippingErrors.city}</p>}
                   </div>
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <label htmlFor="ship_state" className="block text-sm font-medium text-gray-700 mb-1">
                       Kanton / Bundesland
                     </label>
