@@ -22,18 +22,27 @@ export default async function ProduktePage({
   const categorySlug = params.kategorie;
   const search = params.suche;
 
-  const queryParams: Record<string, string | number> = {
-    page,
-    per_page: 20,
-  };
-  if (categorySlug) {
-    const categories = await getCategories();
-    const cat = categories.find((c) => c.slug === categorySlug);
-    if (cat) queryParams.category = cat.id;
-  }
-  if (search) queryParams.search = search;
+  let products: Awaited<ReturnType<typeof getProductsWithTotal>>["products"] = [];
+  let totalPages = 1;
 
-  const { products, totalPages } = await getProductsWithTotal(queryParams);
+  try {
+    const queryParams: Record<string, string | number> = {
+      page,
+      per_page: 20,
+    };
+    if (categorySlug) {
+      const categories = await getCategories();
+      const cat = categories.find((c) => c.slug === categorySlug);
+      if (cat) queryParams.category = cat.id;
+    }
+    if (search) queryParams.search = search;
+
+    const result = await getProductsWithTotal(queryParams);
+    products = result.products;
+    totalPages = result.totalPages;
+  } catch (error) {
+    console.error("Products page fetch failed:", error);
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

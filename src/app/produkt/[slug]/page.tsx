@@ -116,19 +116,43 @@ export default async function ProduktPage({
 
         {/* Product Info */}
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h1>
+
+          {/* Key Attributes — v1 style chips */}
+          {product.attributes.filter((a) => a.visible).length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {product.attributes
+                .filter((a) => a.visible)
+                .slice(0, 4)
+                .map((attr) => (
+                  <span
+                    key={attr.name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
+                  >
+                    <span className="text-gray-400">{attr.name}:</span>
+                    {attr.options[0]}
+                  </span>
+                ))}
+            </div>
+          )}
 
           {/* Price */}
           <div className="mt-4 flex items-center gap-3">
-            <span className="text-3xl font-bold text-gray-900">
+            <span className={`text-3xl font-bold ${product.on_sale ? "text-red-600" : "text-gray-900"}`}>
               {formatPrice(product.price)}
             </span>
             {product.on_sale && product.regular_price && (
-              <span className="text-lg text-gray-400 line-through">
-                {formatPrice(product.regular_price)}
-              </span>
+              <>
+                <span className="text-lg text-gray-400 line-through">
+                  {formatPrice(product.regular_price)}
+                </span>
+                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded">
+                  -{Math.round((1 - parseFloat(product.price) / parseFloat(product.regular_price)) * 100)}%
+                </span>
+              </>
             )}
           </div>
+          <p className="mt-1 text-xs text-gray-400">Inkl. MwSt. zzgl. Versandkosten</p>
 
           {/* Stock */}
           <div className="mt-3 flex items-center gap-2">
@@ -141,8 +165,8 @@ export default async function ProduktPage({
             />
             <span className="text-sm text-gray-600">
               {product.stock_status === "instock"
-                ? "Auf Lager"
-                : "Nicht verfügbar"}
+                ? "Auf Lager – Sofort lieferbar"
+                : "Derzeit nicht verfügbar"}
             </span>
           </div>
 
@@ -167,6 +191,21 @@ export default async function ProduktPage({
               Artikelnummer: {product.sku}
             </p>
           )}
+
+          {/* USP Features — v1 style */}
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            {[
+              { icon: "\uD83C\uDFAF", text: "Passgenaue Fertigung" },
+              { icon: "\uD83D\uDCA7", text: "Wasserdicht & rutschfest" },
+              { icon: "\u2699\uFE0F", text: "Premium TPE-Material" },
+              { icon: "\uD83D\uDE9A", text: "Kostenloser Versand" },
+            ].map((usp) => (
+              <div key={usp.text} className="flex items-center gap-2 text-xs text-gray-500">
+                <span>{usp.icon}</span>
+                <span>{usp.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

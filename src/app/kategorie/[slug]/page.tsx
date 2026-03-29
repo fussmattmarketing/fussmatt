@@ -62,6 +62,25 @@ export default async function KategoriePage({
   const brandLinks = hierarchy.brands.slice(0, 12);
 
   return (
+    <>
+      {/* Hero Section — v1 style */}
+      <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+          <nav className="text-sm text-gray-400 mb-4">
+            <Link href="/" className="hover:text-amber-400 transition-colors">Startseite</Link>
+            <span className="mx-2">/</span>
+            <span className="text-amber-400">{category.name}</span>
+          </nav>
+          <h1 className="text-3xl lg:text-4xl font-bold">{category.name}</h1>
+          {category.description && (
+            <p className="mt-3 text-gray-300 max-w-2xl text-sm leading-relaxed">
+              {category.description.replace(/<[^>]+>/g, "").slice(0, 200)}
+            </p>
+          )}
+          <p className="mt-2 text-sm text-gray-400">{category.count} Produkte</p>
+        </div>
+      </section>
+
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <JsonLd
         data={breadcrumbSchema([
@@ -69,8 +88,6 @@ export default async function KategoriePage({
           { name: category.name, url: `/kategorie/${slug}` },
         ])}
       />
-
-      <Breadcrumbs items={[{ label: category.name }]} />
 
       <div className="grid lg:grid-cols-4 gap-8">
         {/* Sidebar */}
@@ -101,9 +118,6 @@ export default async function KategoriePage({
 
         {/* Products */}
         <div className="lg:col-span-3">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">
-            {category.name}
-          </h1>
 
           {products.length === 0 ? (
             <div className="text-center py-12">
@@ -129,5 +143,6 @@ export default async function KategoriePage({
         </div>
       </div>
     </div>
+    </>
   );
 }
