@@ -131,28 +131,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Popular Brands — pSEO internal linking */}
-      {hierarchy.brands.length > 0 && (
-        <section className="py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Beliebte Marken
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              {hierarchy.brands.slice(0, 20).map((brand) => (
-                <Link
-                  key={brand.slug}
-                  href={`/marke/${brand.slug}`}
-                  className="px-4 py-2 bg-gray-50 hover:bg-amber-50 hover:text-amber-700 border border-gray-200 hover:border-amber-200 rounded-xl text-sm font-medium transition-all"
-                >
-                  {brand.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-center justify-between mb-8">

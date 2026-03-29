@@ -58,9 +58,6 @@ export default async function KategoriePage({
 
   const hierarchy = getVehicleHierarchy();
 
-  // Get brands for pSEO links
-  const brandLinks = hierarchy.brands.slice(0, 12);
-
   return (
     <>
       {/* Hero Section — v1 style */}
@@ -94,26 +91,6 @@ export default async function KategoriePage({
         <div className="lg:col-span-1 space-y-6">
           <VehicleFilter hierarchy={hierarchy} categorySlug={slug} />
 
-          {/* pSEO: Category × Brand links */}
-          {brandLinks.length > 0 && (
-            <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">
-                {category.name} nach Marke
-              </h3>
-              <ul className="space-y-1">
-                {brandLinks.map((brand) => (
-                  <li key={brand.slug}>
-                    <Link
-                      href={`/kategorie/${slug}/${brand.slug}`}
-                      className="text-sm text-gray-600 hover:text-amber-600 transition-colors"
-                    >
-                      {category.name} für {brand.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
 
         {/* Products */}
