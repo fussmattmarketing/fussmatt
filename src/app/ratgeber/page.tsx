@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 
-// Short revalidate to ensure CDN serves fresh content after deploys
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Ratgeber | Auto-Fussmatten Wissen | FussMatt",
@@ -36,12 +36,12 @@ export default function RatgeberIndexPage() {
             >
               {/* Image */}
               <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={article.image}
                   alt={article.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3">
                   <span className="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">

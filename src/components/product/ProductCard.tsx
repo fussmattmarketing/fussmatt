@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { WCProduct } from "@/types/woocommerce";
 import { formatPrice, wpMediaUrl } from "@/lib/utils";
 
@@ -30,15 +31,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       {/* Image */}
       <div className="relative aspect-square bg-gray-50 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={imageSrc}
           alt={image?.alt || product.name}
-          loading="lazy"
-          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
         />
         {discount > 0 && (
-          <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
+          <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
             -{discount}%
           </span>
         )}

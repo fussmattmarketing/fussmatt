@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { WCImage } from "@/types/woocommerce";
 import { wpMediaUrl } from "@/lib/utils";
 
@@ -31,14 +32,16 @@ export default function ProductGallery({
     <div className="space-y-4">
       {/* Main image */}
       <div className="relative aspect-square bg-gray-50 rounded-2xl overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={wpMediaUrl(mainImage.src)}
           alt={mainImage.alt || productName}
-          className="w-full h-full object-contain p-4"
+          fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-contain p-4"
+          priority
         />
         {onSale && (
-          <span className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
+          <span className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg z-10">
             Sale
           </span>
         )}
@@ -58,12 +61,12 @@ export default function ProductGallery({
               }`}
               aria-label={`Bild ${i + 1} anzeigen`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={wpMediaUrl(img.src)}
                 alt={img.alt || `${productName} ${i + 1}`}
-                loading="lazy"
-                className="w-full h-full object-contain p-1"
+                fill
+                sizes="80px"
+                className="object-contain p-1"
               />
             </button>
           ))}
