@@ -5,7 +5,9 @@ import type {
 } from "@/types/woocommerce";
 
 // Server-only: credentials are read at call time, not module init.
-// All auth via Authorization header — NEVER query string (credentials leak in logs/CDN).
+// Auth via query string (consumer_key/consumer_secret) because the hosting
+// CDN (hcdn) strips Authorization headers from Vercel's IP range.
+// These calls are server-side only — credentials never reach the browser.
 
 function getBaseUrl(): string {
   const url = process.env.WORDPRESS_URL;
@@ -13,20 +15,22 @@ function getBaseUrl(): string {
   return url;
 }
 
-function getAuthHeader(): string {
-  // Priority 1: Application Password (local dev)
+function getAuthParams(): Record<string, string> {
+  const key = process.env.WC_CONSUMER_KEY;
+  const secret = process.env.WC_CONSUMER_SECRET;
+  if (key && secret) {
+    return { consumer_key: key, consumer_secret: secret };
+  }
+  throw new Error("No WooCommerce credentials configured (WC_CONSUMER_KEY/WC_CONSUMER_SECRET)");
+}
+
+function getAuthHeader(): string | null {
   const user = process.env.WP_APPLICATION_USER;
   const pass = process.env.WP_APPLICATION_PASSWORD;
   if (user && pass) {
     return `Basic ${Buffer.from(`${user}:${pass}`).toString("base64")}`;
   }
-  // Priority 2: Consumer Key/Secret via Basic auth header (production)
-  const key = process.env.WC_CONSUMER_KEY;
-  const secret = process.env.WC_CONSUMER_SECRET;
-  if (key && secret) {
-    return `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}`;
-  }
-  throw new Error("No WooCommerce credentials configured");
+  return null;
 }
 
 async function wcFetch<T>(
@@ -36,7 +40,9 @@ async function wcFetch<T>(
 ): Promise<T> {
   const url = new URL(`${getBaseUrl()}/wp-json/wc/v3${endpoint}`);
 
-  for (const [key, value] of Object.entries(params)) {
+  // Add auth as query params (CDN-safe)
+  const authParams = getAuthParams();
+  for (const [key, value] of Object.entries({ ...params, ...authParams })) {
     url.searchParams.set(key, String(value));
   }
 
@@ -44,9 +50,14 @@ async function wcFetch<T>(
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    Authorization: getAuthHeader(),
     ...(fetchOptions.headers as Record<string, string>),
   };
+
+  // Add Authorization header if available (local dev with Application Password)
+  const authHeader = getAuthHeader();
+  if (authHeader) {
+    headers.Authorization = authHeader;
+  }
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
@@ -77,14 +88,21 @@ async function wcFetchWithHeaders<T>(
   revalidate = 3600
 ): Promise<{ data: T; total: number; totalPages: number }> {
   const url = new URL(`${getBaseUrl()}/wp-json/wc/v3${endpoint}`);
-  for (const [key, value] of Object.entries(params)) {
+
+  // Add auth as query params (CDN-safe)
+  const authParams = getAuthParams();
+  for (const [key, value] of Object.entries({ ...params, ...authParams })) {
     url.searchParams.set(key, String(value));
   }
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    Authorization: getAuthHeader(),
   };
+
+  const authHeader = getAuthHeader();
+  if (authHeader) {
+    headers.Authorization = authHeader;
+  }
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30000);
