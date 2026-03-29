@@ -21,122 +21,161 @@ export default function VehicleFilter({
 
   const brands = hierarchy.brands;
 
-  const models = useMemo(() => {
-    if (!selectedBrand) return [];
-    const brand = brands.find((b) => b.slug === selectedBrand);
-    return brand?.models || [];
-  }, [selectedBrand, brands]);
+  const currentBrand = useMemo(
+    () => brands.find((b) => b.slug === selectedBrand),
+    [selectedBrand, brands]
+  );
+
+  const models = currentBrand?.models || [];
 
   function handleSearch() {
     if (!selectedBrand) return;
 
-    let url = `/marke/${selectedBrand}`;
-    if (selectedModel) {
-      url += `/${selectedModel}`;
-    }
-
     if (categorySlug) {
-      url = `/kategorie/${categorySlug}/${selectedBrand}`;
+      router.push(`/kategorie/${categorySlug}/${selectedBrand}`);
+    } else if (selectedModel) {
+      router.push(`/marke/${selectedBrand}/${selectedModel}`);
+    } else {
+      router.push(`/marke/${selectedBrand}`);
     }
-
-    router.push(url);
   }
 
-  const isHero = variant === "hero";
-
-  return (
-    <div
-      className={
-        isHero
-          ? "bg-gray-900 rounded-2xl p-6 sm:p-8"
-          : "bg-gray-50 rounded-xl p-4"
-      }
-    >
-      {isHero && (
-        <h2 className="text-white text-lg font-semibold mb-4">
-          Fußmatten für Ihr Fahrzeug finden
+  // ─── Hero variant: white card, stacked dropdowns, pill button ──────
+  if (variant === "hero") {
+    return (
+      <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 max-w-md mx-auto lg:mx-0 text-center">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-8">
+          Finden Sie Ihre Fussmatten
         </h2>
-      )}
 
-      <div
-        className={
-          isHero
-            ? "grid grid-cols-1 sm:grid-cols-3 gap-3"
-            : "space-y-3"
-        }
-      >
-        {/* Brand */}
-        <div>
-          <label
-            htmlFor="vf-brand"
-            className={`block text-sm font-medium mb-1 ${
-              isHero ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            Marke
-          </label>
+        <div className="space-y-4">
+          {/* Brand */}
+          <div className="relative">
+            <select
+              value={selectedBrand}
+              onChange={(e) => {
+                setSelectedBrand(e.target.value);
+                setSelectedModel("");
+              }}
+              aria-label="Marke wählen"
+              className="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-2xl text-base text-gray-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 outline-none appearance-none cursor-pointer transition-colors"
+            >
+              <option value="">Marke wählen</option>
+              {brands.map((b) => (
+                <option key={b.slug} value={b.slug}>
+                  {b.name}
+                </option>
+              ))}
+            </select>
+            <svg
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+
+          {/* Model */}
+          <div className="relative">
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={!selectedBrand || models.length === 0}
+              aria-label="Modell wählen"
+              className={`w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-2xl text-base text-gray-700 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 outline-none appearance-none cursor-pointer transition-colors ${
+                !selectedBrand ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+            >
+              <option value="">Modell wählen</option>
+              {models.map((m) => (
+                <option key={m.slug} value={m.slug}>
+                  {currentBrand?.name} {m.name}
+                </option>
+              ))}
+            </select>
+            <svg
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Search button — pill shape */}
+        <button
+          onClick={handleSearch}
+          disabled={!selectedBrand}
+          className="mt-8 px-12 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold text-base uppercase tracking-wider rounded-full transition-colors shadow-lg shadow-amber-500/25"
+        >
+          Suchen
+        </button>
+      </div>
+    );
+  }
+
+  // ─── Sidebar variant ──────────────────────────────────
+  return (
+    <div className="bg-white border border-gray-200 rounded-2xl p-5">
+      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+        Fahrzeugfilter
+      </h3>
+      <div className="space-y-3">
+        <div className="relative">
           <select
-            id="vf-brand"
             value={selectedBrand}
             onChange={(e) => {
               setSelectedBrand(e.target.value);
               setSelectedModel("");
             }}
-            className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm bg-white focus:border-amber-500 focus:ring-amber-500"
+            aria-label="Marke wählen"
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none appearance-none cursor-pointer"
           >
-            <option value="">Marke wählen...</option>
+            <option value="">Marke wählen</option>
             {brands.map((b) => (
               <option key={b.slug} value={b.slug}>
-                {b.name} ({b.productCount})
+                {b.name}
               </option>
             ))}
           </select>
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
         </div>
 
-        {/* Model */}
-        <div>
-          <label
-            htmlFor="vf-model"
-            className={`block text-sm font-medium mb-1 ${
-              isHero ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            Modell
-          </label>
+        <div className="relative">
           <select
-            id="vf-model"
             value={selectedModel}
             onChange={(e) => setSelectedModel(e.target.value)}
-            disabled={!selectedBrand}
-            className="w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm bg-white focus:border-amber-500 focus:ring-amber-500 disabled:bg-gray-100 disabled:text-gray-400"
+            disabled={!selectedBrand || models.length === 0}
+            aria-label="Modell wählen"
+            className={`w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none appearance-none cursor-pointer ${
+              !selectedBrand ? "opacity-50" : ""
+            }`}
           >
-            <option value="">
-              {selectedBrand ? "Modell wählen..." : "Erst Marke wählen"}
-            </option>
+            <option value="">Modell wählen</option>
             {models.map((m) => (
               <option key={m.slug} value={m.slug}>
-                {m.name}
+                {currentBrand?.name} {m.name}
               </option>
             ))}
           </select>
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
         </div>
 
-        {/* Search button */}
-        <div className={isHero ? "flex items-end" : ""}>
-          <button
-            onClick={handleSearch}
-            disabled={!selectedBrand}
-            className={`w-full rounded-xl font-semibold text-sm transition-all ${
-              isHero ? "py-2.5" : "py-2.5 mt-1"
-            } ${
-              selectedBrand
-                ? "bg-amber-500 hover:bg-amber-600 text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-          >
-            Fußmatten suchen
-          </button>
-        </div>
+        <button
+          onClick={handleSearch}
+          disabled={!selectedBrand}
+          className="w-full py-3 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-200 disabled:cursor-not-allowed text-white font-medium text-sm rounded-xl transition-colors"
+        >
+          Suchen
+        </button>
       </div>
     </div>
   );
