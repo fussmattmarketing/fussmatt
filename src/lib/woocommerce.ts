@@ -5,27 +5,38 @@ import type {
 } from "@/types/woocommerce";
 
 // Server-only: credentials are read at call time, not module init.
-// This avoids issues with edge runtime and ensures env validation works.
-
-function getAuthHeader(): string {
-  const user = process.env.WP_APPLICATION_USER;
-  const pass = process.env.WP_APPLICATION_PASSWORD;
-  if (user && pass) {
-    return `Basic ${Buffer.from(`${user}:${pass}`).toString("base64")}`;
-  }
-  // Fallback to consumer key/secret via Authorization header (OAuth 1.0 simplified)
-  const key = process.env.WC_CONSUMER_KEY;
-  const secret = process.env.WC_CONSUMER_SECRET;
-  if (key && secret) {
-    return `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}`;
-  }
-  throw new Error("No WooCommerce credentials configured");
-}
+// Dual auth strategy matching v1:
+//   - App Password (local dev) → Authorization: Basic header
+//   - Consumer Key/Secret (production) → query string params
 
 function getBaseUrl(): string {
   const url = process.env.WORDPRESS_URL;
   if (!url) throw new Error("WORDPRESS_URL is not configured");
   return url;
+}
+
+/** Returns true if we use Application Password (header auth) */
+function useAppPassword(): boolean {
+  return !!(process.env.WP_APPLICATION_USER && process.env.WP_APPLICATION_PASSWORD);
+}
+
+function getAuthHeader(): string | null {
+  const user = process.env.WP_APPLICATION_USER;
+  const pass = process.env.WP_APPLICATION_PASSWORD;
+  if (user && pass) {
+    return `Basic ${Buffer.from(`${user}:${pass}`).toString("base64")}`;
+  }
+  return null;
+}
+
+/** Appends consumer key/secret as query params (production auth) */
+function appendConsumerAuth(url: URL): void {
+  const key = process.env.WC_CONSUMER_KEY;
+  const secret = process.env.WC_CONSUMER_SECRET;
+  if (key && secret) {
+    url.searchParams.set("consumer_key", key);
+    url.searchParams.set("consumer_secret", secret);
+  }
 }
 
 async function wcFetch<T>(
@@ -35,20 +46,28 @@ async function wcFetch<T>(
 ): Promise<T> {
   const url = new URL(`${getBaseUrl()}/wp-json/wc/v3${endpoint}`);
 
-  // All params go as query params (NOT credentials — those go in header)
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.set(key, String(value));
   }
 
   const { revalidate = 3600, ...fetchOptions } = options;
 
+  // Auth: header for local dev, query params for production
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(fetchOptions.headers as Record<string, string>),
+  };
+
+  const authHeader = getAuthHeader();
+  if (authHeader) {
+    headers["Authorization"] = authHeader;
+  } else {
+    appendConsumerAuth(url);
+  }
+
   const res = await fetch(url.toString(), {
     ...fetchOptions,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getAuthHeader(),
-      ...(fetchOptions.headers as Record<string, string>),
-    },
+    headers,
     next: { revalidate },
   });
 
@@ -71,11 +90,19 @@ async function wcFetchWithHeaders<T>(
     url.searchParams.set(key, String(value));
   }
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  const authHeader = getAuthHeader();
+  if (authHeader) {
+    headers["Authorization"] = authHeader;
+  } else {
+    appendConsumerAuth(url);
+  }
+
   const res = await fetch(url.toString(), {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getAuthHeader(),
-    },
+    headers,
     next: { revalidate },
   });
 

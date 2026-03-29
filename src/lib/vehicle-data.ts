@@ -159,9 +159,47 @@ export function extractBaseModel(model: string): string {
   return base || model;
 }
 
+/** Canonical brand mapping — merges typos, aliases, and abbreviations */
+const BRAND_ALIASES: Record<string, string> = {
+  "vw": "Volkswagen",
+  "volkswagen": "Volkswagen",
+  "mercedes": "Mercedes-Benz",
+  "mercedes benz": "Mercedes-Benz",
+  "mercedes-benz": "Mercedes-Benz",
+  "l.rover": "Land Rover",
+  "land rover": "Land Rover",
+  "alfa romeo": "Alfa Romeo",
+  "alfa": "Alfa Romeo",
+  "citroën": "Citroën",
+  "citroen": "Citroën",
+  "peugeout": "Peugeot",
+  "peugeot": "Peugeot",
+  "seat": "SEAT",
+  "mini": "MINI",
+  "range": "Range Rover",
+  "range rover": "Range Rover",
+  "kia": "KIA",
+  "bmw": "BMW",
+  "byd": "BYD",
+  "daf": "DAF",
+  "ds": "DS",
+  "mg": "MG",
+  "man": "MAN",
+  "kleinbus": "Kleinbus",
+};
+
 function normalizeBrand(brand: string): string {
+  const lower = brand.toLowerCase().trim();
+  if (BRAND_ALIASES[lower]) return BRAND_ALIASES[lower];
+  // Fallback: capitalize first letter
   if (brand.length <= 3 && brand === brand.toUpperCase()) return brand;
   return brand.charAt(0).toUpperCase() + brand.slice(1).toLowerCase();
+}
+
+/** Get canonical brand key for deduplication */
+function getBrandKey(brand: string): string {
+  const normalized = normalizeBrand(brand);
+  return normalized.toLowerCase();
 }
 
 /**
@@ -190,7 +228,7 @@ export function buildVehicleHierarchy(
     const parsed = parseVehicleString(str);
     if (!parsed) continue;
 
-    const brandKey = parsed.brand.toLowerCase();
+    const brandKey = getBrandKey(parsed.brand);
     const baseModel = extractBaseModel(parsed.model);
     const modelKey = baseModel.toLowerCase();
 

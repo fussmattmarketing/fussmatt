@@ -42,15 +42,21 @@ if (!WP_URL) {
   process.exit(1);
 }
 
-function getAuthHeader(): string {
+/** True if using Application Password (local dev) */
+const useAppPassword = !!(WP_USER && WP_PASS);
+
+function getAuthHeader(): string | null {
   if (WP_USER && WP_PASS) {
     return `Basic ${Buffer.from(`${WP_USER}:${WP_PASS}`).toString("base64")}`;
   }
+  return null;
+}
+
+function appendConsumerAuth(url: URL): void {
   if (WC_KEY && WC_SECRET) {
-    return `Basic ${Buffer.from(`${WC_KEY}:${WC_SECRET}`).toString("base64")}`;
+    url.searchParams.set("consumer_key", WC_KEY);
+    url.searchParams.set("consumer_secret", WC_SECRET);
   }
-  console.error("No WooCommerce credentials found in env");
-  process.exit(1);
 }
 
 async function main() {
@@ -67,12 +73,16 @@ async function main() {
     url.searchParams.set("status", "publish");
     url.searchParams.set("_fields", "id,attributes");
 
-    const res = await fetch(url.toString(), {
-      headers: {
-        Authorization: getAuthHeader(),
-        "Content-Type": "application/json",
-      },
-    });
+    // Auth: header for local dev, query params for production
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    const authHeader = getAuthHeader();
+    if (authHeader) {
+      headers["Authorization"] = authHeader;
+    } else {
+      appendConsumerAuth(url);
+    }
+
+    const res = await fetch(url.toString(), { headers });
 
     if (!res.ok) {
       console.error(`API error: ${res.status} ${res.statusText}`);
