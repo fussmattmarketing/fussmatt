@@ -44,57 +44,34 @@ export function wpMediaUrl(url: string): string {
 }
 
 /**
- * Sanitize HTML — allowlist-based, works on server and client.
- * Strips all tags/attributes not in the allowlist.
+ * Sanitize HTML — proper allowlist-based sanitization using sanitize-html.
+ * MUST be used for ALL dangerouslySetInnerHTML content.
  */
-const ALLOWED_TAGS = new Set([
-  "p", "br", "strong", "em", "b", "i", "u",
-  "ul", "ol", "li", "a",
-  "h1", "h2", "h3", "h4", "h5", "h6",
-  "span", "div",
-  "table", "thead", "tbody", "tr", "th", "td",
-  "img",
-]);
-
-const ALLOWED_ATTRS = new Set([
-  "href", "target", "rel", "class",
-  "src", "alt", "width", "height",
-]);
+import sanitize from "sanitize-html";
 
 export function sanitizeHtml(html: string): string {
-  // Remove script/style tags and their content
-  let clean = html.replace(/<(script|style|iframe|object|embed|form)\b[^>]*>[\s\S]*?<\/\1>/gi, "");
-  // Remove event handlers and javascript: URLs
-  clean = clean.replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, "");
-  clean = clean.replace(/javascript\s*:/gi, "");
-
-  // Strip disallowed tags (keep content)
-  clean = clean.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*\/?>/gi, (match, tag) => {
-    const lowerTag = tag.toLowerCase();
-    if (!ALLOWED_TAGS.has(lowerTag)) return "";
-
-    // For allowed tags, strip disallowed attributes
-    if (match.startsWith("</")) return `</${lowerTag}>`;
-
-    const selfClosing = match.endsWith("/>");
-    const attrString = match.replace(/^<[a-z][a-z0-9]*/i, "").replace(/\/?>$/, "");
-    const allowedAttrs: string[] = [];
-
-    const attrRegex = /([a-z][a-z0-9-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|(\S+))/gi;
-    let attrMatch;
-    while ((attrMatch = attrRegex.exec(attrString)) !== null) {
-      const attrName = attrMatch[1].toLowerCase();
-      const attrValue = attrMatch[2] ?? attrMatch[3] ?? attrMatch[4] ?? "";
-      if (ALLOWED_ATTRS.has(attrName) && !attrValue.includes("javascript:")) {
-        allowedAttrs.push(`${attrName}="${attrValue}"`);
-      }
-    }
-
-    const attrs = allowedAttrs.length > 0 ? " " + allowedAttrs.join(" ") : "";
-    return selfClosing ? `<${lowerTag}${attrs} />` : `<${lowerTag}${attrs}>`;
+  return sanitize(html, {
+    allowedTags: [
+      "p", "br", "strong", "em", "b", "i", "u",
+      "ul", "ol", "li", "a",
+      "h1", "h2", "h3", "h4", "h5", "h6",
+      "span", "div",
+      "table", "thead", "tbody", "tr", "th", "td",
+      "img",
+    ],
+    allowedAttributes: {
+      a: ["href", "target", "rel", "class"],
+      img: ["src", "alt", "width", "height"],
+      span: ["class"],
+      div: ["class"],
+      td: ["class"],
+      tr: ["class"],
+      th: ["class"],
+      table: ["class"],
+    },
+    allowedSchemes: ["http", "https", "mailto"],
+    disallowedTagsMode: "discard",
   });
-
-  return clean;
 }
 
 /**

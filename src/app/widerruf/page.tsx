@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Widerrufsrecht",
+  title: "Widerrufsbelehrung",
+  description:
+    "Widerrufsbelehrung für FussMatt.com – Informationen zu Ihrem 14-tägigen Widerrufsrecht beim Online-Kauf von Auto-Fußmatten.",
 };
 
 export default function WiderrufPage() {

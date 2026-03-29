@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ClearCartOnMount from "./ClearCartOnMount";
 
 export const metadata: Metadata = {
   title: "Bestellung bestätigt",
@@ -15,6 +16,9 @@ export default async function BestellungBestaetigungPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      {/* Clear cart after successful payment */}
+      <ClearCartOnMount />
+
       <div className="inline-flex items-center justify-center w-20 h-20 bg-green-50 rounded-full mb-6">
         <svg
           className="w-10 h-10 text-green-500"

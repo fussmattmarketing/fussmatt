@@ -6,7 +6,7 @@ import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Ratgeber | Auto-Fussmatten Wissen | FussMatt",
+  title: "Ratgeber | Auto-Fussmatten Wissen",
   description:
     "Tipps, Vergleiche und Wissenswertes rund um Auto-Fussmatten. Materialien, Pflege und häufig gestellte Fragen.",
 };

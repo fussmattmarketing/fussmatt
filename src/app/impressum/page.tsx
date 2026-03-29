@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Impressum",
+  description:
+    "Impressum der Royal Road GmbH – Betreiber von FussMatt.com. Handelsregister, Kontaktdaten und rechtliche Angaben.",
 };
 
 export default function ImpressumPage() {

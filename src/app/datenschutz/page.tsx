@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Datenschutz",
+  title: "Datenschutzerklärung",
+  description:
+    "Datenschutzerklärung von FussMatt.com – Informationen zur Erhebung, Verarbeitung und Nutzung Ihrer personenbezogenen Daten.",
 };
 
 export default function DatenschutzPage() {

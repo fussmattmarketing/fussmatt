@@ -3,7 +3,9 @@ import { SHIPPING_CONFIG, COUNTRY_NAMES, formatShippingCost } from "@/lib/shippi
 import { SUPPORTED_COUNTRIES } from "@/lib/validations";
 
 export const metadata: Metadata = {
-  title: "AGB",
+  title: "Allgemeine Geschäftsbedingungen",
+  description:
+    "AGB von FussMatt.com – Allgemeine Geschäftsbedingungen für den Online-Kauf von Auto-Fußmatten. Zahlungsbedingungen, Lieferung und Gewährleistung.",
 };
 
 export default function AGBPage() {

@@ -14,7 +14,6 @@ export default function KassePage() {
   const mounted = useCartHydration();
   const items = useCartStore((s) => s.items);
   const totalPrice = useCartStore((s) => s.totalPrice());
-  const clearCart = useCartStore((s) => s.clearCart);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [agbAccepted, setAgbAccepted] = useState(false);
@@ -93,7 +92,8 @@ export default function KassePage() {
       }
 
       if (data.sessionUrl) {
-        clearCart();
+        // clearCart is called on bestellung-bestaetigung page AFTER successful payment
+        // NOT here — user may cancel on Stripe and return with empty cart
         router.push(data.sessionUrl);
       }
     } catch {
