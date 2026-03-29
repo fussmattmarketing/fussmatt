@@ -17,7 +17,7 @@ export default function VersandPage() {
       <div className="prose prose-gray max-w-none">
         <p>
           Wir liefern in 6 europäische Länder. Kostenloser Versand in der
-          Schweiz ab CHF 50.
+          Schweiz ab CHF 50. Alle Preise verstehen sich in Schweizer Franken (CHF).
         </p>
 
         <div className="not-prose mt-8">

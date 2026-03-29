@@ -9,11 +9,11 @@ export interface ShippingRate {
 
 export const SHIPPING_CONFIG: Record<SupportedCountry, ShippingRate> = {
   CH: { cost: 0, freeAbove: 50, currency: "CHF", deliveryDays: "3-5" },
-  DE: { cost: 5.9, freeAbove: 50, currency: "EUR", deliveryDays: "5-7" },
-  AT: { cost: 5.9, freeAbove: 50, currency: "EUR", deliveryDays: "5-7" },
-  FR: { cost: 7.9, freeAbove: 75, currency: "EUR", deliveryDays: "7-10" },
-  IT: { cost: 7.9, freeAbove: 75, currency: "EUR", deliveryDays: "7-10" },
-  NL: { cost: 7.9, freeAbove: 75, currency: "EUR", deliveryDays: "7-10" },
+  DE: { cost: 9.90, freeAbove: 100, currency: "CHF", deliveryDays: "5-7" },
+  AT: { cost: 9.90, freeAbove: 100, currency: "CHF", deliveryDays: "5-7" },
+  FR: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
+  IT: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
+  NL: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
 } as const;
 
 export const COUNTRY_NAMES: Record<SupportedCountry, string> = {

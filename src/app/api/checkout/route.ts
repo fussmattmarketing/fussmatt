@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { billing, line_items, agb_accepted } = parsed.data;
+    const { billing, shipping: shippingAddr, different_shipping, line_items, agb_accepted } = parsed.data;
 
     if (!agb_accepted) {
       return NextResponse.json(
@@ -40,6 +40,21 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    // Determine shipping address: separate or same as billing
+    const effectiveShipping = different_shipping && shippingAddr
+      ? shippingAddr
+      : {
+          first_name: billing.first_name,
+          last_name: billing.last_name,
+          company: billing.company || "",
+          address_1: billing.address_1,
+          address_2: billing.address_2 || "",
+          city: billing.city,
+          state: billing.state || "",
+          postcode: billing.postcode,
+          country: billing.country,
+        };
 
     // SERVER-SIDE PRICE VALIDATION — fetch real prices from WC
     const verifiedItems: {
@@ -80,20 +95,19 @@ export async function POST(request: Request) {
     }
 
     // Calculate totals with server prices
+    // Shipping is based on the shipping destination country
+    const shippingCountry = (effectiveShipping.country || billing.country) as SupportedCountry;
     const subtotal = verifiedItems.reduce(
       (sum, item) => sum + item.serverPrice * item.quantity,
       0
     );
-    const shipping = calculateShipping(
-      billing.country as SupportedCountry,
-      subtotal
-    );
+    const shipping = calculateShipping(shippingCountry, subtotal);
     const total = subtotal + shipping.cost;
 
     // Create WooCommerce order (set_paid: false — paid after Stripe)
     const orderData = {
       payment_method: "stripe",
-      payment_method_title: "Kreditkarte (Stripe)",
+      payment_method_title: "Stripe (Karte / TWINT)",
       set_paid: false,
       currency: "CHF",
       billing: {
@@ -103,19 +117,22 @@ export async function POST(request: Request) {
         address_1: billing.address_1,
         address_2: billing.address_2 || "",
         city: billing.city,
+        state: billing.state || "",
         postcode: billing.postcode,
         country: billing.country,
         email: billing.email,
-        phone: billing.phone || "",
+        phone: billing.phone,
       },
       shipping: {
-        first_name: billing.first_name,
-        last_name: billing.last_name,
-        address_1: billing.address_1,
-        address_2: billing.address_2 || "",
-        city: billing.city,
-        postcode: billing.postcode,
-        country: billing.country,
+        first_name: effectiveShipping.first_name,
+        last_name: effectiveShipping.last_name,
+        company: effectiveShipping.company || "",
+        address_1: effectiveShipping.address_1,
+        address_2: effectiveShipping.address_2 || "",
+        city: effectiveShipping.city,
+        state: effectiveShipping.state || "",
+        postcode: effectiveShipping.postcode,
+        country: effectiveShipping.country,
       },
       line_items: verifiedItems.map((item) => ({
         product_id: item.product_id,
@@ -134,7 +151,7 @@ export async function POST(request: Request) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com";
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "twint"],
       mode: "payment",
       currency: "chf",
       customer_email: billing.email,
