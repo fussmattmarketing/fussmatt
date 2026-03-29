@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Ratgeber",
   description:
