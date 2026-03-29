@@ -2,8 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// In development, React needs 'unsafe-eval' for error overlay and debugging.
-// In production, 'unsafe-eval' is NOT included — this is intentional for security.
+// Tracking params that pollute CDN cache keys
+const TRACKING_PARAMS = [
+  "_gl", "_ga", "_ga_",
+  "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+  "fbclid", "gclid", "msclkid",
+];
+
 const scriptSrc = [
   "'self'",
   "'unsafe-inline'",
@@ -35,8 +40,23 @@ const securityHeaders: Record<string, string> = {
 };
 
 export function proxy(request: NextRequest) {
-  const response = NextResponse.next();
+  // Strip GA/UTM tracking params to prevent CDN cache pollution
+  const url = request.nextUrl.clone();
+  let stripped = false;
 
+  for (const key of [...url.searchParams.keys()]) {
+    if (TRACKING_PARAMS.some((p) => key.startsWith(p))) {
+      url.searchParams.delete(key);
+      stripped = true;
+    }
+  }
+
+  if (stripped) {
+    return NextResponse.redirect(url, 301);
+  }
+
+  // Security headers
+  const response = NextResponse.next();
   for (const [key, value] of Object.entries(securityHeaders)) {
     response.headers.set(key, value);
   }
