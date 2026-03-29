@@ -5,9 +5,7 @@ import type {
 } from "@/types/woocommerce";
 
 // Server-only: credentials are read at call time, not module init.
-// Dual auth strategy matching v1:
-//   - App Password (local dev) → Authorization: Basic header
-//   - Consumer Key/Secret (production) → query string params
+// All auth via Authorization header — NEVER query string (credentials leak in logs/CDN).
 
 function getBaseUrl(): string {
   const url = process.env.WORDPRESS_URL;
@@ -15,28 +13,20 @@ function getBaseUrl(): string {
   return url;
 }
 
-/** Returns true if we use Application Password (header auth) */
-function useAppPassword(): boolean {
-  return !!(process.env.WP_APPLICATION_USER && process.env.WP_APPLICATION_PASSWORD);
-}
-
-function getAuthHeader(): string | null {
+function getAuthHeader(): string {
+  // Priority 1: Application Password (local dev)
   const user = process.env.WP_APPLICATION_USER;
   const pass = process.env.WP_APPLICATION_PASSWORD;
   if (user && pass) {
     return `Basic ${Buffer.from(`${user}:${pass}`).toString("base64")}`;
   }
-  return null;
-}
-
-/** Appends consumer key/secret as query params (production auth) */
-function appendConsumerAuth(url: URL): void {
+  // Priority 2: Consumer Key/Secret via Basic auth header (production)
   const key = process.env.WC_CONSUMER_KEY;
   const secret = process.env.WC_CONSUMER_SECRET;
   if (key && secret) {
-    url.searchParams.set("consumer_key", key);
-    url.searchParams.set("consumer_secret", secret);
+    return `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}`;
   }
+  throw new Error("No WooCommerce credentials configured");
 }
 
 async function wcFetch<T>(
@@ -52,18 +42,11 @@ async function wcFetch<T>(
 
   const { revalidate = 3600, ...fetchOptions } = options;
 
-  // Auth: header for local dev, query params for production
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    Authorization: getAuthHeader(),
     ...(fetchOptions.headers as Record<string, string>),
   };
-
-  const authHeader = getAuthHeader();
-  if (authHeader) {
-    headers["Authorization"] = authHeader;
-  } else {
-    appendConsumerAuth(url);
-  }
 
   const res = await fetch(url.toString(), {
     ...fetchOptions,
@@ -92,14 +75,8 @@ async function wcFetchWithHeaders<T>(
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
+    Authorization: getAuthHeader(),
   };
-
-  const authHeader = getAuthHeader();
-  if (authHeader) {
-    headers["Authorization"] = authHeader;
-  } else {
-    appendConsumerAuth(url);
-  }
 
   const res = await fetch(url.toString(), {
     headers,
