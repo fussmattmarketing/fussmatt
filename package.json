@@ -17,7 +17,6 @@
     "clsx": "^2",
     "csv-parse": "^6",
     "fast-xml-parser": "^5",
-    "isomorphic-dompurify": "^2",
     "next": "^16",
     "react": "^19",
     "react-dom": "^19",
@@ -28,7 +27,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/dompurify": "^3",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
