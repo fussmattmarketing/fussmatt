@@ -23,7 +23,7 @@ export const RATGEBER_ARTICLES: RatgeberArticle[] = [
     title: "3D vs 5D Fussmatten: Unterschiede, Vorteile und Empfehlung",
     excerpt:
       "Welche Fussmatten bieten mehr Schutz? Wir vergleichen 3D und 5D Modelle in Material, Passform und Preis-Leistung.",
-    image: "/images/ratgeber/3d-vs-5d.jpg",
+    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1147.jpg",
     date: "2026-03-15",
     category: "Vergleich",
     readTime: "5 Min",
@@ -75,7 +75,7 @@ export const RATGEBER_ARTICLES: RatgeberArticle[] = [
     title: "TPE-Material: Warum es das beste Material für Fussmatten ist",
     excerpt:
       "TPE ist geruchlos, umweltfreundlich und extrem langlebig. Erfahren Sie, warum Premium-Fussmatten auf dieses Material setzen.",
-    image: "/images/ratgeber/tpe-material.jpg",
+    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/peugeot-3008-2024-sonrasi-havuzl_MTIzMzY0MTAy_1-1-8.jpg",
     date: "2026-03-10",
     category: "Material",
     readTime: "4 Min",
@@ -126,7 +126,7 @@ export const RATGEBER_ARTICLES: RatgeberArticle[] = [
     title: "Fussmatten reinigen und pflegen: Die komplette Anleitung",
     excerpt:
       "So bleiben Ihre Auto-Fussmatten wie neu. Tipps zur Reinigung von TPE-, Gummi- und Textilmatten.",
-    image: "/images/ratgeber/reinigung.jpg",
+    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1149.jpg",
     date: "2026-03-05",
     category: "Pflege",
     readTime: "3 Min",
@@ -170,7 +170,7 @@ export const RATGEBER_ARTICLES: RatgeberArticle[] = [
     title: "Häufig gestellte Fragen",
     excerpt:
       "Antworten auf die wichtigsten Fragen zu unseren Auto-Fussmatten: Material, Passform, Lieferung und mehr.",
-    image: "/images/ratgeber/faq.jpg",
+    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1150.jpg",
     date: "2026-03-01",
     category: "FAQ",
     readTime: "3 Min",

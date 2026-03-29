@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 
 export const metadata: Metadata = {
@@ -34,12 +33,12 @@ export default function RatgeberIndexPage() {
             >
               {/* Image */}
               <div className="relative aspect-[16/10] bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={article.image}
                   alt={article.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3">
                   <span className="bg-amber-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg">
