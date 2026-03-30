@@ -7,23 +7,23 @@ export default function Footer() {
   return (
     <footer className="bg-gray-950 text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <Image
-              src="/logo.png"
-              alt="FussMatt"
-              width={160}
-              height={48}
-              className="h-12 w-auto brightness-0 invert"
-              unoptimized
-            />
-            <p className="mt-4 text-sm leading-relaxed">
-              Premium 3D &amp; 5D Auto-Fussmatten aus TPE-Material. Passgenau
-              für Ihr Fahrzeug.
-            </p>
-          </div>
+        {/* Logo */}
+        <div className="mb-10">
+          <Image
+            src="/logo.png"
+            alt="FussMatt"
+            width={160}
+            height={48}
+            className="h-12 w-auto brightness-0 invert"
+            unoptimized
+          />
+          <p className="mt-3 text-sm leading-relaxed max-w-md">
+            Premium 3D &amp; 5D Auto-Fussmatten aus TPE-Material. Passgenau
+            für Ihr Fahrzeug.
+          </p>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Shop */}
           <div>
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
@@ -130,6 +130,41 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
+          {/* Contact — rightmost column */}
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Kontakt
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Rufen Sie uns an</p>
+                <a
+                  href="tel:+41445052722"
+                  className="text-lg font-semibold text-amber-500 hover:text-amber-400 transition-colors"
+                >
+                  +41 44 505 27 22
+                </a>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">E-Mail</p>
+                <a
+                  href="mailto:info@fussmatt.com"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  info@fussmatt.com
+                </a>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Adresse</p>
+                <p className="text-sm leading-relaxed">
+                  Royal Road GmbH<br />
+                  Dübendorfstrasse 4<br />
+                  8051 Zürich
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Rechtliche Hinweise + Payment */}
@@ -145,7 +180,7 @@ export default function Footer() {
           <div className="flex flex-col items-start lg:items-end gap-4">
             {/* Payment methods image — replace src with actual image */}
             <Image
-              src="/images/payment-methods.png"
+              src="/images/payment-methods.webp"
               alt="Zahlungsmethoden: PostFinance, Visa, Mastercard, PayPal, TWINT, American Express, Rechnung, Apple Pay, Google Pay"
               width={500}
               height={40}
@@ -153,7 +188,7 @@ export default function Footer() {
               unoptimized
             />
             <p className="text-xs text-gray-500">
-              &copy; {new Date().getFullYear()} &copy;{" "}
+              &copy; {new Date().getFullYear()}{" "}
               <Link href="/" className="text-amber-500 hover:text-amber-400 transition-colors">
                 FussMatt
               </Link>{" "}
