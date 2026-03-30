@@ -101,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${SITE_URL}/produkt/${product.slug}`,
         lastModified: product.date_modified || now,
         changeFrequency: "weekly",
-        priority: 0.6,
+        priority: 0.7,
       });
     }
   } catch {

@@ -132,30 +132,43 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <p className="text-xs">
-              &copy; {new Date().getFullYear()} FussMatt. Alle Rechte
-              vorbehalten.
+        {/* Rechtliche Hinweise + Payment */}
+        <div className="mt-12 pt-8 border-t border-gray-800 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-3">Rechtliche Hinweise</h4>
+            <p className="text-xs leading-relaxed text-gray-500">
+              Die Markennamen, die auf dieser Website genannt werden, sind urheberrechtlich
+              geschützte Namen und dienen lediglich der Produktbeschreibung. Wir sind weder eine
+              Werkvertretung noch ähnliches und arbeiten NICHT im Auftrag dieser Automarken.
             </p>
-            <button
-              onClick={() =>
-                window.dispatchEvent(new Event("open-cookie-settings"))
-              }
-              className="text-xs text-gray-500 hover:text-amber-500 transition-colors underline"
-            >
-              Cookie-Einstellungen
-            </button>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-xs">Zahlungsmethoden:</span>
-            <div className="flex items-center gap-2 text-xs font-medium text-gray-500">
-              <span>Stripe</span>
-              <span>&middot;</span>
-              <span>PayPal</span>
-              <span>&middot;</span>
-              <span>Klarna</span>
-            </div>
+          <div className="flex flex-col items-start lg:items-end gap-4">
+            {/* Payment methods image — replace src with actual image */}
+            <Image
+              src="/images/payment-methods.png"
+              alt="Zahlungsmethoden: PostFinance, Visa, Mastercard, PayPal, TWINT, American Express, Rechnung, Apple Pay, Google Pay"
+              width={500}
+              height={40}
+              className="h-10 w-auto"
+              unoptimized
+            />
+            <p className="text-xs text-gray-500">
+              &copy; {new Date().getFullYear()} &copy;{" "}
+              <Link href="/" className="text-amber-500 hover:text-amber-400 transition-colors">
+                FussMatt
+              </Link>{" "}
+              All Rights Reserved.
+              <span className="ml-3">
+                <button
+                  onClick={() =>
+                    window.dispatchEvent(new Event("open-cookie-settings"))
+                  }
+                  className="text-gray-500 hover:text-amber-500 transition-colors underline"
+                >
+                  Cookie-Einstellungen
+                </button>
+              </span>
+            </p>
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import Link from "next/link";
 
 export const revalidate = 3600;
 export const maxDuration = 60;
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const hierarchy = getVehicleHierarchy();
