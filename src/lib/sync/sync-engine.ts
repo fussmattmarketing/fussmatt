@@ -84,30 +84,19 @@ function clearCheckpoint(): void {
 
 // ��── WC API Helpers (using Authorization header) ────────
 
-function getWCAuth(): { baseUrl: string; headers: Record<string, string> } {
+function getWCConfig(): { baseUrl: string; authParams: string } {
   const baseUrl = process.env.WORDPRESS_URL;
   if (!baseUrl) throw new Error("WORDPRESS_URL not configured");
 
-  const user = process.env.WP_APPLICATION_USER;
-  const pass = process.env.WP_APPLICATION_PASSWORD;
   const key = process.env.WC_CONSUMER_KEY;
   const secret = process.env.WC_CONSUMER_SECRET;
-
-  let auth: string;
-  if (user && pass) {
-    auth = `Basic ${Buffer.from(`${user}:${pass}`).toString("base64")}`;
-  } else if (key && secret) {
-    auth = `Basic ${Buffer.from(`${key}:${secret}`).toString("base64")}`;
-  } else {
-    throw new Error("No WooCommerce credentials configured");
+  if (!key || !secret) {
+    throw new Error("No WooCommerce credentials configured (WC_CONSUMER_KEY/WC_CONSUMER_SECRET)");
   }
 
   return {
     baseUrl,
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json",
-    },
+    authParams: `consumer_key=${encodeURIComponent(key)}&consumer_secret=${encodeURIComponent(secret)}`,
   };
 }
 
@@ -117,14 +106,15 @@ async function wcRequest(
   body?: unknown,
   retries = MAX_RETRIES
 ): Promise<unknown> {
-  const { baseUrl, headers } = getWCAuth();
-  const url = `${baseUrl}/wp-json/wc/v3${endpoint}`;
+  const { baseUrl, authParams } = getWCConfig();
+  const separator = endpoint.includes("?") ? "&" : "?";
+  const url = `${baseUrl}/wp-json/wc/v3${endpoint}${separator}${authParams}`;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
         method,
-        headers,
+        headers: { "Content-Type": "application/json" },
         body: body ? JSON.stringify(body) : undefined,
       });
 
@@ -145,9 +135,11 @@ async function wcRequest(
 }
 
 async function findProductBySku(sku: string): Promise<{ id: number } | null> {
-  const { baseUrl, headers } = getWCAuth();
-  const url = `${baseUrl}/wp-json/wc/v3/products?sku=${encodeURIComponent(sku)}&per_page=1`;
-  const res = await fetch(url, { headers });
+  const { baseUrl, authParams } = getWCConfig();
+  const url = `${baseUrl}/wp-json/wc/v3/products?sku=${encodeURIComponent(sku)}&per_page=1&${authParams}`;
+  const res = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+  });
   if (!res.ok) return null;
   const products = (await res.json()) as Array<{ id: number }>;
   return products[0] || null;
