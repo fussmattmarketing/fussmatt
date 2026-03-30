@@ -27,6 +27,7 @@ export interface SyncResult {
   totalProducts: number;
   hasMore: boolean;
   duration: number;
+  notificationsSent?: number;
 }
 
 export interface SyncError {

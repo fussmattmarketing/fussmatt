@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCartStore } from "@/lib/cart-store";
 import type { WCProduct, WCProductVariation } from "@/types/woocommerce";
+import BackInStockNotify from "./BackInStockNotify";
 
 interface AddToCartButtonProps {
   product: WCProduct;
@@ -49,6 +50,19 @@ export default function AddToCartButton({
     addItem(product, quantity, selectedVariation, selectedAttrs);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
+  }
+
+  // Out of stock — show notification form instead
+  if (product.stock_status !== "instock") {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-red-600">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+          <span className="text-sm font-medium">Derzeit nicht verfügbar</span>
+        </div>
+        <BackInStockNotify sku={product.sku} productName={product.name} />
+      </div>
+    );
   }
 
   return (

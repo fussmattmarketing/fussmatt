@@ -18,6 +18,7 @@ import type { XMLProduct, SyncResult, SyncError, SyncOptions, SyncCheckpoint } f
 import { fetchAndParseXML } from "./xml-parser";
 import { sanitizeProduct } from "./brand-sanitizer";
 import { validateGTIN } from "./gtin";
+import { sendBackInStockEmails } from "@/lib/stock-notify";
 
 const LOCK_FILE = path.join(process.cwd(), "data", "sync.lock");
 const CHECKPOINT_FILE = path.join(process.cwd(), "data", "sync-checkpoint.json");
@@ -134,14 +135,21 @@ async function wcRequest(
   }
 }
 
-async function findProductBySku(sku: string): Promise<{ id: number } | null> {
+interface ExistingProduct {
+  id: number;
+  name: string;
+  slug: string;
+  stock_status: string;
+}
+
+async function findProductBySku(sku: string): Promise<ExistingProduct | null> {
   const { baseUrl, authParams } = getWCConfig();
   const url = `${baseUrl}/wp-json/wc/v3/products?sku=${encodeURIComponent(sku)}&per_page=1&${authParams}`;
   const res = await fetch(url, {
     headers: { "Content-Type": "application/json" },
   });
   if (!res.ok) return null;
-  const products = (await res.json()) as Array<{ id: number }>;
+  const products = (await res.json()) as ExistingProduct[];
   return products[0] || null;
 }
 
@@ -154,6 +162,7 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
   let created = 0;
   let updated = 0;
   let skipped = 0;
+  let notificationsSent = 0;
 
   // Check for resume
   let startOffset = options.offset || 0;
@@ -206,9 +215,30 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
         // IMPORTANT: Only update stock_status from the B2B feed.
         // Feed prices are wholesale (e.g. 59.9) — WC has retail prices (e.g. 159).
         // Never overwrite prices, names, or descriptions from the supplier feed.
+        const wasOutOfStock = existing.stock_status === "outofstock";
+        const nowInStock = xmlProduct.stock_status === "instock";
+
         await wcRequest(`/products/${existing.id}`, "PUT", {
           stock_status: xmlProduct.stock_status,
         });
+
+        // Send back-in-stock notifications when product returns to stock
+        if (wasOutOfStock && nowInStock) {
+          try {
+            const { sent } = await sendBackInStockEmails(
+              xmlProduct.sku,
+              existing.name,
+              existing.slug
+            );
+            if (sent > 0) {
+              notificationsSent += sent;
+              console.log(`  📧 Sent ${sent} back-in-stock notifications for ${xmlProduct.sku}`);
+            }
+          } catch (notifyErr) {
+            console.error(`  Notify error for ${xmlProduct.sku}:`, notifyErr);
+          }
+        }
+
         updated++;
         console.log(`  [${globalIndex + 1}] Updated: ${xmlProduct.sku}`);
       } else {
@@ -271,5 +301,6 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
     totalProducts: products.length,
     hasMore,
     duration: Date.now() - startTime,
+    notificationsSent,
   };
 }
