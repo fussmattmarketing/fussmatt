@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice, wpMediaUrl } from "@/lib/utils";
-import { calculateShipping, COUNTRY_NAMES } from "@/lib/shipping";
-import { SUPPORTED_COUNTRIES } from "@/lib/validations";
-import type { SupportedCountry } from "@/lib/validations";
+import { calculateShipping } from "@/lib/shipping";
 
 export default function WarenkorbPage() {
   const mounted = useCartHydration();
@@ -15,9 +12,7 @@ export default function WarenkorbPage() {
   const totalPrice = useCartStore((s) => s.totalPrice());
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
-  const [country, setCountry] = useState<SupportedCountry>("CH");
-
-  const shipping = calculateShipping(country, totalPrice);
+  const shipping = calculateShipping("CH", totalPrice);
 
   if (!mounted) {
     return (
@@ -126,22 +121,6 @@ export default function WarenkorbPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Bestellübersicht
           </h2>
-
-          <div className="mb-4">
-            <label htmlFor="shipping-country" className="block text-sm font-medium text-gray-700 mb-1">
-              Lieferland
-            </label>
-            <select
-              id="shipping-country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value as SupportedCountry)}
-              className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm"
-            >
-              {SUPPORTED_COUNTRIES.map((c) => (
-                <option key={c} value={c}>{COUNTRY_NAMES[c]}</option>
-              ))}
-            </select>
-          </div>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
