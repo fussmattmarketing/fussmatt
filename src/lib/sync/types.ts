@@ -40,7 +40,7 @@ export interface SyncOptions {
   offset?: number;
   syncImages?: boolean;
   dryRun?: boolean;
-  mode?: "full" | "stock-only" | "resume";
+  mode?: "stock-only" | "resume";
 }
 
 export interface SyncLog {

@@ -125,7 +125,7 @@ export type ContactFormInput = z.infer<typeof contactFormSchema>;
 
 // Sync request schema
 export const syncRequestSchema = z.object({
-  mode: z.enum(["full", "stock-only", "resume"]).default("full"),
+  mode: z.enum(["stock-only", "resume"]).default("stock-only"),
   batchSize: z.number().int().min(1).max(10).default(5),
 });
 

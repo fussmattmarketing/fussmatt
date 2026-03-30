@@ -203,26 +203,12 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
       const existing = await findProductBySku(xmlProduct.sku);
 
       if (existing) {
-        if (options.mode === "stock-only") {
-          // Only update stock status
-          await wcRequest(`/products/${existing.id}`, "PUT", {
-            stock_status: xmlProduct.stock_status,
-          });
-        } else {
-          // Full update
-          await wcRequest(`/products/${existing.id}`, "PUT", {
-            name: sanitized.title,
-            description: sanitized.description,
-            short_description: sanitized.short_description,
-            regular_price: xmlProduct.regular_price,
-            sale_price: xmlProduct.price,
-            stock_status: xmlProduct.stock_status,
-            weight: xmlProduct.weight,
-            meta_data: gtin
-              ? [{ key: "_gtin", value: gtin }]
-              : [],
-          });
-        }
+        // IMPORTANT: Only update stock_status from the B2B feed.
+        // Feed prices are wholesale (e.g. 59.9) — WC has retail prices (e.g. 159).
+        // Never overwrite prices, names, or descriptions from the supplier feed.
+        await wcRequest(`/products/${existing.id}`, "PUT", {
+          stock_status: xmlProduct.stock_status,
+        });
         updated++;
         console.log(`  [${globalIndex + 1}] Updated: ${xmlProduct.sku}`);
       } else {
