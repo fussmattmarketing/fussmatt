@@ -41,7 +41,7 @@ export default function ProductGallery({
           priority
         />
         {onSale && (
-          <span className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg z-10">
+          <span className="absolute top-4 right-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg z-10">
             Sale
           </span>
         )}

@@ -39,7 +39,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
         />
         {discount > 0 && (
-          <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
+          <span className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg z-10">
             -{discount}%
           </span>
         )}
