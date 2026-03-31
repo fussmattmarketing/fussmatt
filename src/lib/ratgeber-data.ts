@@ -17,7 +17,11 @@ export interface RatgeberArticle {
   faq?: { question: string; answer: string }[];
 }
 
-export const RATGEBER_ARTICLES: RatgeberArticle[] = [
+export const RATGEBER_ARTICLES: RatgeberArticle[] = [];
+
+// Draft articles — deactivated, content managed via WordPress
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _DRAFT_ARTICLES: RatgeberArticle[] = [
   {
     slug: "3d-vs-5d-fussmatten-unterschied",
     title: "3D vs 5D Fussmatten: Unterschiede, Vorteile und Empfehlung",

@@ -3,8 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 import { getWPPosts, type BlogPost } from "@/lib/wordpress";
+import { getVehicleHierarchy } from "@/lib/vehicle-data";
 
-export const revalidate = 600; // 10 min
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Ratgeber & Blog – Auto-Fussmatten Wissen",
@@ -64,6 +65,30 @@ export default async function RatgeberIndexPage() {
             Tipps, Vergleiche und Wissenswertes rund um Auto-Fussmatten.
             Finden Sie die perfekte Lösung für Ihr Fahrzeug.
           </p>
+        </div>
+      </section>
+
+      {/* Brand Guides */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+        <h2 className="text-xl font-bold text-gray-900 mb-2">
+          Fussmatten-Ratgeber nach Marke
+        </h2>
+        <p className="text-sm text-gray-500 mb-4">
+          Kaufberatung, Modellübersicht und Empfehlungen für jede Automarke.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {getVehicleHierarchy()
+            .brands.sort((a, b) => b.productCount - a.productCount)
+            .slice(0, 20)
+            .map((brand) => (
+              <Link
+                key={brand.slug}
+                href={`/ratgeber/fussmatten-fuer-${brand.slug}`}
+                className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-amber-50 hover:text-amber-700 rounded-lg transition-colors"
+              >
+                {brand.name}
+              </Link>
+            ))}
         </div>
       </section>
 
