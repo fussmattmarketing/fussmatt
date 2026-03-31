@@ -10,6 +10,9 @@ export function getStripe(): Stripe {
     }
     _stripe = new Stripe(key, {
       typescript: true,
+      httpClient: Stripe.createFetchHttpClient(),
+      maxNetworkRetries: 3,
+      timeout: 20000,
     });
   }
   return _stripe;

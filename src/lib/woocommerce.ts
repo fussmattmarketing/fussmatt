@@ -63,11 +63,12 @@ async function wcFetch<T>(
   const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
+    const isGet = !fetchOptions.method || fetchOptions.method === "GET";
     const res = await fetch(url.toString(), {
       ...fetchOptions,
       headers,
       signal: controller.signal,
-      next: { revalidate },
+      ...(isGet ? { next: { revalidate } } : { cache: "no-store" }),
     });
 
     if (!res.ok) {

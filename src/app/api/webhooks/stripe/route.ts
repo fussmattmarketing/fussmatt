@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { updateOrder } from "@/lib/woocommerce";
+import { sendOrderConfirmationEmail, sendAdminNewOrderEmail } from "@/lib/emails";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -27,30 +28,79 @@ export async function POST(request: Request) {
     const event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
 
     switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object;
-        const wcOrderId = session.metadata?.wc_order_id;
+      case "payment_intent.succeeded": {
+        const paymentIntent = event.data.object;
+        const wcOrderId = paymentIntent.metadata?.wc_order_id;
 
         if (wcOrderId) {
-          await updateOrder(parseInt(wcOrderId), {
+          // 1. Update WC order status
+          const updatedOrder = await updateOrder(parseInt(wcOrderId), {
             status: "processing",
             set_paid: true,
-            transaction_id: session.payment_intent,
+            transaction_id: paymentIntent.id,
           });
-          console.log(`Order ${wcOrderId} marked as paid (Stripe session: ${session.id})`);
+          console.log(`Order ${wcOrderId} marked as paid (PaymentIntent: ${paymentIntent.id})`);
+
+          // 2. Send confirmation emails (non-blocking)
+          try {
+            const order = updatedOrder as Record<string, unknown>;
+            const billing = order.billing as Record<string, string>;
+            const shipping = order.shipping as Record<string, string>;
+            const lineItems = (order.line_items as Array<Record<string, unknown>>) || [];
+
+            const emailData = {
+              orderId: parseInt(wcOrderId),
+              customerEmail: billing?.email || paymentIntent.receipt_email || "",
+              customerName: `${billing?.first_name || ""} ${billing?.last_name || ""}`.trim(),
+              items: lineItems.map((item) => ({
+                name: String(item.name || ""),
+                quantity: Number(item.quantity || 1),
+                total: String(item.total || "0"),
+              })),
+              subtotal: String(order.total || "0"),
+              shippingTotal: String((order as Record<string, unknown>).shipping_total || "0"),
+              total: String(order.total || "0"),
+              billingAddress: {
+                first_name: billing?.first_name || "",
+                last_name: billing?.last_name || "",
+                address_1: billing?.address_1 || "",
+                city: billing?.city || "",
+                postcode: billing?.postcode || "",
+                country: billing?.country || "",
+              },
+              shippingAddress: shipping?.address_1
+                ? {
+                    first_name: shipping.first_name || "",
+                    last_name: shipping.last_name || "",
+                    address_1: shipping.address_1 || "",
+                    city: shipping.city || "",
+                    postcode: shipping.postcode || "",
+                    country: shipping.country || "",
+                  }
+                : undefined,
+              paymentMethod: "Stripe",
+            };
+
+            // Send both emails concurrently
+            await Promise.allSettled([
+              sendOrderConfirmationEmail(emailData),
+              sendAdminNewOrderEmail(emailData),
+            ]);
+          } catch (emailError) {
+            // Don't fail the webhook if email sending fails
+            console.error("Email sending error (non-critical):", emailError);
+          }
         }
         break;
       }
 
-      case "checkout.session.expired": {
-        const session = event.data.object;
-        const wcOrderId = session.metadata?.wc_order_id;
+      case "payment_intent.payment_failed": {
+        const paymentIntent = event.data.object;
+        const wcOrderId = paymentIntent.metadata?.wc_order_id;
 
         if (wcOrderId) {
-          await updateOrder(parseInt(wcOrderId), {
-            status: "cancelled",
-          });
-          console.log(`Order ${wcOrderId} cancelled (session expired)`);
+          console.log(`Payment failed for order ${wcOrderId} (PaymentIntent: ${paymentIntent.id})`);
+          // Don't cancel immediately — user might retry
         }
         break;
       }

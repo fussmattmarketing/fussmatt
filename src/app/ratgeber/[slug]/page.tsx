@@ -8,11 +8,22 @@ import {
   RATGEBER_ARTICLES,
   getArticleBySlug,
 } from "@/lib/ratgeber-data";
+import { getWPPostBySlug, getWPPosts } from "@/lib/wordpress";
 
-export const revalidate = 3600;
+export const revalidate = 600; // 10 min
 
 export async function generateStaticParams() {
-  return RATGEBER_ARTICLES.map((a) => ({ slug: a.slug }));
+  // Static articles
+  const staticParams = RATGEBER_ARTICLES.map((a) => ({ slug: a.slug }));
+
+  // WP posts
+  try {
+    const wpPosts = await getWPPosts();
+    const wpParams = wpPosts.map((p) => ({ slug: p.slug }));
+    return [...staticParams, ...wpParams];
+  } catch {
+    return staticParams;
+  }
 }
 
 export async function generateMetadata({
@@ -21,17 +32,34 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
-  if (!article) return { title: "Nicht gefunden" };
 
-  return {
-    title: article.title,
-    description: article.excerpt,
-    openGraph: {
-      title: `${article.title} | FussMatt Ratgeber`,
+  // Try static first
+  const article = getArticleBySlug(slug);
+  if (article) {
+    return {
+      title: article.title,
       description: article.excerpt,
-    },
-  };
+      openGraph: {
+        title: `${article.title} | FussMatt Ratgeber`,
+        description: article.excerpt,
+      },
+    };
+  }
+
+  // Try WordPress
+  const wpPost = await getWPPostBySlug(slug);
+  if (wpPost) {
+    return {
+      title: wpPost.title,
+      description: wpPost.excerpt,
+      openGraph: {
+        title: `${wpPost.title} | FussMatt Blog`,
+        description: wpPost.excerpt,
+      },
+    };
+  }
+
+  return { title: "Nicht gefunden" };
 }
 
 export default async function RatgeberPage({
@@ -40,27 +68,44 @@ export default async function RatgeberPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
-  if (!article) notFound();
 
-  // Related articles (exclude current)
+  // Try static article first
+  const staticArticle = getArticleBySlug(slug);
+
+  // Try WordPress if no static match
+  const wpPost = !staticArticle ? await getWPPostBySlug(slug) : null;
+
+  // 404 if neither found
+  if (!staticArticle && !wpPost) notFound();
+
+  // Unified data
+  const title = staticArticle?.title || wpPost!.title;
+  const excerpt = staticArticle?.excerpt || wpPost!.excerpt;
+  const content = staticArticle?.content || wpPost!.content;
+  const date = staticArticle?.date || wpPost!.date;
+  const category = staticArticle?.category || wpPost!.category;
+  const readTime = staticArticle?.readTime || wpPost!.readTime;
+  const faq = staticArticle?.faq || [];
+
+  // Related articles (static only for now)
   const related = RATGEBER_ARTICLES.filter((a) => a.slug !== slug).slice(0, 2);
 
   // FAQ Schema for SEO
-  const faqSchema = article.faq?.length
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: article.faq.map((f) => ({
-          "@type": "Question",
-          name: f.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: f.answer,
-          },
-        })),
-      }
-    : null;
+  const faqSchema =
+    faq.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faq.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: f.answer,
+            },
+          })),
+        }
+      : null;
 
   return (
     <>
@@ -68,7 +113,7 @@ export default async function RatgeberPage({
         data={breadcrumbSchema([
           { name: "Startseite", url: "/" },
           { name: "Ratgeber", url: "/ratgeber" },
-          { name: article.title, url: `/ratgeber/${slug}` },
+          { name: title, url: `/ratgeber/${slug}` },
         ])}
       />
       {faqSchema && <JsonLd data={faqSchema} />}
@@ -77,7 +122,7 @@ export default async function RatgeberPage({
         <Breadcrumbs
           items={[
             { label: "Ratgeber", href: "/ratgeber" },
-            { label: article.title },
+            { label: title },
           ]}
         />
 
@@ -85,39 +130,39 @@ export default async function RatgeberPage({
         <div className="mb-8">
           <div className="flex items-center gap-3 text-sm text-gray-400 mb-3">
             <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-2.5 py-0.5 rounded">
-              {article.category}
+              {category}
             </span>
-            <time dateTime={article.date}>
-              {new Date(article.date).toLocaleDateString("de-CH", {
+            <time dateTime={date}>
+              {new Date(date).toLocaleDateString("de-CH", {
                 day: "numeric",
                 month: "long",
                 year: "numeric",
               })}
             </time>
             <span>·</span>
-            <span>{article.readTime} Lesezeit</span>
+            <span>{readTime} Lesezeit</span>
           </div>
 
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-            {article.title}
+            {title}
           </h1>
-          <p className="mt-4 text-lg text-gray-500">{article.excerpt}</p>
+          <p className="mt-4 text-lg text-gray-500">{excerpt}</p>
         </div>
 
         {/* Article Content */}
         <div
           className="prose prose-gray prose-lg prose-headings:font-bold prose-a:text-amber-600 prose-table:text-sm max-w-none"
-          dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
         />
 
         {/* FAQ Section */}
-        {article.faq && article.faq.length > 0 && (
+        {faq.length > 0 && (
           <section className="mt-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
               Häufig gestellte Fragen
             </h2>
             <div className="space-y-4">
-              {article.faq.map((f, i) => (
+              {faq.map((f, i) => (
                 <div key={i} className="bg-gray-50 rounded-xl p-5">
                   <h3 className="font-semibold text-gray-900">{f.question}</h3>
                   <p className="mt-2 text-sm text-gray-600">{f.answer}</p>

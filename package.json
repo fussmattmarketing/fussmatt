@@ -11,6 +11,7 @@
     "prebuild": "npx tsx scripts/generate-vehicle-cache.ts || true"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^6.0.0",
     "@stripe/stripe-js": "^8",
     "@upstash/ratelimit": "^2",
     "@upstash/redis": "^1",

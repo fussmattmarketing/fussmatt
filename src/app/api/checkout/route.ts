@@ -62,6 +62,7 @@ export async function POST(request: Request) {
       variation_id: number;
       quantity: number;
       serverPrice: number;
+      name: string;
     }[] = [];
 
     for (const item of line_items) {
@@ -91,11 +92,11 @@ export async function POST(request: Request) {
         variation_id: item.variation_id,
         quantity: item.quantity,
         serverPrice,
+        name: product.name || `Produkt #${item.product_id}`,
       });
     }
 
     // Calculate totals with server prices
-    // Shipping is based on the shipping destination country
     const shippingCountry = (effectiveShipping.country || billing.country) as SupportedCountry;
     const subtotal = verifiedItems.reduce(
       (sum, item) => sum + item.serverPrice * item.quantity,
@@ -146,53 +147,35 @@ export async function POST(request: Request) {
 
     const wcOrder = (await createOrder(orderData)) as { id: number };
 
-    // Create Stripe Checkout Session
+    // Create Stripe PaymentIntent (embedded payment, no redirect)
     const stripe = getStripe();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com";
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card", "twint"],
-      mode: "payment",
+    // Build description for Stripe
+    const description = verifiedItems
+      .map((item) => `${item.name} x${item.quantity}`)
+      .join(", ");
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(total * 100),
       currency: "chf",
-      customer_email: billing.email,
-      line_items: verifiedItems.map((item) => ({
-        price_data: {
-          currency: "chf",
-          product_data: {
-            name: `Produkt #${item.product_id}`,
-          },
-          unit_amount: Math.round(item.serverPrice * 100),
-        },
-        quantity: item.quantity,
-      })),
-      ...(shipping.cost > 0
-        ? {
-            shipping_options: [
-              {
-                shipping_rate_data: {
-                  type: "fixed_amount" as const,
-                  fixed_amount: {
-                    amount: Math.round(shipping.cost * 100),
-                    currency: "chf",
-                  },
-                  display_name: "Standardversand",
-                },
-              },
-            ],
-          }
-        : {}),
+      payment_method_types: ["card", "twint"],
       metadata: {
         wc_order_id: String(wcOrder.id),
       },
-      success_url: `${siteUrl}/bestellung-bestaetigung?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/warenkorb`,
+      description: description.slice(0, 500),
+      receipt_email: billing.email,
     });
 
-    return NextResponse.json({ sessionUrl: session.url });
+    return NextResponse.json({
+      clientSecret: paymentIntent.client_secret,
+      orderId: wcOrder.id,
+    });
   } catch (error) {
-    console.error("Checkout error:", error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errStack = error instanceof Error ? error.stack : "";
+    console.error("Checkout error:", errMsg, errStack);
     return NextResponse.json(
-      { error: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut." },
+      { error: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.", debug: process.env.NODE_ENV === "development" ? errMsg : undefined },
       { status: 500 }
     );
   }
