@@ -10,6 +10,7 @@ import Link from "next/link";
 
 export const revalidate = 7200;
 export const maxDuration = 60;
+export const dynamicParams = true;
 
 type PageParams = { slug: string; brand: string; model: string };
 
@@ -21,21 +22,19 @@ function findModel(brandSlug: string, modelSlug: string) {
   return { brand, model };
 }
 
+// Pre-render only top categories to stay within Vercel deploy size limit.
+// All other combinations are generated on-demand via ISR.
+const PRERENDER_CATEGORIES = ["5d-fussmatten", "3d-fussmatten", "kofferraummatte"];
+
 export async function generateStaticParams() {
   try {
-    const [categories, hierarchy] = await Promise.all([
-      getCategories(),
-      Promise.resolve(getVehicleHierarchy()),
-    ]);
+    const hierarchy = getVehicleHierarchy();
     const params: PageParams[] = [];
-    const mainCats = categories.filter(
-      (c) => c.parent === 0 && c.slug !== "unkategorisiert"
-    );
-    for (const cat of mainCats) {
+    for (const catSlug of PRERENDER_CATEGORIES) {
       for (const brand of hierarchy.brands) {
         for (const model of brand.models) {
           params.push({
-            slug: cat.slug,
+            slug: catSlug,
             brand: brand.slug,
             model: model.slug,
           });
