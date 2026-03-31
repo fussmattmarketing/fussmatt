@@ -90,7 +90,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly",
         priority: 0.5,
       });
+
+      // pSEO: Category x Brand x Model pages
+      for (const model of brand.models) {
+        entries.push({
+          url: `${SITE_URL}/kategorie/${catSlug}/${brand.slug}/${model.slug}`,
+          lastModified: now,
+          changeFrequency: "monthly",
+          priority: 0.4,
+        });
+      }
     }
+  }
+
+  // pSEO: Brand guide (Ratgeber) pages
+  for (const brand of hierarchy.brands) {
+    entries.push({
+      url: `${SITE_URL}/ratgeber/fussmatten-fuer-${brand.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    });
   }
 
   // Product pages — fetch all product slugs from WC API
