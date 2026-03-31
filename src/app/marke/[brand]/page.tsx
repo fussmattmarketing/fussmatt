@@ -68,6 +68,34 @@ export default async function MarkePage({
         maßgefertigte Fußmatten aus hochwertigem TPE-Material.
       </p>
 
+      {/* Category links + Brand guide */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        <Link
+          href={`/kategorie/5d-fussmatten/${brandSlug}`}
+          className="px-4 py-2 text-sm font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-lg transition-colors"
+        >
+          5D Fussmatten
+        </Link>
+        <Link
+          href={`/kategorie/3d-fussmatten/${brandSlug}`}
+          className="px-4 py-2 text-sm font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-lg transition-colors"
+        >
+          3D Fussmatten
+        </Link>
+        <Link
+          href={`/kategorie/kofferraummatte/${brandSlug}`}
+          className="px-4 py-2 text-sm font-medium bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-lg transition-colors"
+        >
+          Kofferraummatten
+        </Link>
+        <Link
+          href={`/ratgeber/fussmatten-fuer-${brandSlug}`}
+          className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
+        >
+          Ratgeber &amp; Kaufberatung
+        </Link>
+      </div>
+
       {/* Model grid */}
       {brand.models.length > 0 && (
         <section className="mb-12">
