@@ -17,7 +17,8 @@ const CATEGORY_SLUGS = [
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const hierarchy = getVehicleHierarchy();
-  const now = new Date().toISOString();
+  // W3C Datetime format without milliseconds — Google rejects .000Z
+  const now = new Date().toISOString().replace(/\.\d{3}Z$/, "+00:00");
 
   const entries: MetadataRoute.Sitemap = [];
 
