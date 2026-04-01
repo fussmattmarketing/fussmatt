@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com"
   ),
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     siteName: "FussMatt",
@@ -41,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
+    <html lang="de-CH">
       <head>
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />

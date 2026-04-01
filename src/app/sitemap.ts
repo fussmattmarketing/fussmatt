@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import { getAllProducts } from "@/lib/woocommerce";
+import { RATGEBER_ARTICLES } from "@/lib/ratgeber-data";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com";
 
@@ -102,6 +103,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         });
       }
     }
+  }
+
+  // Ratgeber index + static articles
+  entries.push({
+    url: `${SITE_URL}/ratgeber`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.6,
+  });
+  for (const article of RATGEBER_ARTICLES) {
+    entries.push({
+      url: `${SITE_URL}/ratgeber/${article.slug}`,
+      lastModified: article.date || now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    });
   }
 
   // pSEO: Brand guide (Ratgeber) pages
