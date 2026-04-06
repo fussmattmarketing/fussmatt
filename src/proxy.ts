@@ -16,6 +16,10 @@ const scriptSrc = [
   "https://js.stripe.com",
   "https://www.googletagmanager.com",
   "https://www.google-analytics.com",
+  "https://googletagmanager.com",
+  "https://*.google-analytics.com",
+  "https://*.googletagmanager.com",
+  "https://tagmanager.google.com",
 ].join(" ");
 
 const securityHeaders: Record<string, string> = {
@@ -29,10 +33,10 @@ const securityHeaders: Record<string, string> = {
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https: blob:",
+    "img-src 'self' data: https: blob: https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://stats.g.doubleclick.net",
     "font-src 'self' https://fonts.gstatic.com",
-    `connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.fussmatt.com https://*.fussmattenprofi.com${isDev ? " ws://localhost:* http://localhost:*" : ""}`,
-    "frame-src 'self' https://js.stripe.com",
+    `connect-src 'self' https://api.stripe.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://*.fussmatt.com https://*.fussmattenprofi.com${isDev ? " ws://localhost:* http://localhost:*" : ""}`,
+    "frame-src 'self' https://js.stripe.com https://www.googletagmanager.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
