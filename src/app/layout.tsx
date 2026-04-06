@@ -6,8 +6,10 @@ import CookieConsent from "@/components/ui/CookieConsent";
 import { JsonLd, organizationSchema, webSiteSchema } from "@/lib/seo";
 import {
   GTM_ID,
+  GA_MEASUREMENT_ID,
   getConsentModeDefaultScript,
   getGTMScript,
+  getGA4Script,
   getGTMNoscript,
 } from "@/lib/gtm";
 import "./globals.css";
@@ -63,6 +65,22 @@ export default function RootLayout({
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{ __html: getGTMScript(GTM_ID) }}
           />
+        )}
+
+        {/* GA4 gtag.js */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              id="ga4-gtag"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="ga4-config"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{ __html: getGA4Script(GA_MEASUREMENT_ID) }}
+            />
+          </>
         )}
       </head>
       <body className="min-h-screen flex flex-col bg-white text-gray-900 antialiased">

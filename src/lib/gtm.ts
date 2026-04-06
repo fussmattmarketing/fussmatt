@@ -1,6 +1,7 @@
-// Google Tag Manager + Consent Mode v2
+// Google Tag Manager + GA4 + Consent Mode v2
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NPKV5XCD";
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-66WQV421DW";
 
 export function getConsentModeDefaultScript(): string {
   return `
@@ -25,6 +26,15 @@ export function getGTMScript(gtmId: string): string {
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','${gtmId}');
+  `;
+}
+
+export function getGA4Script(measurementId: string): string {
+  return `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${measurementId}', { send_page_view: true });
   `;
 }
 
