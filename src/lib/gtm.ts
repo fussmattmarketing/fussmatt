@@ -1,6 +1,6 @@
 // Google Tag Manager + Consent Mode v2
 
-export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "";
+export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NPKV5XCD";
 
 export function getConsentModeDefaultScript(): string {
   return `
