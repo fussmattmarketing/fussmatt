@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice, wpMediaUrl } from "@/lib/utils";
 import { calculateShipping } from "@/lib/shipping";
+import { trackViewCart, trackRemoveFromCart } from "@/lib/analytics";
+import type { CartItem } from "@/types/woocommerce";
 
 export default function WarenkorbPage() {
   const mounted = useCartHydration();
@@ -13,6 +16,20 @@ export default function WarenkorbPage() {
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
   const shipping = calculateShipping("CH", totalPrice);
+
+  // Fire view_cart once when cart hydrates with items
+  const viewCartFired = useRef(false);
+  useEffect(() => {
+    if (mounted && !viewCartFired.current && items.length > 0) {
+      viewCartFired.current = true;
+      trackViewCart(items);
+    }
+  }, [mounted, items]);
+
+  function handleRemove(item: CartItem) {
+    trackRemoveFromCart(item);
+    removeItem(item.product.id, item.variation?.id);
+  }
 
   if (!mounted) {
     return (
@@ -100,7 +117,7 @@ export default function WarenkorbPage() {
                     <div className="flex items-center gap-3">
                       <span className="font-semibold">{formatPrice(price * item.quantity)}</span>
                       <button
-                        onClick={() => removeItem(item.product.id, item.variation?.id)}
+                        onClick={() => handleRemove(item)}
                         className="text-gray-400 hover:text-red-500"
                         aria-label="Entfernen"
                       >

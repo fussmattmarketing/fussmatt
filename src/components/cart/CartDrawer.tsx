@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice, wpMediaUrl } from "@/lib/utils";
+import { trackViewCart, trackRemoveFromCart } from "@/lib/analytics";
+import type { CartItem } from "@/types/woocommerce";
 
 interface CartDrawerProps {
   open: boolean;
@@ -18,6 +20,19 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Fire view_cart when drawer opens with items
+  useEffect(() => {
+    if (open && mounted && items.length > 0) {
+      trackViewCart(items);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  function handleRemove(item: CartItem) {
+    trackRemoveFromCart(item);
+    removeItem(item.product.id, item.variation?.id);
+  }
 
   // Close on Escape
   useEffect(() => {
@@ -167,9 +182,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                           {formatPrice(price * item.quantity)}
                         </span>
                         <button
-                          onClick={() =>
-                            removeItem(item.product.id, item.variation?.id)
-                          }
+                          onClick={() => handleRemove(item)}
                           className="text-gray-400 hover:text-red-500 transition-colors"
                           aria-label="Entfernen"
                         >

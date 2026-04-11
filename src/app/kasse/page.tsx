@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
@@ -13,6 +13,11 @@ import {
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { calculateShipping, COUNTRY_NAMES } from "@/lib/shipping";
+import {
+  trackBeginCheckout,
+  trackAddPaymentInfo,
+  savePurchaseSnapshot,
+} from "@/lib/analytics";
 import {
   SUPPORTED_COUNTRIES,
   addressSchema,
@@ -271,10 +276,21 @@ export default function KassePage() {
         return;
       }
 
+      // Save purchase snapshot BEFORE redirect (cart will be cleared on confirmation page)
+      savePurchaseSnapshot(
+        data.orderId,
+        items,
+        totalPrice + shipping.cost,
+        shipping.cost
+      );
+
       // Got clientSecret — show payment form
       setClientSecret(data.clientSecret);
       setOrderId(data.orderId);
       setStep("payment");
+
+      // Fire add_payment_info — user is now on the payment step
+      trackAddPaymentInfo(items);
     } catch {
       setError("Verbindungsfehler. Bitte versuchen Sie es erneut.");
     } finally {
@@ -293,6 +309,15 @@ export default function KassePage() {
       document.getElementById("payment-section")?.scrollIntoView({ behavior: "smooth" });
     }
   }, [step]);
+
+  // Fire begin_checkout once on mount when cart has items
+  const beginCheckoutFired = useRef(false);
+  useEffect(() => {
+    if (mounted && !beginCheckoutFired.current && items.length > 0) {
+      beginCheckoutFired.current = true;
+      trackBeginCheckout(items);
+    }
+  }, [mounted, items]);
 
   if (!mounted) {
     return (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ClearCartOnMount from "./ClearCartOnMount";
+import PurchaseTracking from "./PurchaseTracking";
 
 export const metadata: Metadata = {
   title: "Bestellung bestätigt",
@@ -16,6 +17,9 @@ export default async function BestellungBestaetigungPage({
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      {/* GA4 purchase event (reads sessionStorage snapshot before cart clear) */}
+      <PurchaseTracking />
+
       {/* Clear cart after successful payment */}
       <ClearCartOnMount />
 

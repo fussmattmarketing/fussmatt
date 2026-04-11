@@ -10,6 +10,7 @@ import { formatPrice, sanitizeHtml, stripHtml } from "@/lib/utils";
 import ProductGallery from "@/components/product/ProductGallery";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import ProductAccordion from "@/components/product/ProductAccordion";
+import ProductPageTracking from "@/components/product/ProductPageTracking";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
 
@@ -192,6 +193,9 @@ export default async function ProduktPage({
           <div className="mt-6">
             <AddToCartButton product={product} variations={variations} />
           </div>
+
+          {/* GA4 view_item tracking */}
+          <ProductPageTracking product={product} />
 
           {/* SKU */}
           {product.sku && (

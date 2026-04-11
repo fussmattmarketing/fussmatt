@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCartStore } from "@/lib/cart-store";
+import { trackAddToCart } from "@/lib/analytics";
 import type { WCProduct, WCProductVariation } from "@/types/woocommerce";
 import BackInStockNotify from "./BackInStockNotify";
 
@@ -48,6 +49,7 @@ export default function AddToCartButton({
   function handleAdd() {
     if (!canAdd) return;
     addItem(product, quantity, selectedVariation, selectedAttrs);
+    trackAddToCart(product, quantity, selectedVariation, selectedAttrs);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   }
