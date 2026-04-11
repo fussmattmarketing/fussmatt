@@ -158,7 +158,7 @@ export async function POST(request: Request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(total * 100),
       currency: "chf",
-      payment_method_types: ["card", "twint"],
+      automatic_payment_methods: { enabled: true },
       metadata: {
         wc_order_id: String(wcOrder.id),
       },
