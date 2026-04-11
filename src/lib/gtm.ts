@@ -4,6 +4,8 @@ export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NPKV5XCD";
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-66WQV421DW";
 
 export function getConsentModeDefaultScript(): string {
+  // Swiss market (revFADP): analytics legitimate interest → granted by default.
+  // Advertising storage remains denied until user explicitly opts in.
   return `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -11,7 +13,7 @@ export function getConsentModeDefaultScript(): string {
       'ad_storage': 'denied',
       'ad_user_data': 'denied',
       'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
+      'analytics_storage': 'granted',
       'wait_for_update': 500
     });
     gtag('set', 'ads_data_redaction', true);
