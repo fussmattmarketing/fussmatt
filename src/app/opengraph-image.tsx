@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "FussMatt | Premium 3D & 5D Auto-Fußmatten";
+export const alt = "FussMatt | Premium 3D & 5D Auto-Fussmatten";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default async function Image() {
             maxWidth: 800,
           }}
         >
-          Premium 3D &amp; 5D Auto-Fußmatten
+          Premium 3D &amp; 5D Auto-Fussmatten
         </div>
         <div
           style={{
@@ -47,7 +47,7 @@ export default async function Image() {
             marginTop: 16,
           }}
         >
-          Maßgefertigt &bull; Wasserdicht &bull; 44+ Marken
+          Massgefertigt &bull; Wasserdicht &bull; 44+ Marken
         </div>
       </div>
     ),

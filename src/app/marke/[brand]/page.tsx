@@ -25,8 +25,8 @@ export async function generateMetadata({
   if (!brand) return { title: "Marke nicht gefunden" };
 
   return {
-    title: `${brand.name} Fußmatten`,
-    description: `Premium Auto-Fußmatten für ${brand.name}. ${brand.models.length} Modelle verfügbar. Maßgefertigt, wasserdicht, rutschfest.`,
+    title: `${brand.name} Fussmatten`,
+    description: `Premium Auto-Fussmatten für ${brand.name}. ${brand.models.length} Modelle verfügbar. Massgefertigt, wasserdicht, rutschfest.`,
   };
 }
 
@@ -61,11 +61,11 @@ export default async function MarkePage({
       <Breadcrumbs items={[{ label: brand.name }]} />
 
       <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-        {brand.name} Fußmatten
+        {brand.name} Fussmatten
       </h1>
       <p className="text-gray-600 mb-8 max-w-3xl">
-        Premium Auto-Fußmatten für {brand.name}. Wählen Sie Ihr Modell für
-        maßgefertigte Fußmatten aus hochwertigem TPE-Material.
+        Premium Auto-Fussmatten für {brand.name}. Wählen Sie Ihr Modell für
+        massgefertigte Fussmatten aus hochwertigem TPE-Material.
       </p>
 
       {/* Category links + Brand guide */}
@@ -125,7 +125,7 @@ export default async function MarkePage({
       {products.length > 0 && (
         <section className="mb-12">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Beliebte {brand.name} Fußmatten
+            Beliebte {brand.name} Fussmatten
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((p) => (

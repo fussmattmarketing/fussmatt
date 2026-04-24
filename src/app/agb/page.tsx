@@ -5,7 +5,7 @@ import { SUPPORTED_COUNTRIES } from "@/lib/validations";
 export const metadata: Metadata = {
   title: "Allgemeine Geschäftsbedingungen",
   description:
-    "AGB von FussMatt.com – Allgemeine Geschäftsbedingungen für den Online-Kauf von Auto-Fußmatten. Zahlungsbedingungen, Lieferung und Gewährleistung.",
+    "AGB von FussMatt.com – Allgemeine Geschäftsbedingungen für den Online-Kauf von Auto-Fussmatten. Zahlungsbedingungen, Lieferung und Gewährleistung.",
 };
 
 export default function AGBPage() {
@@ -61,7 +61,7 @@ export default function AGBPage() {
 
         <h2>6. Gewährleistung</h2>
         <p>
-          Es gelten die gesetzlichen Gewährleistungsrechte gemäß schweizerischem
+          Es gelten die gesetzlichen Gewährleistungsrechte gemäss schweizerischem
           Recht.
         </p>
 

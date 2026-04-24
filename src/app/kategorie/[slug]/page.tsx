@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: category.name,
-    description: `${category.name} von FussMatt. ${category.count} Produkte. Premium Auto-Fußmatten, maßgefertigt und wasserdicht.`,
+    description: `${category.name} von FussMatt. ${category.count} Produkte. Premium Auto-Fussmatten, massgefertigt und wasserdicht.`,
   };
 }
 

@@ -11,7 +11,7 @@ export default function ImpressumPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Impressum</h1>
       <div className="prose prose-gray max-w-none">
-        <h2>Angaben gemäß Art. 3 UWG / Art. 5 E-Commerce-Richtlinie</h2>
+        <h2>Angaben gemäss Art. 3 UWG / Art. 5 E-Commerce-Richtlinie</h2>
         <p>
           <strong>Royal Road GmbH</strong>
           <br />
@@ -27,7 +27,7 @@ export default function ImpressumPage() {
         </p>
         <h3>Umsatzsteuer-Identifikationsnummer</h3>
         <p>
-          Gemäß schweizerischem Recht
+          Gemäss schweizerischem Recht
         </p>
         <h3>Verantwortlich für den Inhalt</h3>
         <p>Royal Road GmbH, Zürich</p>
@@ -35,7 +35,7 @@ export default function ImpressumPage() {
         <p>
           Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung
           für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten
-          sind ausschließlich deren Betreiber verantwortlich.
+          sind ausschliesslich deren Betreiber verantwortlich.
         </p>
       </div>
     </div>

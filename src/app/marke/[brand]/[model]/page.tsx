@@ -33,8 +33,8 @@ export async function generateMetadata({
   if (!brand || !model) return { title: "Nicht gefunden" };
 
   return {
-    title: `${brand.name} ${model.name} Fußmatten`,
-    description: `Maßgefertigte Fußmatten für ${brand.name} ${model.name}. Premium TPE-Material, wasserdicht und rutschfest.`,
+    title: `${brand.name} ${model.name} Fussmatten`,
+    description: `Massgefertigte Fussmatten für ${brand.name} ${model.name}. Premium TPE-Material, wasserdicht und rutschfest.`,
   };
 }
 
@@ -73,10 +73,10 @@ export default async function ModelPage({
       />
 
       <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-        {brand.name} {model.name} Fußmatten
+        {brand.name} {model.name} Fussmatten
       </h1>
       <p className="text-gray-600 mb-8 max-w-3xl">
-        Passgenaue Fußmatten für Ihren {brand.name} {model.name}. Per
+        Passgenaue Fussmatten für Ihren {brand.name} {model.name}. Per
         3D-Vermessung millimetergenau gefertigt aus hochwertigem TPE-Material.
       </p>
 
@@ -110,7 +110,7 @@ export default async function ModelPage({
       ) : (
         <div className="text-center py-12 mb-12">
           <p className="text-gray-500">
-            Derzeit keine Fußmatten für {brand.name} {model.name} verfügbar.
+            Derzeit keine Fussmatten für {brand.name} {model.name} verfügbar.
           </p>
         </div>
       )}

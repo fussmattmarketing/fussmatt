@@ -49,7 +49,7 @@ export default function WarenkorbPage() {
           Ihr Warenkorb ist leer
         </h1>
         <p className="text-gray-500 mt-2">
-          Entdecken Sie unsere Premium Fußmatten.
+          Entdecken Sie unsere Premium Fussmatten.
         </p>
         <Link
           href="/produkte"

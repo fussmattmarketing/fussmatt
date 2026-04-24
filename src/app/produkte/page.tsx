@@ -8,9 +8,9 @@ export const revalidate = 3600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: "Alle Fußmatten",
+  title: "Alle Fussmatten",
   description:
-    "Entdecken Sie unser komplettes Sortiment an Premium 3D & 5D Auto-Fußmatten. Über 1100 Produkte für 44+ Automarken.",
+    "Entdecken Sie unser komplettes Sortiment an Premium 3D & 5D Auto-Fussmatten. Über 1100 Produkte für 44+ Automarken.",
 };
 
 export default async function ProduktePage({
@@ -52,7 +52,7 @@ export default async function ProduktePage({
       <h1 className="text-2xl font-bold text-gray-900 mb-6">
         {search
           ? `Suchergebnisse für "${search}"`
-          : "Alle Fußmatten"}
+          : "Alle Fussmatten"}
       </h1>
 
       {products.length === 0 ? (

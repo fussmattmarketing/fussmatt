@@ -48,7 +48,7 @@ export default function DatenschutzPage() {
         <h3>Stripe</h3>
         <p>
           Wir nutzen Stripe für die Zahlungsabwicklung. Stripe erfasst
-          Zahlungsdaten gemäß deren Datenschutzrichtlinie.
+          Zahlungsdaten gemäss deren Datenschutzrichtlinie.
         </p>
 
         <h2>5. Ihre Rechte</h2>

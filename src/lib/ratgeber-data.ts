@@ -112,7 +112,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       </table>
 
       <h2>Fazit</h2>
-      <p>TPE ist die klare Empfehlung für alle, die Wert auf <strong>Qualität, Gesundheit und Umwelt</strong> legen. Alle FussMatt-Produkte verwenden ausschließlich hochwertiges TPE-Material.</p>
+      <p>TPE ist die klare Empfehlung für alle, die Wert auf <strong>Qualität, Gesundheit und Umwelt</strong> legen. Alle FussMatt-Produkte verwenden ausschliesslich hochwertiges TPE-Material.</p>
     `,
     faq: [
       {
@@ -135,7 +135,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
     category: "Pflege",
     readTime: "3 Min",
     content: `
-      <p>Regelmäßige Pflege verlängert die Lebensdauer Ihrer Fussmatten erheblich. Hier erfahren Sie, wie Sie verschiedene Mattentypen richtig reinigen.</p>
+      <p>Regelmässige Pflege verlängert die Lebensdauer Ihrer Fussmatten erheblich. Hier erfahren Sie, wie Sie verschiedene Mattentypen richtig reinigen.</p>
 
       <h2>TPE-Fussmatten reinigen (3D & 5D)</h2>
       <ol>
@@ -186,7 +186,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <p>Jede Fussmatte wird per 3D-Vermessung millimetergenau für das jeweilige Fahrzeugmodell gefertigt. So ist eine perfekte Passform garantiert.</p>
 
       <h2>Sind die Fussmatten wasserdicht?</h2>
-      <p>Ja, alle unsere Fussmatten sind zu 100% wasserdicht. Erhöhte Ränder (3D oder 5D) schützen den Fahrzeugboden zuverlässig vor Schmutz, Wasser und Verschleiß.</p>
+      <p>Ja, alle unsere Fussmatten sind zu 100% wasserdicht. Erhöhte Ränder (3D oder 5D) schützen den Fahrzeugboden zuverlässig vor Schmutz, Wasser und Verschleiss.</p>
 
       <h2>Was ist der Unterschied zwischen 3D und 5D?</h2>
       <p>3D Fussmatten haben geformte Ränder, die den Boden abdecken. 5D Premium Fussmatten haben zusätzlich erhöhte Seitenränder, die noch mehr Schutz bieten und den gesamten Fussraum abdecken.</p>

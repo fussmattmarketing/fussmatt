@@ -16,11 +16,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "FussMatt | Premium 3D & 5D Auto-Fußmatten",
+    default: "FussMatt | Premium 3D & 5D Auto-Fussmatten",
     template: "%s | FussMatt",
   },
   description:
-    "Premium 3D & 5D Auto-Fußmatten für über 44 Marken. Maßgefertigt, wasserdicht, rutschfest. Kostenloser Versand in der Schweiz ab CHF 50.",
+    "Premium 3D & 5D Auto-Fussmatten für über 44 Marken. Massgefertigt, wasserdicht, rutschfest. Kostenloser Versand in der Schweiz ab CHF 50.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com"
   ),

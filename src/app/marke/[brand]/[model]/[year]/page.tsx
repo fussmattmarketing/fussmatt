@@ -108,14 +108,14 @@ export default async function ModelYearPage({
       ) : (
         <div className="text-center py-12 mb-12">
           <p className="text-gray-500">
-            Derzeit keine Fußmatten für {brand.name} {model.name} (
+            Derzeit keine Fussmatten für {brand.name} {model.name} (
             {yearRange.label}) verfügbar.
           </p>
           <Link
             href={`/marke/${bs}/${ms}`}
             className="text-amber-600 hover:text-amber-700 mt-2 inline-block"
           >
-            Alle {brand.name} {model.name} Fußmatten anzeigen
+            Alle {brand.name} {model.name} Fussmatten anzeigen
           </Link>
         </div>
       )}
