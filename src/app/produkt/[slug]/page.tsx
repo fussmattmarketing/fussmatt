@@ -85,7 +85,7 @@ export default async function ProduktPage({
             .filter((a) => a.visible)
             .map(
               (a) =>
-                `<tr class="border-b border-gray-100"><td class="py-2 pr-4 font-medium text-gray-700 whitespace-nowrap">${a.name}</td><td class="py-2 text-gray-600">${a.options.join(", ")}</td></tr>`
+                `<tr class="border-b border-gray-100"><td class="py-3 pr-6 font-medium text-gray-700 whitespace-nowrap align-top w-1/3">${a.name}</td><td class="py-3 text-gray-600">${a.options.join(", ")}</td></tr>`
             )
             .join("")}</tbody></table>`
         : "Keine Angaben.",
@@ -93,8 +93,12 @@ export default async function ProduktPage({
     },
     {
       title: "Versand",
-      content: `Kostenloser Versand in der Schweiz ab CHF ${SHIPPING_CONFIG.CH.freeAbove}. Deutschland und Österreich: CHF ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab CHF ${SHIPPING_CONFIG.DE.freeAbove}). Lieferzeit: ${SHIPPING_CONFIG.CH.deliveryDays} Werktage (CH).`,
-      isHtml: false,
+      content: `<ul>
+        <li><strong>Schweiz:</strong> Kostenloser Versand ab CHF ${SHIPPING_CONFIG.CH.freeAbove}, sonst CHF ${SHIPPING_CONFIG.CH.cost.toFixed(2)}</li>
+        <li><strong>Deutschland &amp; Österreich:</strong> CHF ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab CHF ${SHIPPING_CONFIG.DE.freeAbove})</li>
+        <li><strong>Lieferzeit:</strong> ${SHIPPING_CONFIG.CH.deliveryDays} Werktage innerhalb der Schweiz</li>
+      </ul>`,
+      isHtml: true,
     },
   ];
 

@@ -49,13 +49,13 @@ export default function ProductAccordion({ items }: ProductAccordionProps) {
             <div className="pb-4 text-sm text-gray-600">
               {item.isHtml ? (
                 <div
-                  className="prose prose-sm max-w-none"
+                  className="prose prose-sm max-w-none prose-headings:text-gray-900 prose-headings:font-semibold prose-headings:mt-6 prose-headings:mb-3 prose-p:my-3 prose-p:leading-relaxed prose-strong:text-gray-900 prose-strong:font-semibold prose-ul:my-3 prose-ul:list-disc prose-ul:pl-6 prose-li:my-1 prose-li:marker:text-gray-400 prose-table:my-4 prose-table:w-full prose-table:text-sm prose-th:bg-gray-50 prose-th:px-3 prose-th:py-2 prose-th:text-left prose-th:font-medium prose-th:text-gray-700 prose-td:px-3 prose-td:py-2 prose-td:align-top prose-td:border-b prose-td:border-gray-100"
                   dangerouslySetInnerHTML={{
                     __html: sanitizeHtml(item.content),
                   }}
                 />
               ) : (
-                <p>{item.content}</p>
+                <p className="leading-relaxed">{item.content}</p>
               )}
             </div>
           )}
