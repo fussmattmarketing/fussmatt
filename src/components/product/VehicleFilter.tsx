@@ -121,8 +121,8 @@ export default function VehicleFilter({
   // ─── Horizontal variant: inline row for the sticky product filter bar ──
   if (variant === "horizontal") {
     return (
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="hidden sm:block text-xs font-bold uppercase tracking-wider text-gray-500 mr-1">
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <span className="hidden sm:block text-sm font-bold uppercase tracking-wider text-gray-600 mr-1">
           Fahrzeug
         </span>
         {/* Brand */}
@@ -134,7 +134,7 @@ export default function VehicleFilter({
               setSelectedModel("");
             }}
             aria-label="Marke wählen"
-            className="appearance-none bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer"
+            className="appearance-none bg-gray-50 border border-gray-300 rounded-lg pl-4 pr-10 py-3 text-base text-gray-700 min-w-[170px] focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer"
           >
             <option value="">Marke</option>
             {brands.map((b) => (
@@ -143,7 +143,7 @@ export default function VehicleFilter({
               </option>
             ))}
           </select>
-          <svg className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </div>
@@ -154,7 +154,7 @@ export default function VehicleFilter({
             onChange={(e) => setSelectedModel(e.target.value)}
             disabled={!selectedBrand || models.length === 0}
             aria-label="Modell wählen"
-            className={`appearance-none bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer ${
+            className={`appearance-none bg-gray-50 border border-gray-300 rounded-lg pl-4 pr-10 py-3 text-base text-gray-700 min-w-[220px] focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer ${
               !selectedBrand ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
@@ -165,14 +165,14 @@ export default function VehicleFilter({
               </option>
             ))}
           </select>
-          <svg className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </div>
         <button
           onClick={handleSearch}
           disabled={!selectedBrand}
-          className="px-5 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-400 text-white font-medium text-sm rounded-lg transition-colors whitespace-nowrap"
+          className="px-8 py-3 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-400 text-white font-semibold text-base rounded-lg transition-colors whitespace-nowrap"
         >
           Suchen
         </button>
