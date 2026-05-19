@@ -25,12 +25,17 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  // Rate limit
-  const rl = await rateLimit(request, "sync");
-  if (!rl.success) return rateLimitResponse(rl.reset);
-
-  // Auth check
+  // Auth FIRST. /api/sync is an authenticated, lock-gated batch endpoint.
+  // A caller holding a valid SYNC_SECRET_KEY running a multi-batch catalog
+  // sync is legitimate operation, not abuse — a full ~1499-SKU sync makes
+  // 150+ resume calls (see src/lib/sync/README.md §5). An IP rate limit of
+  // 2/min made the documented runbook loop impossible to complete.
+  // Concurrency is already prevented by acquireLock() below, so the rate
+  // limiter adds nothing for authenticated callers.
+  // Unauthenticated callers ARE still rate-limited — anti-probe on the secret.
   if (!validateSyncAuth(request)) {
+    const rl = await rateLimit(request, "sync");
+    if (!rl.success) return rateLimitResponse(rl.reset);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

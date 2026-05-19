@@ -164,9 +164,9 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
   let skipped = 0;
   let notificationsSent = 0;
 
-  // Check for resume
+  // Check for resume / stock-only — both continue from the saved checkpoint.
   let startOffset = options.offset || 0;
-  if (options.mode === "resume") {
+  if (options.mode === "resume" || options.mode === "stock-only") {
     const checkpoint = loadCheckpoint();
     if (checkpoint) {
       startOffset = checkpoint.offset;
@@ -242,8 +242,14 @@ export async function runSync(options: SyncOptions = {}): Promise<SyncResult> {
         updated++;
         console.log(`  [${globalIndex + 1}] Updated: ${xmlProduct.sku}`);
       } else {
-        if (options.dryRun) {
-          console.log(`  [${globalIndex + 1}] Would create: ${xmlProduct.sku}`);
+        if (options.dryRun || options.mode === "stock-only") {
+          // stock-only / dryRun: never create a product. The create path
+          // below publishes a BRAND-NEW product LIVE with the supplier feed's
+          // WHOLESALE price (regular_price falls back to <Price>, ~€59.9 vs
+          // ~€159 retail). New-product import must be a deliberate, priced
+          // decision — never a silent side effect of a stock refresh.
+          // See src/lib/sync/README.md §6a.
+          console.log(`  [${globalIndex + 1}] Skipped — would-create (stock-only): ${xmlProduct.sku}`);
           skipped++;
         } else {
           // Create new product
