@@ -94,8 +94,16 @@ export default async function ProduktPage({
     {
       title: "Versand",
       content: `<ul>
-        <li><strong>Schweiz:</strong> Kostenloser Versand ab CHF ${SHIPPING_CONFIG.CH.freeAbove}, sonst CHF ${SHIPPING_CONFIG.CH.cost.toFixed(2)}</li>
-        <li><strong>Deutschland &amp; Österreich:</strong> CHF ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab CHF ${SHIPPING_CONFIG.DE.freeAbove})</li>
+        <li><strong>Schweiz:</strong> ${
+          SHIPPING_CONFIG.CH.cost > 0
+            ? `Kostenloser Versand ab CHF ${SHIPPING_CONFIG.CH.freeAbove}, sonst CHF ${SHIPPING_CONFIG.CH.cost.toFixed(2)}`
+            : `Kostenloser Versand ab CHF ${SHIPPING_CONFIG.CH.freeAbove}`
+        }</li>
+        <li><strong>Deutschland &amp; Österreich:</strong> ${
+          SHIPPING_CONFIG.DE.cost > 0
+            ? `CHF ${SHIPPING_CONFIG.DE.cost.toFixed(2)} (kostenlos ab CHF ${SHIPPING_CONFIG.DE.freeAbove})`
+            : `Kostenloser Versand ab CHF ${SHIPPING_CONFIG.DE.freeAbove}`
+        }</li>
         <li><strong>Lieferzeit:</strong> ${SHIPPING_CONFIG.CH.deliveryDays} Werktage innerhalb der Schweiz</li>
       </ul>`,
       isHtml: true,
