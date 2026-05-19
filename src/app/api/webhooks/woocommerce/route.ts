@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { sendBackInStockEmails } from "@/lib/stock-notify";
 
 /**
  * WooCommerce Product Webhook Handler
  *
  * Triggers when a product is updated in WooCommerce (WP Admin or API).
- * If stock_status changes from outofstock → instock, sends back-in-stock notifications.
+ * On every product.updated event it busts the storefront ISR cache so the
+ * change is live within seconds. If stock_status changes from outofstock →
+ * instock, it also sends back-in-stock notifications.
  *
  * WC Webhook: topic=product.updated, delivery_url=https://fussmatt.com/api/webhooks/woocommerce
  */
@@ -74,6 +77,17 @@ export async function POST(request: Request) {
     console.log(
       `WC webhook: product updated — SKU=${sku}, stock_status=${stockStatus}, name=${productName}`
     );
+
+    // Bust the storefront ISR cache so WooCommerce product changes (price,
+    // stock, publish↔draft status, etc.) reflect on the live site within
+    // seconds — not after the ISR window (homepage 5 min, product page 1 h).
+    // Without this, drafting or repricing a product in WooCommerce leaves the
+    // stale version live, including the homepage "newest products" section.
+    revalidatePath("/");
+    revalidatePath("/produkte");
+    if (productSlug) {
+      revalidatePath(`/produkt/${productSlug}`);
+    }
 
     // If product is now in stock, check for subscribers and send notifications
     if (stockStatus === "instock") {

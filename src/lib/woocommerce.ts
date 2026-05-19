@@ -172,7 +172,13 @@ export async function getAllProducts(): Promise<WCProduct[]> {
 export async function getProductBySlug(
   slug: string
 ): Promise<WCProduct | null> {
-  const products = await wcFetch<WCProduct[]>("/products", { slug });
+  // status:publish — a draft/private product must never render on the
+  // storefront. Without this filter a drafted product's detail page still
+  // returns HTTP 200 with a working add-to-cart button at the wrong price.
+  const products = await wcFetch<WCProduct[]>("/products", {
+    slug,
+    status: "publish",
+  });
   return products[0] || null;
 }
 
