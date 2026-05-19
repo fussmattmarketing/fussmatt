@@ -6,7 +6,7 @@ import type { VehicleHierarchy } from "@/types/woocommerce";
 
 interface VehicleFilterProps {
   hierarchy: VehicleHierarchy;
-  variant?: "hero" | "sidebar";
+  variant?: "hero" | "sidebar" | "horizontal";
   categorySlug?: string;
 }
 
@@ -111,6 +111,68 @@ export default function VehicleFilter({
           onClick={handleSearch}
           disabled={!selectedBrand}
           className="mt-8 px-12 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold text-base uppercase tracking-wider rounded-full transition-colors shadow-lg shadow-amber-500/25"
+        >
+          Suchen
+        </button>
+      </div>
+    );
+  }
+
+  // ─── Horizontal variant: inline row for the sticky product filter bar ──
+  if (variant === "horizontal") {
+    return (
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="hidden sm:block text-xs font-bold uppercase tracking-wider text-gray-500 mr-1">
+          Fahrzeug
+        </span>
+        {/* Brand */}
+        <div className="relative">
+          <select
+            value={selectedBrand}
+            onChange={(e) => {
+              setSelectedBrand(e.target.value);
+              setSelectedModel("");
+            }}
+            aria-label="Marke wählen"
+            className="appearance-none bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer"
+          >
+            <option value="">Marke</option>
+            {brands.map((b) => (
+              <option key={b.slug} value={b.slug}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+          <svg className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+        {/* Model */}
+        <div className="relative">
+          <select
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+            disabled={!selectedBrand || models.length === 0}
+            aria-label="Modell wählen"
+            className={`appearance-none bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-2 text-sm text-gray-700 focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none cursor-pointer ${
+              !selectedBrand ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            <option value="">Modell</option>
+            {models.map((m) => (
+              <option key={m.slug} value={m.slug}>
+                {currentBrand?.name} {m.name}
+              </option>
+            ))}
+          </select>
+          <svg className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+        <button
+          onClick={handleSearch}
+          disabled={!selectedBrand}
+          className="px-5 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-400 text-white font-medium text-sm rounded-lg transition-colors whitespace-nowrap"
         >
           Suchen
         </button>

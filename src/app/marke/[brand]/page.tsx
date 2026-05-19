@@ -4,6 +4,7 @@ import { getProducts } from "@/lib/woocommerce";
 import { getVehicleHierarchy, getBrandBySlug } from "@/lib/vehicle-data";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
 import ProductCard from "@/components/product/ProductCard";
+import ProductFilterBar from "@/components/product/ProductFilterBar";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Link from "next/link";
 
@@ -50,7 +51,9 @@ export default async function MarkePage({
     .slice(0, 10);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <ProductFilterBar hierarchy={hierarchy} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <JsonLd
         data={breadcrumbSchema([
           { name: "Startseite", url: "/" },
@@ -152,6 +155,7 @@ export default async function MarkePage({
           ))}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

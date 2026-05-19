@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getProductsWithTotal, getCategories } from "@/lib/woocommerce";
+import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import ProductCard from "@/components/product/ProductCard";
+import ProductFilterBar from "@/components/product/ProductFilterBar";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
@@ -45,8 +47,12 @@ export default async function ProduktePage({
     console.error("Products page fetch failed:", error);
   }
 
+  const hierarchy = getVehicleHierarchy();
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <ProductFilterBar hierarchy={hierarchy} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Breadcrumbs items={[{ label: "Alle Produkte" }]} />
 
       <h1 className="text-2xl font-bold text-gray-900 mb-6">
@@ -79,6 +85,7 @@ export default async function ProduktePage({
           />
         </>
       )}
-    </div>
+      </div>
+    </>
   );
 }
