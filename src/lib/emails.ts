@@ -96,6 +96,36 @@ export async function sendAdminNewOrderEmail(data: OrderEmailData): Promise<bool
   }
 }
 
+// ─── Contact Form Notification (Admin) ───────────────────
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+export async function sendContactFormNotification(data: ContactFormData): Promise<boolean> {
+  try {
+    const resend = getResend();
+    const adminEmail = "info@fussmatt.com";
+
+    await resend.emails.send({
+      from: `FussMatt Kontaktformular <${getFromEmail()}>`,
+      to: adminEmail,
+      replyTo: data.email,
+      subject: `[Kontakt] ${data.subject}`,
+      html: buildContactFormHtml(data),
+    });
+
+    console.log(`Contact form notification sent to ${adminEmail} from ${data.email}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to send contact form notification:", error);
+    return false;
+  }
+}
+
 // ─── Order Status Update Email (Customer) ────────────────
 
 export async function sendOrderStatusEmail(
@@ -282,6 +312,50 @@ function buildAdminOrderHtml(data: OrderEmailData): string {
           Bestellung ansehen
         </a>
       </div>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+function buildContactFormHtml(data: ContactFormData): string {
+  const escapeHtml = (s: string) =>
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  const messageHtml = escapeHtml(data.message).replace(/\n/g, "<br>");
+
+  return `<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="utf-8"></head>
+<body style="margin:0;padding:0;background:#f9fafb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <div style="max-width:600px;margin:0 auto;padding:20px;">
+    <div style="background:#1f2937;border-radius:16px 16px 0 0;padding:24px;text-align:center;">
+      <h1 style="color:#f59e0b;font-size:20px;margin:0;">Neue Nachricht aus dem Kontaktformular</h1>
+    </div>
+    <div style="background:#ffffff;padding:24px;border-radius:0 0 16px 16px;">
+      <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+        <tr>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#9ca3af;width:30%;">Name</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:14px;color:#111827;">${escapeHtml(data.name)}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#9ca3af;">E-Mail</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:14px;color:#111827;"><a href="mailto:${escapeHtml(data.email)}" style="color:#f59e0b;text-decoration:none;">${escapeHtml(data.email)}</a></td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#9ca3af;">Betreff</td>
+          <td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:14px;color:#111827;font-weight:600;">${escapeHtml(data.subject)}</td>
+        </tr>
+      </table>
+      <h3 style="font-size:13px;color:#9ca3af;margin:16px 0 8px;text-transform:uppercase;letter-spacing:0.05em;">Nachricht</h3>
+      <div style="background:#f9fafb;border-radius:8px;padding:16px;font-size:14px;color:#374151;line-height:1.6;">${messageHtml}</div>
+      <p style="font-size:12px;color:#9ca3af;margin:16px 0 0;">
+        Antworten Sie direkt auf diese E-Mail, um dem Kunden zu antworten.
+      </p>
     </div>
   </div>
 </body>
