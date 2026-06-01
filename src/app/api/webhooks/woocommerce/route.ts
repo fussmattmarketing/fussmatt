@@ -69,6 +69,7 @@ export async function POST(request: Request) {
     const stockStatus = product.stock_status;
     const productName = product.name;
     const productSlug = product.slug;
+    const categories: Array<{ slug?: string }> = product.categories || [];
 
     if (!sku) {
       return NextResponse.json({ received: true, skipped: "no-sku" });
@@ -87,6 +88,11 @@ export async function POST(request: Request) {
     revalidatePath("/produkte");
     if (productSlug) {
       revalidatePath(`/produkt/${productSlug}`);
+    }
+    // Also revalidate every category page this product belongs to so
+    // listing-level UI (badges, strike-throughs, price) stays in sync.
+    for (const cat of categories) {
+      if (cat.slug) revalidatePath(`/kategorie/${cat.slug}`);
     }
 
     // If product is now in stock, check for subscribers and send notifications
