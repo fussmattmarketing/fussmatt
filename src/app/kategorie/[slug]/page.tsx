@@ -8,6 +8,7 @@ import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import VehicleFilter from "@/components/product/VehicleFilter";
+import { TrustStrip } from "@/components/ui/TrustStrip";
 import Link from "next/link";
 
 export const revalidate = 3600;
@@ -87,6 +88,8 @@ export default async function KategoriePage({
           <p className="mt-2 text-sm text-gray-400">{category.count} Produkte</p>
         </div>
       </section>
+
+      <TrustStrip variant="category" />
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <JsonLd

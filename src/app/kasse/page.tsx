@@ -13,6 +13,7 @@ import {
 import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { calculateShipping, COUNTRY_NAMES } from "@/lib/shipping";
+import { TrustStrip } from "@/components/ui/TrustStrip";
 import {
   trackBeginCheckout,
   trackAddPaymentInfo,
@@ -100,6 +101,8 @@ function PaymentForm({
           {error}
         </div>
       )}
+
+      <TrustStrip variant="checkout" />
 
       <button
         type="button"
