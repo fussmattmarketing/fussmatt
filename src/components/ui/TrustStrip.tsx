@@ -17,7 +17,7 @@ export function TrustStrip({
   if (variant === "checkout") {
     return (
       <p className="text-xs text-center text-gray-500 leading-relaxed">
-        Sichere Bezahlung · Versand aus der Schweiz · 30 Tage Geld-zurück-Garantie
+        Sichere Bezahlung · Versand innerhalb der Schweiz · 30 Tage Geld-zurück-Garantie
       </p>
     );
   }
