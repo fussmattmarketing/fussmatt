@@ -9,6 +9,7 @@ import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import VehicleFilter from "@/components/product/VehicleFilter";
 import { TrustStrip } from "@/components/ui/TrustStrip";
+import { TrustGrid } from "@/components/ui/TrustGrid";
 import Link from "next/link";
 
 export const revalidate = 3600;
@@ -131,6 +132,14 @@ export default async function KategoriePage({
             </>
           )}
         </div>
+      </div>
+
+      {/* Trust signals — full grid below products */}
+      <div className="mt-16">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Warum FussMatt
+        </h2>
+        <TrustGrid />
       </div>
     </div>
     </>

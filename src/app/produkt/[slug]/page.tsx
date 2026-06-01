@@ -12,6 +12,7 @@ import AddToCartButton from "@/components/product/AddToCartButton";
 import ProductAccordion from "@/components/product/ProductAccordion";
 import ProductPageTracking from "@/components/product/ProductPageTracking";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { TrustGrid } from "@/components/ui/TrustGrid";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
 
 export const revalidate = 3600;
@@ -236,6 +237,14 @@ export default async function ProduktPage({
       {/* Accordion */}
       <div className="mt-12">
         <ProductAccordion items={accordionItems} />
+      </div>
+
+      {/* Trust signals */}
+      <div className="mt-12">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Warum FussMatt
+        </h2>
+        <TrustGrid />
       </div>
     </div>
   );
