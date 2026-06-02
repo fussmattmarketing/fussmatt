@@ -53,8 +53,14 @@ export async function generateMetadata({
   params: Promise<PageParams>;
 }): Promise<Metadata> {
   const { slug, brand: brandSlug, model: modelSlug } = await params;
-  const category = await getCategoryBySlug(slug);
   const match = findModel(brandSlug, modelSlug);
+  let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
+  try {
+    category = await getCategoryBySlug(slug);
+  } catch {
+    // transient WP error → return minimal metadata; page handler will notFound
+    return { title: "Nicht gefunden" };
+  }
   if (!category || !match) return { title: "Nicht gefunden" };
 
   const pseo = generateCategoryBrandModelContent(
@@ -76,19 +82,41 @@ export default async function KategorieBrandModelPage({
   params: Promise<PageParams>;
 }) {
   const { slug, brand: brandSlug, model: modelSlug } = await params;
-  const category = await getCategoryBySlug(slug);
   const match = findModel(brandSlug, modelSlug);
+
+  // Tolerate WP backend connect timeouts during build/prerender.
+  // If the category lookup fails, fall back to an empty render rather than
+  // hard-failing the static build for an entire route family.
+  let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
+  try {
+    category = await getCategoryBySlug(slug);
+  } catch (err) {
+    console.error(
+      `[kategorie/${slug}/${brandSlug}/${modelSlug}] getCategoryBySlug failed:`,
+      err
+    );
+  }
+
   if (!category || !match) notFound();
 
   const { brand, model } = match;
   const hierarchy = getVehicleHierarchy();
 
-  // Fetch products for this category filtered by brand + model
-  const products = await getProducts({
-    category: category.id,
-    search: `${brand.name} ${model.name}`,
-    per_page: 24,
-  });
+  // Fetch products for this category filtered by brand + model.
+  // Swallow transient connect errors → empty products → page still renders.
+  let products: Awaited<ReturnType<typeof getProducts>> = [];
+  try {
+    products = await getProducts({
+      category: category.id,
+      search: `${brand.name} ${model.name}`,
+      per_page: 24,
+    });
+  } catch (err) {
+    console.error(
+      `[kategorie/${slug}/${brandSlug}/${modelSlug}] getProducts failed:`,
+      err
+    );
+  }
 
   const pseo = generateCategoryBrandModelContent(
     slug,

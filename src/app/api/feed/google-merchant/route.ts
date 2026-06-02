@@ -4,7 +4,7 @@ import { stripHtml } from "@/lib/utils";
 import type { WCProduct } from "@/types/woocommerce";
 
 export const maxDuration = 60;
-export const revalidate = 3600; // 1 hour cache (force-rebuild 2026-06-02T14:06)
+export const revalidate = 3600; // 1 hour cache (force-rebuild 2026-06-02T14:30 — retry after WP timeout fix)
 
 const SITE_URL = "https://fussmatt.com";
 const BRAND = "FussMatt";

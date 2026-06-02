@@ -33,6 +33,24 @@ function getAuthHeader(): string | null {
   return null;
 }
 
+// Retry wrapper for transient connect timeouts (UND_ERR_CONNECT_TIMEOUT)
+// during high-volume builds when wp.fussmatt.com gets overwhelmed.
+function isTransientError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const msg = err.message || "";
+  const cause = (err as Error & { cause?: { code?: string } }).cause;
+  const code = cause?.code || "";
+  return (
+    code === "UND_ERR_CONNECT_TIMEOUT" ||
+    code === "UND_ERR_SOCKET" ||
+    code === "ECONNRESET" ||
+    code === "ETIMEDOUT" ||
+    msg.includes("fetch failed") ||
+    msg.includes("ConnectTimeoutError") ||
+    msg.includes("aborted")
+  );
+}
+
 async function wcFetch<T>(
   endpoint: string,
   params: Record<string, string | number> = {},
@@ -59,28 +77,47 @@ async function wcFetch<T>(
     headers.Authorization = authHeader;
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30000);
+  const isGet = !fetchOptions.method || fetchOptions.method === "GET";
+  // Only retry idempotent GET requests on transient errors
+  const maxAttempts = isGet ? 3 : 1;
+  let lastErr: unknown;
 
-  try {
-    const isGet = !fetchOptions.method || fetchOptions.method === "GET";
-    const res = await fetch(url.toString(), {
-      ...fetchOptions,
-      headers,
-      signal: controller.signal,
-      ...(isGet ? { next: { revalidate } } : { cache: "no-store" }),
-    });
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
-    if (!res.ok) {
-      const errorBody = await res.text().catch(() => "");
-      console.error(`WC API Error [${res.status}] ${endpoint}: ${errorBody}`);
-      throw new Error(`WooCommerce API error: ${res.status}`);
+    try {
+      const res = await fetch(url.toString(), {
+        ...fetchOptions,
+        headers,
+        signal: controller.signal,
+        ...(isGet ? { next: { revalidate } } : { cache: "no-store" }),
+      });
+
+      if (!res.ok) {
+        const errorBody = await res.text().catch(() => "");
+        console.error(`WC API Error [${res.status}] ${endpoint}: ${errorBody}`);
+        throw new Error(`WooCommerce API error: ${res.status}`);
+      }
+
+      return await res.json();
+    } catch (err) {
+      lastErr = err;
+      if (attempt < maxAttempts && isTransientError(err)) {
+        // Exponential backoff: 500ms, 1500ms
+        const delay = 500 * Math.pow(3, attempt - 1);
+        console.warn(
+          `WC fetch transient error [${endpoint}] attempt ${attempt}/${maxAttempts}, retrying in ${delay}ms`
+        );
+        await new Promise((r) => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
     }
-
-    return res.json();
-  } finally {
-    clearTimeout(timeout);
   }
+  throw lastErr;
 }
 
 async function wcFetchWithHeaders<T>(
@@ -105,28 +142,44 @@ async function wcFetchWithHeaders<T>(
     headers.Authorization = authHeader;
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30000);
+  const maxAttempts = 3;
+  let lastErr: unknown;
 
-  let res: Response;
-  try {
-    res = await fetch(url.toString(), {
-      headers,
-      signal: controller.signal,
-      next: { revalidate },
-    });
-  } finally {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    let res: Response;
+    try {
+      res = await fetch(url.toString(), {
+        headers,
+        signal: controller.signal,
+        next: { revalidate },
+      });
+    } catch (err) {
+      clearTimeout(timeout);
+      lastErr = err;
+      if (attempt < maxAttempts && isTransientError(err)) {
+        const delay = 500 * Math.pow(3, attempt - 1);
+        console.warn(
+          `WC fetch transient error [${endpoint}] attempt ${attempt}/${maxAttempts}, retrying in ${delay}ms`
+        );
+        await new Promise((r) => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    }
     clearTimeout(timeout);
-  }
 
-  if (!res.ok) {
-    throw new Error(`WooCommerce API error: ${res.status}`);
-  }
+    if (!res.ok) {
+      throw new Error(`WooCommerce API error: ${res.status}`);
+    }
 
-  const data = (await res.json()) as T;
-  const total = parseInt(res.headers.get("X-WP-Total") || "0", 10);
-  const totalPages = parseInt(res.headers.get("X-WP-TotalPages") || "1", 10);
-  return { data, total, totalPages };
+    const data = (await res.json()) as T;
+    const total = parseInt(res.headers.get("X-WP-Total") || "0", 10);
+    const totalPages = parseInt(res.headers.get("X-WP-TotalPages") || "1", 10);
+    return { data, total, totalPages };
+  }
+  throw lastErr;
 }
 
 // ─── Products ───────────────────────────────────────────
