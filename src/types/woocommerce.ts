@@ -50,6 +50,7 @@ export interface WCProduct {
   variations: number[];
   related_ids: number[];
   meta_data: { key: string; value: string }[];
+  catalog_visibility: "visible" | "catalog" | "search" | "hidden";
   weight: string;
   dimensions: {
     length: string;

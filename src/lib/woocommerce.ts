@@ -219,7 +219,15 @@ export async function getAllProducts(): Promise<WCProduct[]> {
     page++;
   }
 
-  return allProducts;
+  // Exclude products explicitly marked catalog_visibility=hidden. Sitemap,
+  // Google Merchant feed, and any "all products" iteration must not surface
+  // hidden products to crawlers — direct URLs still work but they should
+  // not appear in any discovery surface. WC /products endpoint does not
+  // honor a robust catalog_visibility filter on the query side, so we
+  // post-filter here.
+  return allProducts.filter(
+    (p) => p.catalog_visibility !== "hidden"
+  );
 }
 
 export async function getProductBySlug(
