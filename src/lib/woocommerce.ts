@@ -187,11 +187,18 @@ async function wcFetchWithHeaders<T>(
 export async function getProducts(
   params: Record<string, string | number> = {}
 ): Promise<WCProduct[]> {
-  return wcFetch<WCProduct[]>("/products", {
+  const data = await wcFetch<WCProduct[]>("/products", {
     per_page: 20,
     status: "publish",
     ...params,
   });
+  // Exclude catalog_visibility=hidden — these must NOT appear in
+  // category listings, product grids, or any browse surface (only
+  // direct URL access keeps working). WC /products endpoint does not
+  // support a robust "NOT hidden" query-side filter (catalog_visibility
+  // takes a single value, so any positive filter would also exclude
+  // legitimate `catalog`-only products), hence post-filter.
+  return data.filter((p) => p.catalog_visibility !== "hidden");
 }
 
 export async function getProductsWithTotal(
@@ -201,7 +208,11 @@ export async function getProductsWithTotal(
     "/products",
     { per_page: 20, status: "publish", ...params }
   );
-  return { products: data, total, totalPages };
+  // Same post-filter as getProducts. Total/totalPages may overstate by
+  // the number of hidden products in scope (minor cosmetic in
+  // pagination footer); WC has no clean query-side "NOT hidden" filter.
+  const visible = data.filter((p) => p.catalog_visibility !== "hidden");
+  return { products: visible, total, totalPages };
 }
 
 export async function getAllProducts(): Promise<WCProduct[]> {
