@@ -8,6 +8,30 @@ import { stripHtml } from "@/lib/utils";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com";
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "FussMatt";
 
+/**
+ * Canonicalize a media URL so it appears under the storefront hostname.
+ *
+ * Schema.org Product fields exported by Google get cross-referenced against
+ * the page URL's domain. When the storefront is fussmatt.com but the image
+ * src is wp.fussmatt.com/wp-content/uploads/... Google's automated review
+ * flags it as a domain-inconsistency trust signal.
+ *
+ * We rewrite wp.fussmatt.com/wp-content/uploads/* → fussmatt.com/uploads/*
+ * Next.js rewrite (next.config.ts) proxies /uploads/* back to the WP host
+ * so the bytes still load.
+ *
+ * Non-WP URLs (CDNs, static assets, placeholders) pass through unchanged.
+ */
+export function canonicalImageUrl(src: string | undefined | null): string {
+  if (!src) return `${SITE_URL}/logo.png`;
+  // Match wp.fussmatt.com/wp-content/uploads/...
+  const m = src.match(
+    /^https?:\/\/wp\.fussmatt\.com\/wp-content\/uploads\/(.+)$/
+  );
+  if (m) return `${SITE_URL}/uploads/${m[1]}`;
+  return src;
+}
+
 // ─── Organization Schema ────────────────────────���───────
 
 export function organizationSchema() {
@@ -49,7 +73,7 @@ export function webSiteSchema() {
 
 export function productSchema(product: WCProduct) {
   const url = `${SITE_URL}/produkt/${product.slug}`;
-  const image = product.images[0]?.src || `${SITE_URL}/logo.png`;
+  const image = canonicalImageUrl(product.images[0]?.src);
 
   // Extract real brand from product attributes (NOT "FussMatt")
   const markeAttr = product.attributes.find(
