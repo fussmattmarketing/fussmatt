@@ -13,6 +13,7 @@ import ProductAccordion from "@/components/product/ProductAccordion";
 import ProductPageTracking from "@/components/product/ProductPageTracking";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { TrustGrid } from "@/components/ui/TrustGrid";
+import { TrustBadges } from "@/components/ui/TrustBadges";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
 
 export const revalidate = 3600;
@@ -232,6 +233,11 @@ export default async function ProduktPage({
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Trust Badges (REQ-006 TS-001) — factual seals above-fold */}
+      <div className="mt-8 -mx-4 sm:-mx-6 lg:-mx-8">
+        <TrustBadges />
       </div>
 
       {/* Accordion */}

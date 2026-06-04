@@ -14,6 +14,7 @@ import { useCartStore, useCartHydration } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { calculateShipping, COUNTRY_NAMES } from "@/lib/shipping";
 import { TrustStrip } from "@/components/ui/TrustStrip";
+import { TrustBadges } from "@/components/ui/TrustBadges";
 import {
   trackBeginCheckout,
   trackAddPaymentInfo,
@@ -102,6 +103,8 @@ function PaymentForm({
         </div>
       )}
 
+      {/* REQ-006 TS-004 — factual trust reinforcement at conversion moment */}
+      <TrustBadges variant="checkout" />
       <TrustStrip variant="checkout" />
 
       <button

@@ -195,6 +195,16 @@ export default function Footer() {
               className="h-10 w-auto"
               unoptimized
             />
+            {/* Royal Road GmbH legal entity badge (REQ-006 TS-002) */}
+            <p className="text-xs text-gray-400 leading-relaxed lg:text-right">
+              Royal Road GmbH
+              <span className="mx-2 text-gray-600">·</span>
+              UID CHE-473.347.068
+              <span className="mx-2 text-gray-600">·</span>
+              Eingetragen im Handelsregister des Kantons Zürich
+              <span className="mx-2 text-gray-600">·</span>
+              Dübendorfstrasse 4, 8051 Zürich, Schweiz
+            </p>
             <p className="text-xs text-gray-500">
               &copy; {new Date().getFullYear()}{" "}
               <Link href="/" className="text-amber-500 hover:text-amber-400 transition-colors">

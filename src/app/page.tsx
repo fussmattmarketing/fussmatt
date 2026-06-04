@@ -3,6 +3,7 @@ import { getProducts } from "@/lib/woocommerce";
 import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import ProductCard from "@/components/product/ProductCard";
 import VehicleFilter from "@/components/product/VehicleFilter";
+import { TrustBadges } from "@/components/ui/TrustBadges";
 import type { WCProduct } from "@/types/woocommerce";
 
 export const revalidate = 300;
@@ -43,6 +44,17 @@ export default async function HomePage() {
               <VehicleFilter hierarchy={hierarchy} variant="hero" />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Trust Badges (REQ-006 TS-003) — factual seals just below hero */}
+      <TrustBadges />
+      <section className="bg-gray-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-center">
+          <p className="text-xs text-gray-600 leading-relaxed">
+            FussMatt ist eine unabhängige Marke der Royal Road GmbH, einer
+            etablierten Schweizer Gesellschaft mit Sitz in Zürich.
+          </p>
         </div>
       </section>
 
