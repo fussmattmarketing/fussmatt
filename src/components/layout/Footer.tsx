@@ -81,6 +81,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/ratgeber"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/ueber-uns"
                   className="text-sm hover:text-amber-500 transition-colors"
                 >
@@ -128,14 +136,6 @@ export default function Footer() {
                   AGB
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/widerruf"
-                  className="text-sm hover:text-amber-500 transition-colors"
-                >
-                  Widerrufsbelehrung
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -153,6 +153,9 @@ export default function Footer() {
                 >
                   +41 44 505 27 22
                 </a>
+                <p className="text-xs text-gray-500 mt-1">
+                  Mo&ndash;Fr, 09:00&ndash;17:00 Uhr
+                </p>
               </div>
               <div>
                 <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">E-Mail</p>
