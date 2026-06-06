@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Über uns",
   description:
-    "FussMatt ist die Marke der Royal Road GmbH mit Sitz in Zürich. Passgenaue 3D- und 5D-Auto-Fussmatten, hochwertiges TPE-Material, Schweizer Service in CHF.",
+    "FussMatt ist die Marke der Royal Road GmbH mit Sitz in Zürich. Passgenaue 3D- und 5D-Auto-Fussmatten aus hochwertigem TPE-Material.",
 };
 
 export default function UeberUnsPage() {
@@ -20,6 +20,12 @@ export default function UeberUnsPage() {
           und dabei keine Kompromisse bei Passform und Qualität eingehen.
         </p>
 
+        <p>
+          Die Marke FussMatt steht für saubere Passform, ehrliche Produkte und
+          einen direkten, persönlichen Kundenservice — ohne Marketing-Geräusch,
+          ohne Versprechen, die wir nicht halten können.
+        </p>
+
         <h2>Worauf wir Wert legen</h2>
         <ul>
           <li>
@@ -31,18 +37,6 @@ export default function UeberUnsPage() {
             <strong>Hochwertiges Material:</strong> Wir setzen auf TPE —
             geruchsarm, langlebig, rutschfest und recyclebar.
           </li>
-          <li>
-            <strong>Schweizer Service:</strong> Bestellung und Bezahlung in CHF
-            (inkl. TWINT und Kauf auf Rechnung), Versand innerhalb der Schweiz
-            in 1–3 Werktagen, Kundenservice auf Deutsch.
-          </li>
-        </ul>
-
-        <h2>Unser Versprechen an Sie</h2>
-        <ul>
-          <li>30 Tage Geld-zurück-Garantie</li>
-          <li>14 Tage gesetzliches Widerrufsrecht</li>
-          <li>Kostenloser Versand innerhalb der Schweiz</li>
         </ul>
 
         <h2>Transparenz</h2>
