@@ -192,7 +192,7 @@ export default function Footer() {
             {/* Payment methods image — replace src with actual image */}
             <Image
               src="/images/payment-methods.webp"
-              alt="Zahlungsmethoden: PostFinance, Visa, Mastercard, PayPal, TWINT, American Express, Rechnung, Apple Pay, Google Pay"
+              alt="Zahlungsmethoden: TWINT und Stripe"
               width={500}
               height={40}
               className="h-10 w-auto"
