@@ -34,7 +34,7 @@ export default function UeberUnsPage() {
           <li>
             <strong>Schweizer Service:</strong> Bestellung und Bezahlung in CHF
             (inkl. TWINT und Kauf auf Rechnung), Versand innerhalb der Schweiz
-            in der Regel in 3–5 Werktagen, Kundenservice auf Deutsch.
+            in 1–3 Werktagen, Kundenservice auf Deutsch.
           </li>
         </ul>
 
@@ -42,7 +42,7 @@ export default function UeberUnsPage() {
         <ul>
           <li>30 Tage Geld-zurück-Garantie</li>
           <li>14 Tage gesetzliches Widerrufsrecht</li>
-          <li>Kostenloser Versand ab CHF 50 innerhalb der Schweiz</li>
+          <li>Kostenloser Versand innerhalb der Schweiz</li>
         </ul>
 
         <h2>Transparenz</h2>

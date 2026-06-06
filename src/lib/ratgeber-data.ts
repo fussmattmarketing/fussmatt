@@ -195,7 +195,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <p>Einfach herausnehmen und mit Wasser abspülen. Bei stärkerer Verschmutzung können Sie milde Seife verwenden. Die Matten trocknen schnell an der Luft.</p>
 
       <h2>Wie lange dauert die Lieferung?</h2>
-      <p>Lieferung innerhalb der Schweiz: 3-5 Werktage. Deutschland und Österreich: 5-7 Werktage. Kostenloser Versand ab CHF 50 (Schweiz).</p>
+      <p>Lieferung innerhalb der Schweiz: 1–3 Werktage. Kostenloser Versand in der ganzen Schweiz.</p>
 
       <h2>Kann ich die Fussmatten zurückgeben?</h2>
       <p>Ja, Sie haben ein 30-tägiges Rückgaberecht. Die Matten müssen in unbenutztem Zustand und in der Originalverpackung zurückgesendet werden.</p>
@@ -211,7 +211,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       },
       {
         question: "Wie lange dauert die Lieferung?",
-        answer: "Schweiz: 3-5 Werktage. Deutschland/Österreich: 5-7 Werktage. Kostenloser Versand ab CHF 50.",
+        answer: "Schweiz: 1–3 Werktage. Kostenloser Versand in der ganzen Schweiz.",
       },
     ],
   },

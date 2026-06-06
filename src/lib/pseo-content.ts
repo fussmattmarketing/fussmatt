@@ -82,7 +82,7 @@ export function generateCategoryBrandContent(
       },
       {
         question: `Wie lange dauert die Lieferung?`,
-        answer: `Die Lieferung erfolgt innerhalb von 3-5 Werktagen in der Schweiz. Nach Deutschland und Österreich 5-7 Werktage. Ab einem Bestellwert von CHF 50 ist der Versand in der Schweiz kostenlos.`,
+        answer: `Die Lieferung erfolgt innerhalb von 1–3 Werktagen in der ganzen Schweiz. Der Versand ist immer kostenlos — ohne Mindestbestellwert.`,
       },
     ],
   };
@@ -129,7 +129,7 @@ export function generateCategoryBrandModelContent(
       },
       {
         question: `Wie viel kosten ${categoryName} für den ${brandName} ${modelName}?`,
-        answer: `Unsere ${categoryName} für den ${brandName} ${modelName} beginnen ab CHF 89. Komplette Sets mit Kofferraummatte sind ebenfalls verfügbar. Ab CHF 50 Bestellwert liefern wir schweizweit kostenlos.`,
+        answer: `Unsere ${categoryName} für den ${brandName} ${modelName} beginnen ab CHF 89. Komplette Sets mit Kofferraummatte sind ebenfalls verfügbar. Wir liefern schweizweit kostenlos — ohne Mindestbestellwert.`,
       },
     ],
   };
@@ -175,7 +175,7 @@ export function generateBrandGuideContent(
       },
       {
         heading: "Bestellung, Versand & Rückgabe",
-        text: "Kostenloser Versand in der Schweiz ab CHF 50 Bestellwert. Lieferung in 3-5 Werktagen. 30 Tage Rückgaberecht auf alle Fussmatten. Bezahlung per TWINT, Kreditkarte, PostFinance oder auf Rechnung möglich.",
+        text: "Kostenloser Versand in der ganzen Schweiz — ohne Mindestbestellwert. Lieferung in 1–3 Werktagen. 30 Tage Rückgaberecht auf alle Fussmatten. Bezahlung per TWINT, Kreditkarte, PostFinance oder auf Rechnung möglich.",
       },
     ],
     faqItems: [
@@ -189,7 +189,7 @@ export function generateBrandGuideContent(
       },
       {
         question: `Was kostet ein Fussmatten-Set für ${brandName}?`,
-        answer: `Einzelne Fussmatten beginnen ab CHF 89. Komplette Sets (alle Sitzreihen + Kofferraum) sind je nach Modell ab CHF 120 erhältlich. Ab CHF 50 liefern wir schweizweit kostenlos.`,
+        answer: `Einzelne Fussmatten beginnen ab CHF 89. Komplette Sets (alle Sitzreihen + Kofferraum) sind je nach Modell ab CHF 120 erhältlich. Wir liefern schweizweit kostenlos — ohne Mindestbestellwert.`,
       },
       {
         question: `Wie reinige ich ${brandName} Fussmatten aus TPE?`,

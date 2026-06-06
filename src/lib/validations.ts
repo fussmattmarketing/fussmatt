@@ -1,17 +1,14 @@
 import { z } from "zod";
 
-// Supported countries
-export const SUPPORTED_COUNTRIES = ["CH", "DE", "AT", "FR", "IT", "NL"] as const;
+// Supported countries — Switzerland only (CH-only fulfillment).
+// To re-enable cross-border shipping in the future, expand this tuple AND
+// add the corresponding entries in shipping.ts SHIPPING_CONFIG + COUNTRY_NAMES.
+export const SUPPORTED_COUNTRIES = ["CH"] as const;
 export type SupportedCountry = (typeof SUPPORTED_COUNTRIES)[number];
 
 // PLZ validation per country
 export const plzPatterns: Record<SupportedCountry, RegExp> = {
   CH: /^\d{4}$/,
-  DE: /^\d{5}$/,
-  AT: /^\d{4}$/,
-  FR: /^\d{5}$/,
-  IT: /^\d{5}$/,
-  NL: /^\d{4}\s?[A-Z]{2}$/i,
 };
 
 // PLZ helper for client-side validation

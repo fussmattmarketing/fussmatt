@@ -65,7 +65,7 @@ export default async function HomePage() {
             {[
               { icon: "\uD83D\uDE97", title: "Passgenau", desc: "Für Ihr Fahrzeugmodell" },
               { icon: "\uD83D\uDCA7", title: "Wasserdicht", desc: "TPE-Material" },
-              { icon: "\uD83D\uDE9A", title: "Kostenloser Versand", desc: "Ab CHF 50 in CH" },
+              { icon: "\uD83D\uDE9A", title: "Kostenloser Versand", desc: "In der ganzen Schweiz" },
               { icon: "\u21A9\uFE0F", title: "30 Tage", desc: "Rückgaberecht" },
             ].map((usp) => (
               <div key={usp.title} className="flex items-center gap-3">

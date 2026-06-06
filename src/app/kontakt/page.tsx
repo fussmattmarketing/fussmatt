@@ -37,14 +37,13 @@ export default function KontaktPage() {
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
-                <strong>Lieferzeit:</strong> 3-5 Werktage (Schweiz), 5-7
-                Werktage (EU)
+                <strong>Lieferzeit:</strong> 1–3 Werktage (Schweiz)
               </li>
               <li>
                 <strong>Rückgabe:</strong> 14 Tage Widerrufsrecht
               </li>
               <li>
-                <strong>Versand:</strong> Kostenlos ab CHF 50 (Schweiz)
+                <strong>Versand:</strong> Kostenlos in der Schweiz
               </li>
             </ul>
           </div>

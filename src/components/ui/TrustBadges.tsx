@@ -8,7 +8,7 @@
  *   - Payment providers (real, contractual)
  *   - Schweizer Unternehmen (Royal Road GmbH 2021 — Handelsregister
  *     CHE-473.347.068)
- *   - Versand 3-5 Tage (real shipping SLA)
+ *   - Versand 1-3 Tage (real shipping SLA — CH only)
  *   - 30 Tage Geld-zurück (real return policy)
  *   - Phone +41 44 505 27 22 (real, answered Mo-Fr 9-17)
  *
@@ -82,7 +82,7 @@ const BADGES: { Icon: SVGIcon; title: string; subtitle: string; href?: string }[
   },
   {
     Icon: Icon.Truck,
-    title: "Versand 3–5 Tage",
+    title: "Versand 1–3 Tage",
     subtitle: "Schweizer Versand",
   },
   {
@@ -113,7 +113,7 @@ export function TrustBadges({
         <span className="text-gray-300">·</span>
         <span className="inline-flex items-center gap-1.5">
           <Icon.Swiss className="w-3.5 h-3.5" />
-          Schweizer Versand 3–5 Tage
+          Schweizer Versand 1–3 Tage
         </span>
         <span className="text-gray-300">·</span>
         <span>30 Tage Geld-zurück</span>

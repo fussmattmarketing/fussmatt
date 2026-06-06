@@ -61,7 +61,7 @@ const TRUST_BLOCKS: { Icon: SVGIcon; label: string; text: string }[] = [
   {
     Icon: Icons.Truck,
     label: "Schweizer Versand",
-    text: "Lieferung innerhalb der Schweiz in 3–5 Werktagen. Kostenlos ab CHF 50.",
+    text: "Kostenlose Lieferung innerhalb der Schweiz in 1–3 Werktagen.",
   },
   {
     Icon: Icons.Return,

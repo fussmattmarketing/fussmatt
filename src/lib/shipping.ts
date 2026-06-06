@@ -8,21 +8,13 @@ export interface ShippingRate {
 }
 
 export const SHIPPING_CONFIG: Record<SupportedCountry, ShippingRate> = {
-  CH: { cost: 0, freeAbove: 50, currency: "CHF", deliveryDays: "3-5" },
-  DE: { cost: 9.90, freeAbove: 100, currency: "CHF", deliveryDays: "5-7" },
-  AT: { cost: 9.90, freeAbove: 100, currency: "CHF", deliveryDays: "5-7" },
-  FR: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
-  IT: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
-  NL: { cost: 12.90, freeAbove: 150, currency: "CHF", deliveryDays: "7-10" },
+  // CH-only fulfillment. cost=0 + freeAbove=0 = unconditional free shipping.
+  // deliveryDays surfaces in UI as "1-3 Werktage".
+  CH: { cost: 0, freeAbove: 0, currency: "CHF", deliveryDays: "1-3" },
 } as const;
 
 export const COUNTRY_NAMES: Record<SupportedCountry, string> = {
   CH: "Schweiz",
-  DE: "Deutschland",
-  AT: "Österreich",
-  FR: "Frankreich",
-  IT: "Italien",
-  NL: "Niederlande",
 } as const;
 
 export function calculateShipping(

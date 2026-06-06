@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | FussMatt",
   },
   description:
-    "Premium 3D & 5D Auto-Fussmatten für über 44 Marken. Massgefertigt, wasserdicht, rutschfest. Kostenloser Versand in der Schweiz ab CHF 50.",
+    "Premium 3D & 5D Auto-Fussmatten für über 44 Marken. Massgefertigt, wasserdicht, rutschfest. Kostenloser Versand in der ganzen Schweiz, Lieferung in 1–3 Werktagen.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "https://fussmatt.com"
   ),

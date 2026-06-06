@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { SHIPPING_CONFIG, COUNTRY_NAMES, formatShippingCost, getDeliveryEstimate } from "@/lib/shipping";
-import { SUPPORTED_COUNTRIES } from "@/lib/validations";
 
 export const metadata: Metadata = {
   title: "Versand & Lieferung",
-  description: "Versandinformationen für FussMatt. Kostenloser Versand in der Schweiz ab CHF 50. Lieferung in 6 europäische Länder.",
+  description:
+    "Versandinformationen für FussMatt. Kostenloser Versand in der ganzen Schweiz — ohne Mindestbestellwert. Lieferung in 1–3 Werktagen.",
 };
 
 export default function VersandPage() {
@@ -14,46 +13,36 @@ export default function VersandPage() {
         Versand &amp; Lieferung
       </h1>
 
-      <div className="prose prose-gray max-w-none">
+      <div className="prose prose-gray max-w-none prose-headings:text-gray-900 prose-headings:font-semibold prose-p:my-3 prose-p:leading-relaxed prose-li:my-1.5 prose-strong:text-gray-900">
         <p>
-          Wir liefern in 6 europäische Länder. Kostenloser Versand in der
-          Schweiz ab CHF 50. Alle Preise verstehen sich in Schweizer Franken (CHF).
+          Wir liefern ausschliesslich innerhalb der Schweiz.{" "}
+          <strong>Kostenloser Versand</strong> in der ganzen Schweiz — ohne
+          Mindestbestellwert. Alle Preise verstehen sich in Schweizer Franken
+          (CHF).
         </p>
 
-        <div className="not-prose mt-8">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b-2 border-gray-200">
-                <th className="text-left py-3 font-semibold">Land</th>
-                <th className="text-left py-3 font-semibold">Versandkosten</th>
-                <th className="text-left py-3 font-semibold">Kostenlos ab</th>
-                <th className="text-left py-3 font-semibold">Lieferzeit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {SUPPORTED_COUNTRIES.map((country) => {
-                const config = SHIPPING_CONFIG[country];
-                return (
-                  <tr key={country} className="border-b border-gray-100">
-                    <td className="py-3 font-medium">
-                      {COUNTRY_NAMES[country]}
-                    </td>
-                    <td className="py-3">{formatShippingCost(country)}</td>
-                    <td className="py-3">
-                      {config.currency} {config.freeAbove}
-                    </td>
-                    <td className="py-3">{getDeliveryEstimate(country)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <h2>Lieferzeit</h2>
+        <ul>
+          <li>
+            <strong>Vorbereitungszeit der Bestellung:</strong> 0–1 Werktag
+          </li>
+          <li>
+            <strong>Gesamte Lieferzeit:</strong> 1–3 Werktage
+          </li>
+        </ul>
 
-        <h2 className="mt-8">Versandarten</h2>
+        <h2>Versandkosten</h2>
+        <ul>
+          <li>
+            <strong>Schweiz:</strong> Kostenlos — ohne Mindestbestellwert
+          </li>
+        </ul>
+
+        <h2>Versandart</h2>
         <p>
-          Alle Bestellungen werden per Standardversand versendet. Sie erhalten
-          eine Versandbestätigung per E-Mail mit Tracking-Informationen.
+          Alle Bestellungen werden per Standardversand verschickt. Sie erhalten
+          eine Versandbestätigung per E-Mail mit Tracking-Informationen, sobald
+          Ihre Bestellung das Lager verlässt.
         </p>
 
         <h2>Lieferadresse</h2>
