@@ -30,8 +30,9 @@ const FacebookIcon: SVGIcon = (props) => (
 );
 
 export const SOCIALS: { name: string; href: string; Icon: SVGIcon }[] = [
-  { name: "Instagram", href: "https://instagram.com/fussmatt", Icon: InstagramIcon },
-  { name: "Facebook", href: "https://facebook.com/fussmatt", Icon: FacebookIcon },
+  { name: "Instagram", href: "https://www.instagram.com/fussmattcom", Icon: InstagramIcon },
+  // Facebook profile is a numeric profile.php id (FB page-mode), not a vanity URL.
+  { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61590836723623", Icon: FacebookIcon },
 ];
 
 export function SocialIcons({
