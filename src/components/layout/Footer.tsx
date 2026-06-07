@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { SocialIcons } from "@/components/ui/SocialIcons";
 
 export default function Footer() {
   return (
@@ -77,6 +78,14 @@ export default function Footer() {
                   className="text-sm hover:text-amber-500 transition-colors"
                 >
                   Rückgabe &amp; Umtausch
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/bestellung-verfolgen"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Bestellung verfolgen
                 </Link>
               </li>
               <li>
@@ -181,6 +190,10 @@ export default function Footer() {
                   Dübendorfstrasse 4<br />
                   8051 Zürich
                 </p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Folgen Sie uns</p>
+                <SocialIcons size="sm" className="text-gray-400" />
               </div>
             </div>
           </div>

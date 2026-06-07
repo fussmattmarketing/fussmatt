@@ -217,6 +217,10 @@ export default function Header() {
               Alle Produkte
             </Link>
 
+            <Link href="/bestellung-verfolgen" className="px-4 h-12 flex items-center text-gray-700 hover:text-amber-600 transition-colors">
+              Bestellung verfolgen
+            </Link>
+
             <Link href="/ratgeber" className="px-4 h-12 flex items-center text-gray-700 hover:text-amber-600 transition-colors">
               Blog
             </Link>
@@ -280,6 +284,9 @@ export default function Header() {
             </Link>
             <Link href="/faq" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
               Häufig gestellte Fragen
+            </Link>
+            <Link href="/bestellung-verfolgen" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+              Bestellung verfolgen
             </Link>
             <Link href="/produkte" className="block px-3 py-2.5 text-sm font-semibold text-amber-600 hover:bg-amber-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
               Alle Produkte anzeigen &rarr;

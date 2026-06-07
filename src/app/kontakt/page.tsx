@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
+import { SocialIcons } from "@/components/ui/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -60,6 +61,13 @@ export default function KontaktPage() {
               >
                 info@fussmatt.com
               </a>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                Folgen Sie uns
+              </p>
+              <SocialIcons size="md" className="text-gray-600" />
             </div>
           </div>
         </div>
