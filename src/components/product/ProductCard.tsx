@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { WCProduct } from "@/types/woocommerce";
 import { formatPrice, wpMediaUrl } from "@/lib/utils";
+import QuickAddButton from "./QuickAddButton";
 
 interface ProductCardProps {
   product: WCProduct;
@@ -43,6 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             -{discount}%
           </span>
         )}
+        <QuickAddButton product={product} />
       </div>
 
       {/* Info */}
