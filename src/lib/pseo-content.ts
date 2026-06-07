@@ -175,7 +175,7 @@ export function generateBrandGuideContent(
       },
       {
         heading: "Bestellung, Versand & Rückgabe",
-        text: "Kostenloser Versand in der ganzen Schweiz — ohne Mindestbestellwert. Lieferung in 1–3 Werktagen. 30 Tage Rückgaberecht auf alle Fussmatten. Bezahlung per TWINT, Kreditkarte, PostFinance oder auf Rechnung möglich.",
+        text: "Kostenloser Versand in der ganzen Schweiz — ohne Mindestbestellwert. Lieferung in 1–3 Werktagen. 30 Tage Rückgaberecht auf alle Fussmatten. Bezahlung mit TWINT und Stripe.",
       },
     ],
     faqItems: [

@@ -25,7 +25,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "Welche Zahlungsmethoden werden akzeptiert?",
-    a: "TWINT und Stripe. Über Stripe können Sie mit Kreditkarte (Visa, Mastercard, American Express), Apple Pay, Google Pay und Link bezahlen. Alle Zahlungen sind SSL-verschlüsselt.",
+    a: "Wir akzeptieren TWINT und Stripe. Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.",
   },
   {
     q: "Kann ich die Bestellung zurücksenden?",
