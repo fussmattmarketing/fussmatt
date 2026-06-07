@@ -1,25 +1,29 @@
 "use client";
 
 /**
- * QuickAddButton — small "Add to cart" affordance for product cards.
+ * QuickAddButton — full-width "Add to cart" button rendered at the
+ * bottom of every product card.
  *
- * Renders a 36×36 amber pill in the bottom-right corner of the card
- * image. Click adds the product to the cart and flashes a green
- * checkmark for 1.5s.
+ * Replaces the earlier icon-only floating pill (CEO 2026-06-07: wanted
+ * the action visible as text, not just an icon). Now reads as
+ * "🛒 In den Warenkorb" so users on listing pages know exactly what
+ * the click will do without hovering for a tooltip.
  *
- * Constraints handled here (so ProductCard can stay declarative):
+ * Layout: full-width amber bar inside the card's info section, sitting
+ * below the stock dot — flush with the card's left/right padding.
+ *
+ * Constraints (unchanged from icon version):
  *   - Variable products → no quick-add (need a variant choice).
- *     Button is hidden; ProductCard's Link to the detail page is
- *     the only path.
- *   - Out-of-stock → button is hidden too; the card itself surfaces
- *     stock status separately.
- *   - The ProductCard wraps everything in a <Link>; this button
- *     calls preventDefault + stopPropagation so click doesn't
- *     navigate to the detail page.
+ *     Renders nothing; ProductCard's Link to the detail page is the
+ *     only path.
+ *   - Out-of-stock → renders nothing too; the card surfaces stock
+ *     status separately above this button.
+ *   - The ProductCard wraps everything in a <Link>; this button calls
+ *     preventDefault + stopPropagation on click so the click adds the
+ *     item to the cart instead of navigating to the detail page.
  *
- * Analytics: fires trackAddToCart (same event the full AddToCart
- * button on the detail page emits), so quick-adds and full-page
- * adds end up in the same funnel.
+ * Analytics: fires trackAddToCart (same event as AddToCartButton on
+ * the detail page) so quick-adds and full-page adds share one funnel.
  */
 
 import { useState } from "react";
@@ -53,41 +57,46 @@ export default function QuickAddButton({ product }: { product: WCProduct }) {
       type="button"
       onClick={handleClick}
       aria-label={`${product.name} in den Warenkorb`}
-      title="In den Warenkorb"
-      className={`absolute bottom-3 right-3 z-10 inline-flex items-center justify-center w-9 h-9 rounded-full shadow-md transition-all ${
+      className={`mt-3 w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${
         added
-          ? "bg-green-500 text-white scale-110"
+          ? "bg-green-500 text-white"
           : "bg-amber-500 hover:bg-amber-600 text-white"
       }`}
     >
       {added ? (
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4"
-          aria-hidden="true"
-        >
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
+        <>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4"
+            aria-hidden="true"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span>Hinzugefügt</span>
+        </>
       ) : (
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4"
-          aria-hidden="true"
-        >
-          <path d="M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-          <path d="M20 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-        </svg>
+        <>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4"
+            aria-hidden="true"
+          >
+            <path d="M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+            <path d="M20 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span>In den Warenkorb</span>
+        </>
       )}
     </button>
   );

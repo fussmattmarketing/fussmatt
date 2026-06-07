@@ -44,7 +44,6 @@ export default function ProductCard({ product }: ProductCardProps) {
             -{discount}%
           </span>
         )}
-        <QuickAddButton product={product} />
       </div>
 
       {/* Info */}
@@ -84,6 +83,8 @@ export default function ProductCard({ product }: ProductCardProps) {
               : "Nicht verfügbar"}
           </span>
         </div>
+
+        <QuickAddButton product={product} />
       </div>
     </Link>
   );
