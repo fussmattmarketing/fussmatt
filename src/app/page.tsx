@@ -4,6 +4,7 @@ import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import ProductCard from "@/components/product/ProductCard";
 import VehicleFilter from "@/components/product/VehicleFilter";
 import { TrustBadges } from "@/components/ui/TrustBadges";
+import { FAQAccordion } from "@/components/ui/FAQAccordion";
 import type { WCProduct } from "@/types/woocommerce";
 
 export const revalidate = 300;
@@ -196,6 +197,29 @@ export default async function HomePage() {
                 <p className="mt-2 text-sm text-gray-500 leading-relaxed">{feature.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — accordion at homepage bottom (CEO request 2026-06-07) */}
+      <section className="border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Häufig gestellte Fragen
+            </h2>
+            <p className="mt-3 text-gray-500 max-w-lg mx-auto">
+              Versand, Rückgabe, Zahlung und mehr — kurz beantwortet.
+            </p>
+          </div>
+          <FAQAccordion />
+          <div className="mt-8 text-center">
+            <Link
+              href="/faq"
+              className="text-sm font-medium text-amber-600 hover:text-amber-700 transition-colors"
+            >
+              Alle Fragen ansehen &rarr;
+            </Link>
           </div>
         </div>
       </section>

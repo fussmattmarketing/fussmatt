@@ -81,6 +81,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/faq"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Häufig gestellte Fragen
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/ratgeber"
                   className="text-sm hover:text-amber-500 transition-colors"
                 >

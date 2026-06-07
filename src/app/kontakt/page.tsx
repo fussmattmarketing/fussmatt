@@ -18,34 +18,49 @@ export default function KontaktPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Royal Road GmbH
           </h2>
-          <div className="space-y-3 text-gray-600">
-            <p>Zürich, Schweiz</p>
-            <p>
-              E-Mail:{" "}
+
+          <div className="space-y-4 text-gray-700">
+            <div>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                Adresse
+              </p>
+              <p className="leading-relaxed">
+                Royal Road GmbH
+                <br />
+                Dübendorfstrasse 4
+                <br />
+                8051 Zürich
+                <br />
+                Schweiz
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                Telefon
+              </p>
+              <a
+                href="tel:+41445052722"
+                className="text-lg font-semibold text-amber-600 hover:text-amber-700 transition-colors"
+              >
+                +41 44 505 27 22
+              </a>
+              <p className="text-sm text-gray-500 mt-0.5">
+                Mo–Fr, 09:00–17:00 Uhr
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">
+                E-Mail
+              </p>
               <a
                 href="mailto:info@fussmatt.com"
-                className="text-amber-600 hover:underline"
+                className="text-amber-600 hover:text-amber-700 transition-colors"
               >
                 info@fussmatt.com
               </a>
-            </p>
-          </div>
-
-          <div className="mt-8">
-            <h3 className="font-semibold text-gray-900 mb-2">
-              Häufig gestellte Fragen
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li>
-                <strong>Lieferzeit:</strong> 1–3 Werktage (Schweiz)
-              </li>
-              <li>
-                <strong>Rückgabe:</strong> 14 Tage Widerrufsrecht
-              </li>
-              <li>
-                <strong>Versand:</strong> Kostenlos in der Schweiz
-              </li>
-            </ul>
+            </div>
           </div>
         </div>
 

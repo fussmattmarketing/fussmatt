@@ -73,7 +73,7 @@ const BADGES: { Icon: SVGIcon; title: string; subtitle: string; href?: string }[
   {
     Icon: Icon.Card,
     title: "Sicher bezahlen",
-    subtitle: "TWINT, PostFinance, Visa, Mastercard",
+    subtitle: "TWINT und Stripe",
   },
   {
     Icon: Icon.Swiss,
@@ -88,7 +88,7 @@ const BADGES: { Icon: SVGIcon; title: string; subtitle: string; href?: string }[
   {
     Icon: Icon.Return,
     title: "30 Tage Geld-zurück",
-    subtitle: "+ 14 Tage Widerrufsrecht",
+    subtitle: "Auf alle Bestellungen",
   },
   {
     Icon: Icon.Phone,

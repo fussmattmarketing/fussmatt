@@ -56,7 +56,7 @@ const TRUST_BLOCKS: { Icon: SVGIcon; label: string; text: string }[] = [
   {
     Icon: Icons.Shield,
     label: "Sicher bezahlen",
-    text: "TWINT, PostFinance, Visa, Mastercard, Amex, PayPal, Apple Pay, Google Pay oder Kauf auf Rechnung.",
+    text: "Bezahlung mit TWINT und Stripe — SSL-verschlüsselt, Schweizer Standard.",
   },
   {
     Icon: Icons.Truck,
