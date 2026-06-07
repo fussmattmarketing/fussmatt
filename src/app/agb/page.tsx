@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { SHIPPING_CONFIG, COUNTRY_NAMES, formatShippingCost } from "@/lib/shipping";
-import { SUPPORTED_COUNTRIES } from "@/lib/validations";
 
 export const metadata: Metadata = {
   title: "Allgemeine Geschäftsbedingungen",
   description:
-    "AGB von FussMatt.com – Allgemeine Geschäftsbedingungen für den Online-Kauf von Auto-Fussmatten. Zahlungsbedingungen, Lieferung und Gewährleistung.",
+    "AGB von FussMatt.com – Allgemeine Geschäftsbedingungen für den Online-Kauf von Auto-Fussmatten. Zahlungsbedingungen, Versand und Rückgabe.",
 };
 
 export default function AGBPage() {
@@ -31,23 +29,17 @@ export default function AGBPage() {
         <h2>3. Preise und Zahlung</h2>
         <p>
           Alle Preise sind in Schweizer Franken (CHF) angegeben und verstehen
-          sich inklusive Mehrwertsteuer. Die Zahlung erfolgt über Stripe
-          (Kreditkarte).
+          sich inklusive Mehrwertsteuer. Die Zahlung erfolgt über{" "}
+          <strong>TWINT</strong> und <strong>Stripe</strong>. Alle Transaktionen
+          sind SSL-verschlüsselt nach Schweizer Standard.
         </p>
 
         <h2>4. Versand</h2>
-        <p>Wir liefern in folgende Länder:</p>
-        <ul>
-          {SUPPORTED_COUNTRIES.map((country) => (
-            <li key={country}>
-              <strong>{COUNTRY_NAMES[country]}:</strong>{" "}
-              {formatShippingCost(country)}, kostenlos ab{" "}
-              {SHIPPING_CONFIG[country].currency}{" "}
-              {SHIPPING_CONFIG[country].freeAbove}. Lieferzeit:{" "}
-              {SHIPPING_CONFIG[country].deliveryDays} Werktage.
-            </li>
-          ))}
-        </ul>
+        <p>
+          Wir liefern ausschliesslich innerhalb der Schweiz. Der Versand ist
+          kostenlos — ohne Mindestbestellwert. Details zur Lieferzeit finden Sie
+          auf unserer <a href="/versand">Versand-Seite</a>.
+        </p>
 
         <h2>5. Widerrufsrecht und Rückgabe</h2>
         <p>
@@ -55,20 +47,11 @@ export default function AGBPage() {
           alle Produkte. Sie haben das Recht, binnen 30 Tagen ohne Angabe von
           Gründen diesen Vertrag zu widerrufen. Dies geht über das gesetzliche
           Widerrufsrecht von 14 Tagen hinaus. Weitere Informationen finden Sie
-          in unserer{" "}
-          <a href="/widerruf">Widerrufsbelehrung</a>.
+          in unserer <a href="/widerruf">Widerrufsbelehrung</a>.
         </p>
 
-        <h2>6. Gewährleistung</h2>
-        <p>
-          Es gelten die gesetzlichen Gewährleistungsrechte gemäss schweizerischem
-          Recht.
-        </p>
-
-        <h2>7. Anwendbares Recht</h2>
-        <p>
-          Es gilt schweizerisches Recht. Gerichtsstand ist Zürich.
-        </p>
+        <h2>6. Anwendbares Recht</h2>
+        <p>Es gilt schweizerisches Recht. Gerichtsstand ist Zürich.</p>
       </div>
     </div>
   );
