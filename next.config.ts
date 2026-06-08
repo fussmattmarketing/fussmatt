@@ -17,18 +17,11 @@ const nextConfig: NextConfig = {
         source: "/uploads/:path*",
         destination: "https://wp.fussmatt.com/wp-content/uploads/:path*",
       },
-      // Product Feed PRO XML feeds (CEO 2026-06-08). The Feed PRO plugin
-      // writes its XML files to wp-content/uploads/woo-product-feed-pro/
-      // on the WP backend host. Customer/GMC-facing URL must be
-      // fussmatt.com (single canonical hostname for trust + brand
-      // consistency). This rewrite serves those XML feeds transparently
-      // under fussmatt.com so the URL we register in Google Merchant
-      // Center matches the hostname customers see everywhere else.
-      {
-        source: "/wp-content/uploads/woo-product-feed-pro/:path*",
-        destination:
-          "https://wp.fussmatt.com/wp-content/uploads/woo-product-feed-pro/:path*",
-      },
+      // (Product Feed PRO XML proxy lives in src/app/wp-content/uploads/
+      // woo-product-feed-pro/[...path]/route.ts — Next.js rewrites with
+      // external destinations send a 308 redirect rather than proxying,
+      // so we use a Route Handler that fetches + streams the XML under
+      // the canonical fussmatt.com hostname.)
     ];
   },
   images: {
