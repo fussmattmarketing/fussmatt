@@ -50,15 +50,44 @@ export async function GET() {
     });
   }
 
-  const body = await res.arrayBuffer();
-
-  return new NextResponse(body, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control":
-        "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
-      "X-Proxy-Source": "wp.fussmatt.com",
-    },
-  });
+  // Buffer-based rewrite of any leftover wp.fussmatt.com host references
+  // to the canonical fussmatt.com. Feed PRO's <g:image_link> values come
+  // out of wp_get_attachment_url(), which bypasses the home_url filter
+  // chain in the noindex plugin, so the feed file on disk ends up with
+  // wp.fussmatt.com URLs for every product image. Rewriting here keeps
+  // the canonical-host promise from the proxy without needing a second
+  // round of plugin edits.
+  //
+  // Order matters: rewrite the wp-content/uploads/ path first so it
+  // collapses to the shorter /uploads/ form that next.config's existing
+  // rewrite already routes back to wp.fussmatt.com. Then a final
+  // catch-all sweep handles any other wp.fussmatt.com references.
+  //
+  // Wrapped in try/catch so any encoding/runtime error surfaces in the
+  // response body instead of a silent 500 (previous attempt's pain).
+  try {
+    const buf = Buffer.from(await res.arrayBuffer());
+    const transformed = buf
+      .toString("utf-8")
+      .split("https://wp.fussmatt.com/wp-content/uploads/")
+      .join("https://fussmatt.com/uploads/")
+      .split("wp.fussmatt.com")
+      .join("fussmatt.com");
+    return new NextResponse(transformed, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/xml; charset=utf-8",
+        "Cache-Control":
+          "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+        "X-Proxy-Source": "wp.fussmatt.com",
+        "X-Proxy-Rewrite": "wp→fussmatt + wp-content/uploads→uploads",
+      },
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return new NextResponse(`Proxy transform failed: ${msg}`, {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
 }
