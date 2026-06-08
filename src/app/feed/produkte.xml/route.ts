@@ -80,7 +80,7 @@ export async function GET() {
         "Cache-Control":
           "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
         "X-Proxy-Source": "wp.fussmatt.com",
-        "X-Proxy-Rewrite": "wp→fussmatt + wp-content/uploads→uploads",
+        "X-Proxy-Rewrite": "wp-to-fussmatt-plus-uploads",
       },
     });
   } catch (err) {
