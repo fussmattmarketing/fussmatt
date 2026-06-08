@@ -33,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: "/datenschutz", priority: 0.1, changeFrequency: "yearly" as const },
     { url: "/agb", priority: 0.1, changeFrequency: "yearly" as const },
     { url: "/widerruf", priority: 0.1, changeFrequency: "yearly" as const },
+    { url: "/zahlungsmethoden", priority: 0.3, changeFrequency: "yearly" as const },
     { url: "/ueber-uns", priority: 0.3, changeFrequency: "monthly" as const },
     { url: "/faq", priority: 0.5, changeFrequency: "monthly" as const },
     { url: "/bestellung-verfolgen", priority: 0.4, changeFrequency: "yearly" as const },

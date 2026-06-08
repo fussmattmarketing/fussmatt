@@ -82,6 +82,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/zahlungsmethoden"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Zahlungsmethoden
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/bestellung-verfolgen"
                   className="text-sm hover:text-amber-500 transition-colors"
                 >
