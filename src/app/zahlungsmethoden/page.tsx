@@ -24,14 +24,8 @@ export default function ZahlungsmethodenPage() {
         <h2>Akzeptierte Zahlungsmethoden</h2>
         <p>
           Wir akzeptieren <strong>TWINT</strong> und <strong>Stripe</strong>.
-          Über Stripe können Sie mit den folgenden Methoden bezahlen:
+          Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.
         </p>
-        <ul>
-          <li>Kreditkarte (Visa, Mastercard, American Express)</li>
-          <li>Apple Pay</li>
-          <li>Google Pay</li>
-          <li>Stripe Link (1-Klick-Zahlung)</li>
-        </ul>
 
         <h2>Währung</h2>
         <p>
