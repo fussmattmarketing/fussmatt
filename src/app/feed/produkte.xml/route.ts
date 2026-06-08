@@ -44,15 +44,25 @@ export async function GET() {
     });
   }
 
-  const body = await res.arrayBuffer();
+  // Read as text so we can rewrite any leftover wp.fussmatt.com host
+  // references to the canonical fussmatt.com host. Feed PRO is supposed
+  // to emit fussmatt.com URLs (the noindex plugin's home_url filter
+  // handles that), but if the feed was ever regenerated while the
+  // filter wasn't active (e.g. during plugin maintenance windows) the
+  // XML on disk can be left with wp.fussmatt.com URLs baked in. This
+  // proxy-side rewrite makes the served bytes always show the canonical
+  // host, regardless of how / when the upstream file was generated.
+  const raw = await res.text();
+  const canonical = raw.split("wp.fussmatt.com").join("fussmatt.com");
 
-  return new NextResponse(body, {
+  return new NextResponse(canonical, {
     status: 200,
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control":
         "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
       "X-Proxy-Source": "wp.fussmatt.com",
+      "X-Proxy-Rewrite": "wp.fussmatt.com→fussmatt.com",
     },
   });
 }
