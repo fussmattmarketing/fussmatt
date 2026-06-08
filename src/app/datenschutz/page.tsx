@@ -47,8 +47,31 @@ export default function DatenschutzPage() {
         <h2>4. Zahlungsanbieter</h2>
         <h3>Stripe</h3>
         <p>
-          Wir nutzen Stripe für die Zahlungsabwicklung. Stripe erfasst
-          Zahlungsdaten gemäss deren Datenschutzrichtlinie.
+          Wir nutzen Stripe für die Zahlungsabwicklung (Kreditkarte und
+          weitere von Stripe angebotene Methoden). Stripe erfasst
+          Zahlungsdaten gemäss deren Datenschutzrichtlinie:{" "}
+          <a
+            href="https://stripe.com/ch/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            stripe.com/ch/privacy
+          </a>
+          .
+        </p>
+        <h3>TWINT</h3>
+        <p>
+          Wir bieten TWINT als Schweizer Zahlungsmethode an. Bei der
+          Verwendung von TWINT werden Ihre Zahlungsdaten direkt von TWINT
+          AG verarbeitet. Datenschutzrichtlinie:{" "}
+          <a
+            href="https://www.twint.ch/datenschutz/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            twint.ch/datenschutz
+          </a>
+          .
         </p>
 
         <h2>5. Ihre Rechte</h2>

@@ -24,6 +24,38 @@ const nextConfig: NextConfig = {
       // the canonical fussmatt.com hostname.)
     ];
   },
+  async redirects() {
+    return [
+      // WooCommerce auto-registers /shop (page id=6) and /mein-konto
+      // (page id=9) on the WP backend. Headless frontend has no matching
+      // Next.js routes — pre-redirect, both URLs returned 403 from
+      // Vercel's edge. /shop maps onto our canonical product list
+      // (/produkte); /mein-konto is bounced to wp.fussmatt.com where the
+      // WC My Account template is live (noindex'd, so SEO-safe).
+      {
+        source: "/shop",
+        destination: "/produkte",
+        permanent: true,
+      },
+      {
+        source: "/shop/:path*",
+        destination: "/produkte",
+        permanent: true,
+      },
+      {
+        source: "/mein-konto",
+        destination: "https://wp.fussmatt.com/mein-konto",
+        permanent: false,
+        basePath: false,
+      },
+      {
+        source: "/mein-konto/:path*",
+        destination: "https://wp.fussmatt.com/mein-konto/:path*",
+        permanent: false,
+        basePath: false,
+      },
+    ];
+  },
   images: {
     // Custom loader (src/lib/image-loader.ts) — routes remote images through
     // wsrv.nl for on-the-fly resize + WebP, fully bypassing Vercel's metered
