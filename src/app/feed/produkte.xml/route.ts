@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 
+// Force Node runtime + extend timeout to 60s. The XML can be 4 MB+ and
+// the body-rewrite step is whole-string replace, which the default
+// Vercel Function (10 s edge) was timing out on with 500.
+export const runtime = "nodejs";
+export const maxDuration = 60;
+
 /**
  * GET /feed/produkte.xml
  *
