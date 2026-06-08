@@ -21,7 +21,7 @@ import { NextResponse } from "next/server";
  */
 
 const UPSTREAM =
-  "https://wp.fussmatt.com/wp-content/uploads/woo-product-feed-pro/xml/3zuvb53p3vze51yb2krzt0tf0qqzpf4g.xml";
+  "https://wp.fussmatt.com/wp-content/uploads/woo-product-feed-pro/xml/zjhlflyous9kyegm29os7o8p9fx8p6xm.xml";
 
 export async function GET() {
   let res: Response;
