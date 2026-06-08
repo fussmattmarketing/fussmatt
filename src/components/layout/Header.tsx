@@ -63,7 +63,7 @@ export default function Header() {
               Kontakt
             </Link>
             <span className="text-gray-600">|</span>
-            <Link href="/impressum" className="hover:text-white transition-colors">
+            <Link href="/ueber-uns" className="hover:text-white transition-colors">
               Über uns
             </Link>
           </div>
