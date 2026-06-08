@@ -9,6 +9,57 @@ const TRACKING_PARAMS = [
   "fbclid", "gclid", "msclkid",
 ];
 
+/**
+ * Allow-list of every routable first-segment under src/app/. Anything
+ * else gets 307'd to / (CEO policy 2026-06-09: dead URLs land on home,
+ * not a 404 page).
+ *
+ * Why proxy and not not-found.tsx: Vercel ships the build-time 404
+ * output as a cached static asset. RSC `redirect("/")` (with or without
+ * force-dynamic) gets shadowed by that cache and the redirect never
+ * runs at request time. The proxy hook runs at Vercel Edge runtime
+ * BEFORE static asset serving — its 307 response is real and not
+ * cacheable.
+ *
+ * When adding a new top-level segment under src/app/ (e.g. a new
+ * /lp-landing/), append it here. Forgetting means the new route 307s
+ * to / and you notice on first visit.
+ */
+const APP_ROOTS = new Set([
+  // Page routes (src/app/<seg>/page.tsx)
+  "produkte",
+  "kategorie",
+  "produkt",
+  "marke",
+  "kasse",
+  "warenkorb",
+  "bestellung-bestaetigung",
+  "bestellung-verfolgen",
+  "kontakt",
+  "faq",
+  "ratgeber",
+  "agb",
+  "datenschutz",
+  "impressum",
+  "widerruf",
+  "versand",
+  "zahlungsmethoden",
+  "ueber-uns",
+  // Routes that next.config redirects() rewrites — pass them through
+  // so the config rule fires; dropping them here would 307 to / first
+  // and the redirect rule would never see the URL.
+  "shop",
+  "mein-konto",
+  // Route handler
+  "feed",
+  // Wp uploads media proxy (next.config rewrites to wp.fussmatt.com).
+  // Not strictly needed since the existing matcher already excludes
+  // dotted paths, but kept explicit for resilience.
+  "uploads",
+  // API routes — should bypass via the matcher but keep listed defensively
+  "api",
+]);
+
 const scriptSrc = [
   "'self'",
   "'unsafe-inline'",
@@ -44,7 +95,19 @@ const securityHeaders: Record<string, string> = {
 };
 
 export function proxy(request: NextRequest) {
-  // Strip GA/UTM tracking params to prevent CDN cache pollution
+  const pathname = request.nextUrl.pathname;
+
+  // 1. Unknown-route catch-all → 307 to homepage (CEO-2 dead-link policy).
+  //    Runs first so it short-circuits before UTM rewrites or security
+  //    header attachment on URLs we're throwing away anyway.
+  if (pathname !== "/" && pathname !== "") {
+    const firstSeg = pathname.split("/")[1];
+    if (firstSeg && !APP_ROOTS.has(firstSeg)) {
+      return NextResponse.redirect(new URL("/", request.url), 307);
+    }
+  }
+
+  // 2. Strip GA/UTM tracking params to prevent CDN cache pollution
   const url = request.nextUrl.clone();
   let stripped = false;
 
@@ -59,7 +122,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // Security headers
+  // 3. Security headers
   const response = NextResponse.next();
   for (const [key, value] of Object.entries(securityHeaders)) {
     response.headers.set(key, value);
