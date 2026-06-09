@@ -24,9 +24,8 @@ export default function ZahlungsmethodenPage() {
         <h2>Akzeptierte Zahlungsmethoden</h2>
         <p>
           Wir akzeptieren <strong>Stripe</strong> für die sichere
-          Verarbeitung Ihrer Zahlungen — Kreditkarte (Visa, Mastercard,
-          American Express) und weitere von Stripe angebotene Methoden.
-          Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.
+          Verarbeitung Ihrer Zahlungen. Alle Transaktionen sind
+          SSL-verschlüsselt nach Schweizer Standard.
         </p>
 
         <h2>Währung</h2>
