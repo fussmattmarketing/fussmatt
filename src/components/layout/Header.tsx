@@ -127,12 +127,14 @@ export default function Header() {
           {/* Actions: Account + Cart + Mobile Toggle */}
           <div className="flex items-center gap-1">
             {/* Account / Mein Konto — proxy-redirected to wp.fussmatt.com
-                /mein-konto by next.config redirects() (CEO-4). Lives in
-                the action row on every breakpoint so customers always
-                have a one-tap path to login / orders / profile. */}
+                /mein-konto by next.config redirects() (CEO-4). Hidden
+                for now (CEO 2026-06-09): the WP-side login UI lives on
+                wp.fussmatt.com and the cross-host hop felt jarring; we
+                keep the markup so re-enabling is a one-class-toggle
+                later (just drop the `hidden` class). */}
             <Link
               href="/mein-konto"
-              className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+              className="hidden items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
               aria-label="Mein Konto"
               title="Mein Konto"
             >
