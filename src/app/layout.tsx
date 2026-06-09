@@ -3,6 +3,7 @@ import Script from "next/script";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CookieConsent from "@/components/ui/CookieConsent";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import { JsonLd, organizationSchema, webSiteSchema } from "@/lib/seo";
 import {
   GTM_ID,
@@ -97,6 +98,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <CookieConsent />
+        <ScrollToTop />
       </body>
     </html>
   );
