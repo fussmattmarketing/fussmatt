@@ -110,12 +110,34 @@ export const checkoutSchema = z
 export type CheckoutInput = z.infer<typeof checkoutSchema>;
 
 // Contact form schema
+// CEO-9 2026-06-09: thresholds relaxed after customer reports that valid
+// short submissions were being rejected with the generic
+// "Bitte füllen Sie alle Pflichtfelder korrekt aus" message. Whitespace
+// is trimmed before length checks so a stray iOS-keyboard space doesn't
+// trigger a min-length violation. Honeypot is checked separately in the
+// route handler so an autofill/password-manager that populates the
+// hidden field doesn't surface as a generic form error.
 export const contactFormSchema = z.object({
-  name: z.string().min(2, "Name ist zu kurz"),
-  email: z.string().email("Ungültige E-Mail-Adresse"),
-  subject: z.string().min(3, "Betreff ist zu kurz"),
-  message: z.string().min(10, "Nachricht ist zu kurz").max(5000),
-  honeypot: z.string().max(0).optional(),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Bitte geben Sie Ihren Namen an.")
+    .max(120, "Name ist zu lang."),
+  email: z
+    .string()
+    .trim()
+    .email("Bitte geben Sie eine gültige E-Mail-Adresse an."),
+  subject: z
+    .string()
+    .trim()
+    .min(1, "Bitte geben Sie einen Betreff an.")
+    .max(200, "Betreff ist zu lang."),
+  message: z
+    .string()
+    .trim()
+    .min(2, "Bitte geben Sie eine Nachricht ein.")
+    .max(5000, "Nachricht ist zu lang."),
+  honeypot: z.string().optional(),
 });
 
 export type ContactFormInput = z.infer<typeof contactFormSchema>;

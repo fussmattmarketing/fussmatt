@@ -11,8 +11,13 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // CSRF honeypot check
-    if (body.honeypot) {
+    // Honeypot — only treat NON-whitespace content as a bot signal.
+    // Some password managers / browser autofill drop whitespace into
+    // hidden fields, which used to false-positive legitimate users.
+    if (
+      typeof body.honeypot === "string" &&
+      body.honeypot.trim().length > 0
+    ) {
       return NextResponse.json(
         { error: "Ungültige Anfrage." },
         { status: 400 }
@@ -22,9 +27,16 @@ export async function POST(request: Request) {
     // Validate with Zod
     const parsed = contactFormSchema.safeParse(body);
     if (!parsed.success) {
+      // Surface the first specific message so the user sees what's
+      // actually wrong instead of the generic
+      // "Bitte füllen Sie alle Pflichtfelder korrekt aus." line.
+      const firstIssue = parsed.error.issues[0];
+      const specific =
+        firstIssue?.message ||
+        "Bitte überprüfen Sie Ihre Angaben.";
       return NextResponse.json(
         {
-          error: "Bitte füllen Sie alle Pflichtfelder korrekt aus.",
+          error: specific,
           details: parsed.error.flatten(),
         },
         { status: 400 }
