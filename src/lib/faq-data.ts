@@ -25,7 +25,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "Welche Zahlungsmethoden werden akzeptiert?",
-    a: "Wir akzeptieren TWINT und Stripe. Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.",
+    a: "Wir akzeptieren Stripe (Kreditkarte und weitere von Stripe angebotene Methoden). Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.",
   },
   {
     q: "Kann ich die Bestellung zurücksenden?",

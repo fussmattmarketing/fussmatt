@@ -30,8 +30,9 @@ export default function AGBPage() {
         <p>
           Alle Preise sind in Schweizer Franken (CHF) angegeben und verstehen
           sich inklusive Mehrwertsteuer. Die Zahlung erfolgt über{" "}
-          <strong>TWINT</strong> und <strong>Stripe</strong>. Alle Transaktionen
-          sind SSL-verschlüsselt nach Schweizer Standard.
+          <strong>Stripe</strong> (Kreditkarte und weitere von Stripe
+          angebotene Methoden). Alle Transaktionen sind SSL-verschlüsselt
+          nach Schweizer Standard.
         </p>
 
         <h2>4. Versand</h2>

@@ -73,7 +73,7 @@ const BADGES: { Icon: SVGIcon; title: string; subtitle: string; href?: string }[
   {
     Icon: Icon.Card,
     title: "Sicher bezahlen",
-    subtitle: "TWINT und Stripe",
+    subtitle: "Stripe (Kreditkarte)",
   },
   {
     Icon: Icon.Swiss,

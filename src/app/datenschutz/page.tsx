@@ -59,21 +59,6 @@ export default function DatenschutzPage() {
           </a>
           .
         </p>
-        <h3>TWINT</h3>
-        <p>
-          Wir bieten TWINT als Schweizer Zahlungsmethode an. Bei der
-          Verwendung von TWINT werden Ihre Zahlungsdaten direkt von TWINT
-          AG verarbeitet. Datenschutzrichtlinie:{" "}
-          <a
-            href="https://www.twint.ch/datenschutz/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            twint.ch/datenschutz
-          </a>
-          .
-        </p>
-
         <h2>5. Ihre Rechte</h2>
         <p>
           Sie haben das Recht auf Auskunft, Berichtigung, Löschung und

@@ -56,7 +56,7 @@ const TRUST_BLOCKS: { Icon: SVGIcon; label: string; text: string }[] = [
   {
     Icon: Icons.Shield,
     label: "Sicher bezahlen",
-    text: "Bezahlung mit TWINT und Stripe — SSL-verschlüsselt, Schweizer Standard.",
+    text: "Bezahlung mit Stripe — SSL-verschlüsselt, Schweizer Standard.",
   },
   {
     Icon: Icons.Truck,

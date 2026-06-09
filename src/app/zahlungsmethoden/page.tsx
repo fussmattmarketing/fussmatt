@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Zahlungsmethoden",
   description:
-    "Übersicht der akzeptierten Zahlungsmethoden bei FussMatt: TWINT und Stripe. Bezahlung in Schweizer Franken (CHF), SSL-verschlüsselt nach Schweizer Standard.",
+    "Übersicht der akzeptierten Zahlungsmethoden bei FussMatt: Stripe (Kreditkarte). Bezahlung in Schweizer Franken (CHF), SSL-verschlüsselt nach Schweizer Standard.",
   alternates: { canonical: "/zahlungsmethoden" },
 };
 
@@ -23,7 +23,9 @@ export default function ZahlungsmethodenPage() {
       <div className="prose prose-gray max-w-none prose-headings:text-gray-900 prose-headings:font-semibold prose-p:my-3 prose-p:leading-relaxed prose-li:my-1.5 prose-strong:text-gray-900">
         <h2>Akzeptierte Zahlungsmethoden</h2>
         <p>
-          Wir akzeptieren <strong>TWINT</strong> und <strong>Stripe</strong>.
+          Wir akzeptieren <strong>Stripe</strong> für die sichere
+          Verarbeitung Ihrer Zahlungen — Kreditkarte (Visa, Mastercard,
+          American Express) und weitere von Stripe angebotene Methoden.
           Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.
         </p>
 
@@ -41,19 +43,18 @@ export default function ZahlungsmethodenPage() {
           Alle Zahlungen auf unserer Website sind SSL-verschlüsselt und
           entsprechen dem Schweizer Sicherheitsstandard. Ihre Karten- und
           Zahlungsdaten werden niemals auf unseren Servern gespeichert —
-          sie werden direkt und sicher von TWINT bzw. Stripe verarbeitet.
+          sie werden direkt und sicher von Stripe verarbeitet.
         </p>
         <p>
-          Beide Zahlungsdienstleister sind PCI-DSS zertifiziert, dem
-          höchsten Sicherheitsstandard für die Verarbeitung von
-          Kreditkartendaten.
+          Stripe ist PCI-DSS zertifiziert, dem höchsten Sicherheitsstandard
+          für die Verarbeitung von Kreditkartendaten.
         </p>
 
         <h2>Zahlungsablauf</h2>
         <ol>
           <li>
-            Im Checkout wählen Sie Ihre bevorzugte Zahlungsmethode (TWINT
-            oder eine Methode über Stripe).
+            Im Checkout wählen Sie Ihre bevorzugte Zahlungsmethode über
+            Stripe (Kreditkarte oder eine der weiteren angebotenen Methoden).
           </li>
           <li>
             Die Zahlung wird sicher über den Zahlungsdienstleister
