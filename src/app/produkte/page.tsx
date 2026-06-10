@@ -6,7 +6,12 @@ import ProductFilterBar from "@/components/product/ProductFilterBar";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 
-export const revalidate = 3600;
+// Tight ISR window — listings have to track WC backend price changes
+// promptly. The previous 3600s (1h) hold meant a backend rollback
+// sat in stale card-snapshots for an hour. 60s keeps freshness in
+// the same minute price changes land while still keeping the page
+// mostly cached.
+export const revalidate = 60;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {

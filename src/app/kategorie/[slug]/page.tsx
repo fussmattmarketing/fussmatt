@@ -12,7 +12,9 @@ import { TrustStrip } from "@/components/ui/TrustStrip";
 import { TrustGrid } from "@/components/ui/TrustGrid";
 import Link from "next/link";
 
-export const revalidate = 3600;
+// Tight ISR window — listings have to track WC backend price changes
+// promptly (per /produkte page rationale).
+export const revalidate = 60;
 export const maxDuration = 60;
 
 export async function generateStaticParams() {
