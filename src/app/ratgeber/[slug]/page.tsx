@@ -123,13 +123,24 @@ export async function generateMetadata({
 
   const article = getArticleBySlug(slug);
   if (article) {
+    const articleImage = (article as { image?: string }).image;
     return {
       title: article.title,
       description: article.excerpt,
       openGraph: {
         title: `${article.title} | FussMatt Ratgeber`,
         description: article.excerpt,
+        type: "article",
+        ...(articleImage ? { images: [{ url: articleImage }] } : {}),
       },
+      ...(articleImage
+        ? {
+            twitter: {
+              card: "summary_large_image",
+              images: [articleImage],
+            },
+          }
+        : {}),
     };
   }
 
@@ -141,7 +152,17 @@ export async function generateMetadata({
       openGraph: {
         title: `${wpPost.title} | FussMatt Blog`,
         description: wpPost.excerpt,
+        type: "article",
+        ...(wpPost.image ? { images: [{ url: wpPost.image }] } : {}),
       },
+      ...(wpPost.image
+        ? {
+            twitter: {
+              card: "summary_large_image",
+              images: [wpPost.image],
+            },
+          }
+        : {}),
     };
   }
 
@@ -375,6 +396,12 @@ export default async function RatgeberPage({
   const category = staticArticle?.category || wpPost!.category;
   const readTime = staticArticle?.readTime || wpPost!.readTime;
   const faq = staticArticle?.faq || [];
+  // Cover image — WP _embedded["wp:featuredmedia"][0].source_url, or
+  // the static article's bundled image. Falls back to undefined so the
+  // hero block disappears cleanly when there's no real image to show.
+  const coverImage =
+    (staticArticle as { image?: string } | undefined)?.image ||
+    wpPost?.image;
 
   const related = RATGEBER_ARTICLES.filter((a) => a.slug !== slug).slice(0, 2);
 
@@ -442,7 +469,23 @@ export default async function RatgeberPage({
                 </p>
               )}
 
-              <div className="mt-6 border-t border-gray-100" />
+              {/* Cover image — WP featured_media or static-article image.
+                  Hidden cleanly when no source is available; uses a
+                  loose alt fallback so we don't ship empty alt text. */}
+              {coverImage && (
+                <div className="mt-8 -mx-4 sm:mx-0 sm:rounded-2xl overflow-hidden bg-gray-100">
+                  <img
+                    src={coverImage}
+                    alt={title}
+                    width={1200}
+                    height={630}
+                    className="w-full h-auto object-cover aspect-[16/9]"
+                    loading="eager"
+                  />
+                </div>
+              )}
+
+              <div className="mt-8 border-t border-gray-100" />
             </header>
 
             {/* Article Content */}
