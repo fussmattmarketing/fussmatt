@@ -45,10 +45,40 @@ function estimateReadTime(html: string): string {
   return `${minutes} Min`;
 }
 
-function mapWPPost(post: WPPost): BlogPost {
-  const featuredImage =
-    post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-    "/images/blog-placeholder.jpg";
+/**
+ * Some posts have their `_embedded["wp:featuredmedia"][0]` populated
+ * with a REST error object ({ code, message, data }) rather than the
+ * real media payload — observed for media items the embed pipeline
+ * couldn't resolve (private attachment, missing permission, etc).
+ * `wp/v2/media/{id}` direct fetch returns the source_url in those
+ * cases. This helper falls back to the direct media endpoint when the
+ * embed shape isn't usable.
+ */
+async function resolveFeaturedImage(post: WPPost): Promise<string> {
+  const embedded = post._embedded?.["wp:featuredmedia"]?.[0];
+  const embeddedSrc = (
+    embedded as unknown as { source_url?: string } | undefined
+  )?.source_url;
+  if (embeddedSrc) return embeddedSrc;
+  if (!post.featured_media || post.featured_media === 0) {
+    return "/images/blog-placeholder.jpg";
+  }
+  try {
+    const res = await fetch(`${WP_API}/media/${post.featured_media}`, {
+      next: { revalidate: 600 },
+    });
+    if (res.ok) {
+      const media = (await res.json()) as { source_url?: string };
+      if (media.source_url) return media.source_url;
+    }
+  } catch {
+    // swallow; fall through to placeholder
+  }
+  return "/images/blog-placeholder.jpg";
+}
+
+async function mapWPPost(post: WPPost): Promise<BlogPost> {
+  const featuredImage = await resolveFeaturedImage(post);
 
   const categories = post._embedded?.["wp:term"]?.[0] || [];
   const category = categories[0]?.name || "Blog";
@@ -82,7 +112,7 @@ export async function getWPPosts(perPage = 50): Promise<BlogPost[]> {
     }
 
     const posts: WPPost[] = await res.json();
-    return posts.map(mapWPPost);
+    return await Promise.all(posts.map(mapWPPost));
   } catch (error) {
     console.error("Failed to fetch WP posts:", error);
     return [];
@@ -106,7 +136,7 @@ export async function getWPPostBySlug(
     const posts: WPPost[] = await res.json();
     if (posts.length === 0) return null;
 
-    return mapWPPost(posts[0]);
+    return await mapWPPost(posts[0]);
   } catch (error) {
     console.error("Failed to fetch WP post:", error);
     return null;
