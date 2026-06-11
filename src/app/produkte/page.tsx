@@ -5,6 +5,7 @@ import ProductCard from "@/components/product/ProductCard";
 import ProductFilterBar from "@/components/product/ProductFilterBar";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import CategoryNav from "@/components/ui/CategoryNav";
 
 // Tight ISR window — listings have to track WC backend price changes
 // promptly. The previous 3600s (1h) hold meant a backend rollback
@@ -66,30 +67,40 @@ export default async function ProduktePage({
           : "Alle Fussmatten"}
       </h1>
 
-      {products.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500">Keine Produkte gefunden.</p>
-          <a
-            href="/produkte"
-            className="text-amber-600 hover:text-amber-700 mt-2 inline-block"
-          >
-            Alle Produkte anzeigen
-          </a>
+      <div className="grid lg:grid-cols-4 gap-8">
+        {/* Sidebar — category nav, mirrors /kategorie/[slug] layout */}
+        <div className="lg:col-span-1">
+          <CategoryNav activeSlug="__all__" />
         </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            baseUrl={`/produkte${categorySlug ? `?kategorie=${categorySlug}` : ""}${search ? `?suche=${search}` : ""}`}
-          />
-        </>
-      )}
+
+        {/* Products */}
+        <div className="lg:col-span-3">
+          {products.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Keine Produkte gefunden.</p>
+              <a
+                href="/produkte"
+                className="text-amber-600 hover:text-amber-700 mt-2 inline-block"
+              >
+                Alle Produkte anzeigen
+              </a>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                baseUrl={`/produkte${categorySlug ? `?kategorie=${categorySlug}` : ""}${search ? `?suche=${search}` : ""}`}
+              />
+            </>
+          )}
+        </div>
+      </div>
       </div>
     </>
   );

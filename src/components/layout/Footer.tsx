@@ -55,6 +55,46 @@ export default function Footer() {
                   5D Fussmatten
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/kategorie/kofferraummatte"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Kofferraummatte
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kategorie/fuss-und-kofferraummatten-set"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Fuss- und Kofferraummatten Set
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kategorie/passend-fuer-lkw-truck-fussmatten"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  LKW-Truck Fussmatten
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kategorie/passend-fuer-kleinbus-pickup-fussmatten"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Kleinbus &amp; Pickup Fussmatten
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kategorie/universal-fussmatten"
+                  className="text-sm hover:text-amber-500 transition-colors"
+                >
+                  Universal Fussmatten
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -78,7 +78,7 @@ const BADGES: { Icon: SVGIcon; title: string; subtitle: string; href?: string }[
   {
     Icon: Icon.Swiss,
     title: "Schweizer Unternehmen",
-    subtitle: "Royal Road GmbH seit 2021",
+    subtitle: "Royal Road GmbH",
   },
   {
     Icon: Icon.Truck,

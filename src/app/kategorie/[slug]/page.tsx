@@ -8,6 +8,7 @@ import ProductCard from "@/components/product/ProductCard";
 import Pagination from "@/components/ui/Pagination";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import VehicleFilter from "@/components/product/VehicleFilter";
+import CategoryNav from "@/components/ui/CategoryNav";
 import { TrustStrip } from "@/components/ui/TrustStrip";
 import { TrustGrid } from "@/components/ui/TrustGrid";
 import Link from "next/link";
@@ -105,8 +106,8 @@ export default async function KategoriePage({
       <div className="grid lg:grid-cols-4 gap-8">
         {/* Sidebar */}
         <div className="lg:col-span-1 space-y-6">
+          <CategoryNav activeSlug={slug} />
           <VehicleFilter hierarchy={hierarchy} categorySlug={slug} />
-
         </div>
 
         {/* Products */}

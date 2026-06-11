@@ -13,6 +13,7 @@ import ProductAccordion from "@/components/product/ProductAccordion";
 import ProductPageTracking from "@/components/product/ProductPageTracking";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { TrustGrid } from "@/components/ui/TrustGrid";
+import ProductFAQ from "@/components/ui/ProductFAQ";
 import { TrustBadges } from "@/components/ui/TrustBadges";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
 
@@ -236,6 +237,9 @@ export default async function ProduktPage({
       <div className="mt-12">
         <ProductAccordion items={accordionItems} />
       </div>
+
+      {/* FAQ — generic accordion + FAQ JSON-LD for SEO */}
+      <ProductFAQ productLabel={product.name} />
 
       {/* Trust signals */}
       <div className="mt-12">
