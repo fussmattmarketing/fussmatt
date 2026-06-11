@@ -104,10 +104,11 @@ export default async function KategoriePage({
       />
 
       <div className="grid lg:grid-cols-4 gap-8">
-        {/* Sidebar */}
+        {/* Sidebar — vehicle filter first (most active control on the
+            page), then the category nav as a quieter secondary jump-off */}
         <div className="lg:col-span-1 space-y-6">
-          <CategoryNav activeSlug={slug} />
           <VehicleFilter hierarchy={hierarchy} categorySlug={slug} />
+          <CategoryNav activeSlug={slug} />
         </div>
 
         {/* Products */}
