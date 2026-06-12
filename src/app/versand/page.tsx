@@ -29,6 +29,10 @@ export default function VersandPage() {
           <li>
             <strong>Gesamte Lieferzeit:</strong> 1–3 Werktage
           </li>
+          <li>
+            <strong>Bestellzeitpunkt:</strong> Bestellungen nach 17:00 Uhr
+            werden am nächsten Werktag versandt
+          </li>
         </ul>
 
         <h2>Versandkosten</h2>

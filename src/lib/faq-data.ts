@@ -21,7 +21,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "Wie lange dauert die Lieferung?",
-    a: "Die gesamte Lieferzeit beträgt 1–3 Werktage (inklusive 0–1 Werktag Vorbereitungszeit). Der Versand ist kostenlos — ohne Mindestbestellwert.",
+    a: "Die gesamte Lieferzeit beträgt 1–3 Werktage (inklusive 0–1 Werktag Vorbereitungszeit). Bestellungen nach 17:00 Uhr werden am nächsten Werktag versandt. Der Versand ist kostenlos — ohne Mindestbestellwert.",
   },
   {
     q: "Welche Zahlungsmethoden werden akzeptiert?",

@@ -100,6 +100,7 @@ export default async function ProduktPage({
         <li><strong>Schweiz:</strong> Kostenloser Versand — ohne Mindestbestellwert</li>
         <li><strong>Lieferzeit:</strong> ${SHIPPING_CONFIG.CH.deliveryDays} Werktage innerhalb der Schweiz</li>
         <li><strong>Vorbereitungszeit:</strong> 0–1 Werktag</li>
+        <li><strong>Bestellzeitpunkt:</strong> Bestellungen nach 17:00 Uhr werden am nächsten Werktag versandt</li>
       </ul>`,
       isHtml: true,
     },

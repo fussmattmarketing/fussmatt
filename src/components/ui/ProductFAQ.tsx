@@ -26,7 +26,7 @@ export default function ProductFAQ({ productLabel }: ProductFAQProps) {
     },
     {
       q: "Wie lange dauert die Lieferung?",
-      a: "Versand erfolgt aus der Schweiz innerhalb von 1–3 Werktagen. Wir liefern ausschliesslich in der Schweiz, der Versand ist kostenlos — ohne Mindestbestellwert.",
+      a: "Versand erfolgt aus der Schweiz innerhalb von 1–3 Werktagen. Bestellungen nach 17:00 Uhr werden am nächsten Werktag versandt. Wir liefern ausschliesslich in der Schweiz, der Versand ist kostenlos — ohne Mindestbestellwert.",
     },
     {
       q: "Aus welchem Material bestehen die Matten?",

@@ -82,7 +82,7 @@ export function generateCategoryBrandContent(
       },
       {
         question: `Wie lange dauert die Lieferung?`,
-        answer: `Die Lieferung erfolgt innerhalb von 1–3 Werktagen in der ganzen Schweiz. Der Versand ist immer kostenlos — ohne Mindestbestellwert.`,
+        answer: `Die Lieferung erfolgt innerhalb von 1–3 Werktagen in der ganzen Schweiz. Bestellungen nach 17:00 Uhr werden am nächsten Werktag versandt. Der Versand ist immer kostenlos — ohne Mindestbestellwert.`,
       },
     ],
   };

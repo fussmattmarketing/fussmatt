@@ -38,8 +38,9 @@ export default function AGBPage() {
         <h2>4. Versand</h2>
         <p>
           Wir liefern ausschliesslich innerhalb der Schweiz. Der Versand ist
-          kostenlos — ohne Mindestbestellwert. Details zur Lieferzeit finden Sie
-          auf unserer <a href="/versand">Versand-Seite</a>.
+          kostenlos — ohne Mindestbestellwert. Bestellungen, die nach 17:00 Uhr
+          eingehen, werden am nächsten Werktag versandt. Details zur Lieferzeit
+          finden Sie auf unserer <a href="/versand">Versand-Seite</a>.
         </p>
 
         <h2>5. Widerrufsrecht und Rückgabe</h2>
