@@ -41,7 +41,7 @@ export default function CategoryNav({
 }: CategoryNavProps) {
   return (
     <nav
-      aria-label="Kategorien"
+      aria-label="Kategorie-Seitennavigation"
       className={`bg-gray-50 border border-gray-100 rounded-2xl p-5 ${className}`}
     >
       <h2 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
