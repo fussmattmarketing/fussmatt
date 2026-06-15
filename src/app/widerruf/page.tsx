@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Widerrufsbelehrung & Rückgaberecht",
+  title: "Rückgabe & 30 Tage Geld-zurück-Garantie",
   description:
-    "Widerrufsbelehrung für FussMatt.com – 30 Tage Geld-zurück-Garantie auf alle Auto-Fussmatten. Einfach und unkompliziert.",
+    "30 Tage Geld-zurück-Garantie auf alle Auto-Fussmatten bei FussMatt.com. Rückgabe ohne Angabe von Gründen — einfach und unkompliziert.",
 };
 
 export default function WiderrufPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-2xl font-bold text-gray-900 mb-8">
-        Widerrufsbelehrung &amp; Rückgaberecht
+        Rückgabe &amp; 30 Tage Geld-zurück-Garantie
       </h1>
       <div className="prose prose-gray max-w-none">
         <h2>30 Tage Geld-zurück-Garantie</h2>
@@ -19,11 +19,7 @@ export default function WiderrufPage() {
           ohne Angabe von Gründen zurückzugeben. Die Rückgabefrist beträgt
           dreissig Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter
           Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen
-          haben bzw. hat.
-        </p>
-        <p>
-          Damit gehen wir über das gesetzliche Widerrufsrecht von 14 Tagen
-          hinaus und geben Ihnen ausreichend Zeit, unsere Produkte in Ihrem
+          haben. So haben Sie ausreichend Zeit, unsere Produkte in Ihrem
           Fahrzeug zu testen.
         </p>
 
@@ -55,28 +51,18 @@ export default function WiderrufPage() {
 
         <h2>Rücksendung</h2>
         <p>
-          Bitte senden Sie die Ware innerhalb von 14 Tagen nach Ihrer
-          Rückgabemeldung an uns zurück. Die unmittelbaren Kosten der
-          Rücksendung tragen Sie als Käufer.
+          Bitte senden Sie die Ware zeitnah nach Ihrer Rückgabemeldung an uns
+          zurück. Die unmittelbaren Kosten der Rücksendung tragen Sie als
+          Käufer.
         </p>
 
         <h2>Erstattung</h2>
         <p>
           Nach Eingang und Prüfung der zurückgesendeten Ware erstatten wir
           Ihnen den vollen Kaufpreis einschliesslich der ursprünglichen
-          Lieferkosten (mit Ausnahme zusätzlicher Kosten, die sich aus einer
-          von Ihnen gewählten Expresslieferung ergeben). Die Erstattung erfolgt
-          unverzüglich und spätestens binnen vierzehn Tagen über dasselbe
+          Lieferkosten. Die Erstattung erfolgt umgehend über dasselbe
           Zahlungsmittel, das Sie bei der ursprünglichen Bestellung verwendet
           haben.
-        </p>
-
-        <h2>Gesetzliches Widerrufsrecht</h2>
-        <p>
-          Unabhängig von unserer erweiterten 30-Tage-Garantie steht Ihnen das
-          gesetzliche Widerrufsrecht von 14 Tagen gemäss schweizerischem Recht
-          zu. Die 30-Tage-Garantie von FussMatt geht über dieses gesetzliche
-          Minimum hinaus und ersetzt es nicht.
         </p>
       </div>
     </div>

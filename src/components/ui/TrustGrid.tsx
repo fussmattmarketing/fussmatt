@@ -70,8 +70,8 @@ const TRUST_BLOCKS: { Icon: SVGIcon; label: string; text: string }[] = [
   },
   {
     Icon: Icons.Doc,
-    label: "14 Tage Widerrufsrecht",
-    text: "Bestellung ohne Risiko — gesetzliches Widerrufsrecht inklusive.",
+    label: "30 Tage Rückgaberecht",
+    text: "Bestellung ohne Risiko — 30 Tage Geld-zurück-Garantie inklusive.",
   },
   {
     Icon: Icons.Phone,

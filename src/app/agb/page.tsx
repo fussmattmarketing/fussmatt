@@ -43,13 +43,12 @@ export default function AGBPage() {
           finden Sie auf unserer <a href="/versand">Versand-Seite</a>.
         </p>
 
-        <h2>5. Widerrufsrecht und Rückgabe</h2>
+        <h2>5. Rückgabe</h2>
         <p>
           FussMatt bietet eine <strong>30-Tage-Geld-zurück-Garantie</strong> auf
-          alle Produkte. Sie haben das Recht, binnen 30 Tagen ohne Angabe von
-          Gründen diesen Vertrag zu widerrufen. Dies geht über das gesetzliche
-          Widerrufsrecht von 14 Tagen hinaus. Weitere Informationen finden Sie
-          in unserer <a href="/widerruf">Widerrufsbelehrung</a>.
+          alle Produkte. Sie haben 30 Tage Zeit, Ihre Bestellung ohne Angabe von
+          Gründen zurückzugeben. Weitere Informationen finden Sie auf unserer{" "}
+          <a href="/widerruf">Rückgabe-Seite</a>.
         </p>
 
         <h2>6. Anwendbares Recht</h2>

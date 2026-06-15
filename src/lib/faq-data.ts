@@ -29,11 +29,11 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "Kann ich die Bestellung zurücksenden?",
-    a: "Ja. FussMatt bietet eine 30-Tage-Geld-zurück-Garantie auf alle Produkte. Darüber hinaus gilt das gesetzliche Widerrufsrecht von 14 Tagen. Sie können die Matten ohne Angabe von Gründen zurücksenden, solange sie sich in einem wiederverkaufsfähigen Zustand befinden.",
+    a: "Ja. FussMatt bietet eine 30-Tage-Geld-zurück-Garantie auf alle Produkte. Sie können die Matten innerhalb von 30 Tagen ohne Angabe von Gründen zurücksenden, solange sie sich in einem wiederverkaufsfähigen Zustand befinden.",
   },
   {
     q: "Wie funktioniert eine Rücksendung?",
-    a: "Schreiben Sie uns eine kurze E-Mail an info@fussmatt.com mit Ihrer Bestellnummer. Wir senden Ihnen die Rücksendeanweisungen zu und erstatten Ihnen nach Erhalt der Ware den vollen Kaufbetrag innerhalb von 14 Tagen.",
+    a: "Schreiben Sie uns eine kurze E-Mail an info@fussmatt.com mit Ihrer Bestellnummer. Wir senden Ihnen die Rücksendeanweisungen zu und erstatten Ihnen nach Erhalt und Prüfung der Ware den vollen Kaufbetrag umgehend.",
   },
   {
     q: "Passen die Fussmatten genau in mein Fahrzeug?",

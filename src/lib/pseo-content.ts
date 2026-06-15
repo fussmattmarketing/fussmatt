@@ -243,7 +243,7 @@ export function generateModelYearContent(
       },
       {
         question: `Kann ich die Fussmatten zurückgeben?`,
-        answer: `Ja, Sie haben ein 14-tägiges Widerrufsrecht. Die Fussmatten können in unbenutztem Zustand zurückgeschickt werden. Weitere Details finden Sie in unserer Widerrufsbelehrung.`,
+        answer: `Ja, Sie haben 30 Tage Rückgaberecht mit unserer Geld-zurück-Garantie. Die Fussmatten können in unbenutztem Zustand zurückgeschickt werden. Weitere Details finden Sie auf unserer Rückgabe-Seite.`,
       },
     ],
   };

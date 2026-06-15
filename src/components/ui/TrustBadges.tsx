@@ -116,9 +116,7 @@ export function TrustBadges({
           Schweizer Versand 1–3 Tage
         </span>
         <span className="text-gray-300">·</span>
-        <span>30 Tage Geld-zurück</span>
-        <span className="text-gray-300">·</span>
-        <span>14 Tage Widerruf</span>
+        <span>30 Tage Geld-zurück-Garantie</span>
         <span className="text-gray-300">·</span>
         <a href="tel:+41445052722" className="hover:text-amber-700 transition-colors">
           +41 44 505 27 22
