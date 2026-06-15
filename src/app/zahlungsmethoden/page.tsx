@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PaymentMethods from "@/components/ui/PaymentMethods";
 
 export const metadata: Metadata = {
   title: "Zahlungsmethoden",
@@ -24,9 +25,14 @@ export default function ZahlungsmethodenPage() {
         <h2>Akzeptierte Zahlungsmethoden</h2>
         <p>
           Wir akzeptieren <strong>Stripe</strong> für die sichere
-          Verarbeitung Ihrer Zahlungen. Alle Transaktionen sind
+          Verarbeitung Ihrer Zahlungen — inklusive der gängigen
+          Kreditkarten <strong>Visa</strong>, <strong>Mastercard</strong> und{" "}
+          <strong>American Express</strong>. Alle Transaktionen sind
           SSL-verschlüsselt nach Schweizer Standard.
         </p>
+        <div className="not-prose my-6">
+          <PaymentMethods variant="inline" showLabel={false} />
+        </div>
 
         <h2>Währung</h2>
         <p>

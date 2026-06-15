@@ -13,6 +13,7 @@ import ProductAccordion from "@/components/product/ProductAccordion";
 import ProductPageTracking from "@/components/product/ProductPageTracking";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { TrustGrid } from "@/components/ui/TrustGrid";
+import PaymentMethods from "@/components/ui/PaymentMethods";
 import ProductFAQ from "@/components/ui/ProductFAQ";
 import { TrustBadges } from "@/components/ui/TrustBadges";
 import { SHIPPING_CONFIG } from "@/lib/shipping";
@@ -225,6 +226,12 @@ export default async function ProduktPage({
                 <span>{usp.text}</span>
               </div>
             ))}
+          </div>
+
+          {/* Accepted payment methods — under add-to-cart, reassures the
+              buyer which cards we take via Stripe before checkout */}
+          <div className="mt-5 pt-5 border-t border-gray-100">
+            <PaymentMethods variant="inline" />
           </div>
         </div>
       </div>
