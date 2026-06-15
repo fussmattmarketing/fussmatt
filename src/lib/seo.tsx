@@ -75,11 +75,12 @@ export function productSchema(product: WCProduct) {
   const url = `${SITE_URL}/produkt/${product.slug}`;
   const image = canonicalImageUrl(product.images[0]?.src);
 
-  // Extract real brand from product attributes (NOT "FussMatt")
-  const markeAttr = product.attributes.find(
-    (a) => a.name.toLowerCase() === "marke" || a.name.toLowerCase() === "brand"
-  );
-  const brandName = markeAttr?.options[0] || SITE_NAME;
+  // Brand is always "FussMatt" — we manufacture/sell the mats, we are not
+  // the car maker. The vehicle marque belongs in the product NAME and the
+  // feed's g:size, never in schema.org brand (that's our store brand and
+  // must not collide with Mercedes/BMW/etc in Google's eyes). The old
+  // per-product "Marke" attribute is being removed from WooCommerce.
+  const brandName = SITE_NAME;
 
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
