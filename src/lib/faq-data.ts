@@ -25,7 +25,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "Welche Zahlungsmethoden werden akzeptiert?",
-    a: "Wir akzeptieren Stripe (Kreditkarte und weitere von Stripe angebotene Methoden). Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.",
+    a: "Wir akzeptieren Stripe — mit den Kreditkarten Visa, Mastercard und American Express. Alle Zahlungen sind SSL-verschlüsselt nach Schweizer Standard.",
   },
   {
     q: "Kann ich die Bestellung zurücksenden?",

@@ -42,7 +42,7 @@ export default function ProductFAQ({ productLabel }: ProductFAQProps) {
     },
     {
       q: "Wie bezahle ich?",
-      a: "Sicher über Stripe — Kreditkarte und weitere von Stripe angebotene Zahlungsmethoden. Alle Transaktionen sind SSL-verschlüsselt nach Schweizer Standard.",
+      a: "Sicher über Stripe — mit den Kreditkarten Visa, Mastercard und American Express. Alle Transaktionen sind SSL-verschlüsselt nach Schweizer Standard.",
     },
   ];
 

@@ -127,7 +127,7 @@ function PaymentForm({
       </button>
 
       <p className="text-xs text-gray-400 text-center">
-        Sichere Zahlung über Stripe. Ihre Daten werden verschlüsselt übertragen.
+        Sichere Zahlung über Stripe — Visa, Mastercard und American Express. Ihre Daten werden verschlüsselt übertragen.
       </p>
     </div>
   );

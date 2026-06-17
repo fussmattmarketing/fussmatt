@@ -5,7 +5,7 @@ import PaymentMethods from "@/components/ui/PaymentMethods";
 export const metadata: Metadata = {
   title: "Zahlungsmethoden",
   description:
-    "Übersicht der akzeptierten Zahlungsmethoden bei FussMatt: Stripe (Kreditkarte). Bezahlung in Schweizer Franken (CHF), SSL-verschlüsselt nach Schweizer Standard.",
+    "Übersicht der akzeptierten Zahlungsmethoden bei FussMatt: Stripe — Visa, Mastercard und American Express. Bezahlung in Schweizer Franken (CHF), SSL-verschlüsselt nach Schweizer Standard.",
   alternates: { canonical: "/zahlungsmethoden" },
 };
 
@@ -58,8 +58,8 @@ export default function ZahlungsmethodenPage() {
         <h2>Zahlungsablauf</h2>
         <ol>
           <li>
-            Im Checkout wählen Sie Ihre bevorzugte Zahlungsmethode über
-            Stripe (Kreditkarte oder eine der weiteren angebotenen Methoden).
+            Im Checkout bezahlen Sie sicher über Stripe — mit Ihrer
+            Kreditkarte von Visa, Mastercard oder American Express.
           </li>
           <li>
             Die Zahlung wird sicher über den Zahlungsdienstleister

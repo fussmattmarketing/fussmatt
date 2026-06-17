@@ -56,7 +56,7 @@ const TRUST_BLOCKS: { Icon: SVGIcon; label: string; text: string }[] = [
   {
     Icon: Icons.Shield,
     label: "Sicher bezahlen",
-    text: "Bezahlung mit Stripe — SSL-verschlüsselt, Schweizer Standard.",
+    text: "Stripe — Visa, Mastercard & American Express. SSL-verschlüsselt, Schweizer Standard.",
   },
   {
     Icon: Icons.Truck,

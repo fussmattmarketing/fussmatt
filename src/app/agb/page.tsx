@@ -29,10 +29,10 @@ export default function AGBPage() {
         <h2>3. Preise und Zahlung</h2>
         <p>
           Alle Preise sind in Schweizer Franken (CHF) angegeben und verstehen
-          sich inklusive Mehrwertsteuer. Die Zahlung erfolgt über{" "}
-          <strong>Stripe</strong> (Kreditkarte und weitere von Stripe
-          angebotene Methoden). Alle Transaktionen sind SSL-verschlüsselt
-          nach Schweizer Standard.
+          sich inklusive Mehrwertsteuer. Die Zahlung erfolgt sicher über{" "}
+          <strong>Stripe</strong> — mit den Kreditkarten <strong>Visa</strong>,{" "}
+          <strong>Mastercard</strong> und <strong>American Express</strong>.
+          Alle Transaktionen sind SSL-verschlüsselt nach Schweizer Standard.
         </p>
 
         <h2>4. Versand</h2>

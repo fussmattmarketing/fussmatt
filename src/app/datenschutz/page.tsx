@@ -47,8 +47,8 @@ export default function DatenschutzPage() {
         <h2>4. Zahlungsanbieter</h2>
         <h3>Stripe</h3>
         <p>
-          Wir nutzen Stripe für die Zahlungsabwicklung (Kreditkarte und
-          weitere von Stripe angebotene Methoden). Stripe erfasst
+          Wir nutzen Stripe für die Zahlungsabwicklung der Kreditkarten
+          Visa, Mastercard und American Express. Stripe erfasst
           Zahlungsdaten gemäss deren Datenschutzrichtlinie:{" "}
           <a
             href="https://stripe.com/ch/privacy"
