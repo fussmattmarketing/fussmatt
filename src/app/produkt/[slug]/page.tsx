@@ -105,6 +105,30 @@ export default async function ProduktPage({
       </ul>`,
       isHtml: true,
     },
+    {
+      title: "Rückgabe & 30 Tage Geld-zurück-Garantie",
+      content: `<h3>30 Tage Geld-zurück-Garantie</h3>
+      <p>Bei FussMatt haben Sie <strong>30 Tage</strong> Zeit, Ihre Bestellung ohne Angabe von Gründen zurückzugeben. Die Rückgabefrist beträgt dreissig Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben. So haben Sie ausreichend Zeit, unsere Produkte in Ihrem Fahrzeug zu testen.</p>
+      <h3>Voraussetzungen für die Rückgabe</h3>
+      <ul>
+        <li>Die Fussmatten müssen sich in unbenutztem, neuwertigem Zustand befinden.</li>
+        <li>Die Originalverpackung muss vorhanden sein.</li>
+        <li>Normale Prüfung der Passform im Fahrzeug (Einlegen und wieder Herausnehmen) gilt nicht als Benutzung.</li>
+      </ul>
+      <h3>So geben Sie Ihre Bestellung zurück</h3>
+      <p>Um Ihr Rückgaberecht auszuüben, kontaktieren Sie uns per E-Mail oder über unser Kontaktformular:</p>
+      <ul>
+        <li><strong>E-Mail:</strong> info@fussmatt.com</li>
+        <li><strong>Kontaktformular:</strong> fussmatt.com/kontakt</li>
+        <li><strong>Adresse:</strong> Royal Road GmbH, Dübendorfstrasse 4, 8051 Zürich</li>
+      </ul>
+      <p>Teilen Sie uns Ihre Bestellnummer und den Rückgabegrund mit. Wir senden Ihnen eine Rücksendebestätigung mit allen weiteren Informationen.</p>
+      <h3>Rücksendung</h3>
+      <p>Bitte senden Sie die Ware zeitnah nach Ihrer Rückgabemeldung an uns zurück. Die unmittelbaren Kosten der Rücksendung tragen Sie als Käufer.</p>
+      <h3>Erstattung</h3>
+      <p>Nach Eingang und Prüfung der zurückgesendeten Ware erstatten wir Ihnen den vollen Kaufpreis einschliesslich der ursprünglichen Lieferkosten. Die Erstattung erfolgt umgehend über dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Bestellung verwendet haben.</p>`,
+      isHtml: true,
+    },
   ];
 
   return (
