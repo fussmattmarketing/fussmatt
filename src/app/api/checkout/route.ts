@@ -108,7 +108,7 @@ export async function POST(request: Request) {
     // Create WooCommerce order (set_paid: false — paid after Stripe)
     const orderData = {
       payment_method: "stripe",
-      payment_method_title: "Stripe (Kreditkarte)",
+      payment_method_title: "Stripe — Visa, Mastercard, American Express",
       set_paid: false,
       currency: "CHF",
       billing: {

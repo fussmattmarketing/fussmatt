@@ -78,7 +78,7 @@ export async function POST(request: Request) {
                     country: shipping.country || "",
                   }
                 : undefined,
-              paymentMethod: "Stripe",
+              paymentMethod: "Stripe — Visa, Mastercard, American Express",
             };
 
             // Send both emails concurrently
