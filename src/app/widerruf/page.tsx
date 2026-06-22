@@ -59,10 +59,9 @@ export default function WiderrufPage() {
         <h2>Erstattung</h2>
         <p>
           Nach Eingang und Prüfung der zurückgesendeten Ware erstatten wir
-          Ihnen den vollen Kaufpreis einschliesslich der ursprünglichen
-          Lieferkosten. Die Erstattung erfolgt umgehend über dasselbe
-          Zahlungsmittel, das Sie bei der ursprünglichen Bestellung verwendet
-          haben.
+          Ihnen den vollen Kaufpreis. Die Erstattung erfolgt innerhalb von
+          14 Tagen nach Eingang der Rücksendung über dasselbe Zahlungsmittel,
+          das Sie bei der ursprünglichen Bestellung verwendet haben.
         </p>
       </div>
     </div>

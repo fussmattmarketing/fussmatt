@@ -97,12 +97,21 @@ export default async function ProduktPage({
     },
     {
       title: "Versand",
-      content: `<ul>
-        <li><strong>Schweiz:</strong> Kostenloser Versand — ohne Mindestbestellwert</li>
-        <li><strong>Lieferzeit:</strong> ${SHIPPING_CONFIG.CH.deliveryDays} Werktage innerhalb der Schweiz</li>
-        <li><strong>Vorbereitungszeit:</strong> 0–1 Werktag</li>
+      content: `<p>Wir liefern ausschliesslich innerhalb der Schweiz. <strong>Kostenloser Versand</strong> in der ganzen Schweiz — ohne Mindestbestellwert. Alle Preise verstehen sich in Schweizer Franken (CHF).</p>
+      <h3>Lieferzeit</h3>
+      <ul>
+        <li><strong>Vorbereitungszeit der Bestellung:</strong> 0–1 Werktag</li>
+        <li><strong>Gesamte Lieferzeit:</strong> ${SHIPPING_CONFIG.CH.deliveryDays} Werktage</li>
         <li><strong>Bestellzeitpunkt:</strong> Bestellungen nach 17:00 Uhr werden am nächsten Werktag versandt</li>
-      </ul>`,
+      </ul>
+      <h3>Versandkosten</h3>
+      <ul>
+        <li><strong>Schweiz:</strong> Kostenlos — ohne Mindestbestellwert</li>
+      </ul>
+      <h3>Versandart</h3>
+      <p>Alle Bestellungen werden per Standardversand verschickt. Sie erhalten eine Versandbestätigung per E-Mail mit Tracking-Informationen, sobald Ihre Bestellung das Lager verlässt.</p>
+      <h3>Lieferadresse</h3>
+      <p>Bitte stellen Sie sicher, dass Ihre Lieferadresse korrekt und vollständig ist. Bei fehlerhaften Adressen kann es zu Verzögerungen kommen.</p>`,
       isHtml: true,
     },
     {
@@ -126,7 +135,7 @@ export default async function ProduktPage({
       <h3>Rücksendung</h3>
       <p>Bitte senden Sie die Ware zeitnah nach Ihrer Rückgabemeldung an uns zurück. Die unmittelbaren Kosten der Rücksendung tragen Sie als Käufer.</p>
       <h3>Erstattung</h3>
-      <p>Nach Eingang und Prüfung der zurückgesendeten Ware erstatten wir Ihnen den vollen Kaufpreis einschliesslich der ursprünglichen Lieferkosten. Die Erstattung erfolgt umgehend über dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Bestellung verwendet haben.</p>`,
+      <p>Nach Eingang und Prüfung der zurückgesendeten Ware erstatten wir Ihnen den vollen Kaufpreis. Die Erstattung erfolgt innerhalb von 14 Tagen nach Eingang der Rücksendung über dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Bestellung verwendet haben.</p>`,
       isHtml: true,
     },
   ];
