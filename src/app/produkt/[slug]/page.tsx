@@ -170,7 +170,7 @@ export default async function ProduktPage({
               </>
             )}
           </div>
-          <p className="mt-1 text-xs text-gray-400">Inkl. MwSt. zzgl. Versandkosten</p>
+          <p className="mt-1 text-xs text-gray-400">Inkl. MwSt. · Kostenloser Versand</p>
 
           {/* Stock */}
           <div className="mt-3 flex items-center gap-2">
