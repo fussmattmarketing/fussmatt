@@ -42,18 +42,10 @@ const nextConfig: NextConfig = {
         destination: "/produkte",
         permanent: true,
       },
-      {
-        source: "/mein-konto",
-        destination: "https://wp.fussmatt.com/mein-konto",
-        permanent: false,
-        basePath: false,
-      },
-      {
-        source: "/mein-konto/:path*",
-        destination: "https://wp.fussmatt.com/mein-konto/:path*",
-        permanent: false,
-        basePath: false,
-      },
+      // /mein-konto is now served by a route-handler proxy
+      // (src/app/mein-konto/[[...slug]]/route.ts) that streams the WC
+      // My-Account pages under the fussmatt.com host, so the URL no longer
+      // redirects to wp.fussmatt.com.
     ];
   },
   images: {
