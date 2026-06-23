@@ -29,7 +29,7 @@ const SELF_ORIGIN = "https://fussmatt.com";
 // because the WP block theme ships heavy inline styles.
 const FM_STYLE = `<style id="fm-account-skin">
 :root{--fm:#d97706;--fm-d:#b45309}
-header.wp-block-template-part,footer.wp-block-template-part,.wp-site-blocks>header,.wp-site-blocks>footer{display:none!important}
+header.wp-block-template-part,footer.wp-block-template-part,.wp-site-blocks>header,.wp-site-blocks>footer,.wc-block-mini-cart,.wp-block-woocommerce-mini-cart,.wc-block-mini-cart__drawer,.wc-block-components-drawer,.wp-block-woocommerce-mini-cart-contents,.wc-block-components-drawer__screen-overlay{display:none!important}
 html,body.woocommerce-account{background:#f9fafb!important}
 body.woocommerce-account *{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif!important}
 .wp-site-blocks main,main.wp-block-group{max-width:520px!important;margin:0 auto!important;padding:8px 18px 64px!important}
