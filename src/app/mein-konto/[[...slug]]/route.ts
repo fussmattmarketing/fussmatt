@@ -23,6 +23,38 @@ import { NextRequest } from "next/server";
 const WP_ORIGIN = "https://wp.fussmatt.com";
 const SELF_ORIGIN = "https://fussmatt.com";
 
+// Injected skin: hides the raw WP (twentytwentyfive) theme chrome and
+// restyles the WooCommerce My-Account markup to match the fussmatt.com
+// storefront (amber accent, rounded cards, system font). Broad + !important
+// because the WP block theme ships heavy inline styles.
+const FM_STYLE = `<style id="fm-account-skin">
+:root{--fm:#d97706;--fm-d:#b45309}
+header.wp-block-template-part,footer.wp-block-template-part,.wp-site-blocks>header,.wp-site-blocks>footer{display:none!important}
+html,body.woocommerce-account{background:#f9fafb!important}
+body.woocommerce-account *{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif!important}
+.wp-site-blocks main,main.wp-block-group{max-width:520px!important;margin:0 auto!important;padding:8px 18px 64px!important}
+.fm-account-bar{max-width:520px;margin:0 auto;padding:22px 18px 4px;display:flex;align-items:center;justify-content:space-between}
+.fm-account-bar .fm-logo{font-size:1.3rem;font-weight:800;color:#111827;text-decoration:none;letter-spacing:-.02em}
+.fm-account-bar .fm-back{font-size:.85rem;color:var(--fm);text-decoration:none;font-weight:600}
+.fm-account-bar .fm-back:hover{text-decoration:underline}
+.woocommerce{background:#fff;border:1px solid #eef0f2;border-radius:16px;padding:28px 24px;box-shadow:0 1px 3px rgba(0,0,0,.04);margin-top:18px}
+.woocommerce h1,.woocommerce h2,.entry-title{font-size:1.35rem!important;font-weight:700!important;color:#111827!important;margin:0 0 18px!important}
+.woocommerce-Input.input-text,body.woocommerce-account input[type=text],body.woocommerce-account input[type=email],body.woocommerce-account input[type=password],body.woocommerce-account input[type=tel]{width:100%!important;padding:11px 14px!important;border:1px solid #d1d5db!important;border-radius:10px!important;font-size:.95rem!important;box-sizing:border-box!important;background:#fff!important;color:#111827!important}
+body.woocommerce-account input:focus{outline:none!important;border-color:var(--fm)!important;box-shadow:0 0 0 3px rgba(217,119,6,.15)!important}
+.woocommerce-form-row label,body.woocommerce-account form label{display:block;font-size:.85rem;font-weight:600;color:#374151;margin-bottom:6px}
+.woocommerce-form-row,.form-row{margin-bottom:16px!important}
+.woocommerce-button,.woocommerce .button,.wp-element-button,body.woocommerce-account button[type=submit]{background:var(--fm)!important;color:#fff!important;border:none!important;border-radius:10px!important;padding:12px 22px!important;font-weight:600!important;font-size:.95rem!important;cursor:pointer!important;box-shadow:none!important;text-decoration:none!important;display:inline-block}
+.woocommerce-button:hover,.wp-element-button:hover,body.woocommerce-account button[type=submit]:hover{background:var(--fm-d)!important}
+.woocommerce-form-login__rememberme{font-weight:400!important;font-size:.85rem!important;color:#6b7280!important;display:flex;align-items:center;gap:6px}
+.woocommerce-LostPassword a{color:var(--fm)!important;font-size:.85rem}
+.woocommerce-MyAccount-navigation ul{list-style:none!important;padding:0!important;margin:0 0 20px!important;display:flex;flex-wrap:wrap;gap:8px}
+.woocommerce-MyAccount-navigation li a{display:block;padding:8px 14px;border-radius:9px;background:#f3f4f6;color:#374151!important;text-decoration:none;font-size:.88rem;font-weight:500}
+.woocommerce-MyAccount-navigation li.is-active a,.woocommerce-MyAccount-navigation li a:hover{background:var(--fm);color:#fff!important}
+.woocommerce-message,.woocommerce-error,.woocommerce-info{border-radius:10px!important;border-left:3px solid var(--fm)!important;background:#fff!important}
+</style>`;
+
+const FM_BAR = `<div class="fm-account-bar"><a href="/" class="fm-logo">FussMatt</a><a href="/produkte" class="fm-back">← Zurück zum Shop</a></div>`;
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
@@ -103,6 +135,11 @@ async function handle(
       .replaceAll(`${WP_ORIGIN}/mein-konto`, "/mein-konto")
       .replaceAll(`${WP_ORIGIN}/wp-login.php`, "/wp-login.php")
       .replaceAll(`action="${WP_ORIGIN}/"`, `action="/"`);
+    // Inject the fussmatt skin + a minimal storefront bar.
+    if (html.includes("</head>")) {
+      html = html.replace("</head>", `${FM_STYLE}</head>`);
+    }
+    html = html.replace(/(<body[^>]*>)/i, `$1${FM_BAR}`);
     return new Response(html, { status: wpRes.status, headers: outHeaders });
   }
 
