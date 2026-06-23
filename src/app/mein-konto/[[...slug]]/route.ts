@@ -129,6 +129,9 @@ async function handle(
   // browser or any CDN cache them (otherwise a pre-skin / wrong-user copy
   // gets served). Override whatever cache-control WP returned.
   outHeaders.set("cache-control", "private, no-store, max-age=0, must-revalidate");
+  // Personal proxy page — keep it (and the wp.fussmatt.com asset/links it
+  // streams) out of search indexes and link crawlers.
+  outHeaders.set("x-robots-tag", "noindex, nofollow");
 
   // HTML: rewrite only My-Account links back on-host; leave asset hosts alone.
   if (contentType.includes("text/html")) {
