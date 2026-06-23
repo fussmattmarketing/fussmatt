@@ -124,9 +124,10 @@ async function handle(
 
   const contentType = wpRes.headers.get("content-type") || "";
   if (contentType) outHeaders.set("content-type", contentType);
-  const cc = wpRes.headers.get("cache-control");
-  if (cc) outHeaders.set("cache-control", cc);
-  else outHeaders.set("cache-control", "private, no-store");
+  // Account/login pages are personal AND we inject a skin — never let the
+  // browser or any CDN cache them (otherwise a pre-skin / wrong-user copy
+  // gets served). Override whatever cache-control WP returned.
+  outHeaders.set("cache-control", "private, no-store, max-age=0, must-revalidate");
 
   // HTML: rewrite only My-Account links back on-host; leave asset hosts alone.
   if (contentType.includes("text/html")) {
