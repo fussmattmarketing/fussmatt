@@ -33,7 +33,13 @@ async function handle(
   const { slug } = await ctx.params;
   const subPath = slug?.length ? "/" + slug.join("/") : "";
   const { search } = new URL(req.url);
-  const target = `${WP_ORIGIN}/mein-konto${subPath}${search}`;
+  // Always request WP with a trailing slash. WooCommerce 301-redirects
+  // /mein-konto → /mein-konto/; forwarding that 301 (combined with Next's
+  // own trailing-slash handling) produced a 301↔308 loop the CDN cut off
+  // with 429. Hitting the canonical /mein-konto/ form returns 200 directly.
+  let wpPath = `/mein-konto${subPath}`;
+  if (!wpPath.endsWith("/")) wpPath += "/";
+  const target = `${WP_ORIGIN}${wpPath}${search}`;
 
   // --- forward request → WP ---
   const fwdHeaders = new Headers();
