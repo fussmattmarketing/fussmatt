@@ -126,15 +126,12 @@ export default function Header() {
 
           {/* Actions: Account + Cart + Mobile Toggle */}
           <div className="flex items-center gap-1">
-            {/* Account / Mein Konto — proxy-redirected to wp.fussmatt.com
-                /mein-konto by next.config redirects() (CEO-4). Hidden
-                for now (CEO 2026-06-09): the WP-side login UI lives on
-                wp.fussmatt.com and the cross-host hop felt jarring; we
-                keep the markup so re-enabling is a one-class-toggle
-                later (just drop the `hidden` class). */}
+            {/* Account / Mein Konto — visible. /mein-konto is redirected to
+                wp.fussmatt.com/mein-konto (WC My Account, noindex'd) by
+                next.config redirects() (CEO-4). Re-enabled CEO 2026-06-23. */}
             <Link
               href="/mein-konto"
-              className="hidden items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
               aria-label="Mein Konto"
               title="Mein Konto"
             >
@@ -328,6 +325,9 @@ export default function Header() {
             </Link>
             <Link href="/bestellung-verfolgen" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
               Bestellung verfolgen
+            </Link>
+            <Link href="/mein-konto" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+              Mein Konto
             </Link>
 
             <div className="my-2 border-t border-gray-100" />
