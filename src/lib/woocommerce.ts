@@ -33,6 +33,9 @@ function getAuthHeader(): string | null {
   return null;
 }
 
+// Marker used by wcFetch when a response carries a retryable status code.
+const TRANSIENT_STATUS_RE = /WooCommerce API error: (429|500|502|503|504)\b/;
+
 // Retry wrapper for transient connect timeouts (UND_ERR_CONNECT_TIMEOUT)
 // during high-volume builds when wp.fussmatt.com gets overwhelmed.
 function isTransientError(err: unknown): boolean {
@@ -47,7 +50,14 @@ function isTransientError(err: unknown): boolean {
     code === "ETIMEDOUT" ||
     msg.includes("fetch failed") ||
     msg.includes("ConnectTimeoutError") ||
-    msg.includes("aborted")
+    msg.includes("aborted") ||
+    // HTTP-level transients: Hostinger's MySQL drops connections under the
+    // build's request concurrency and WP answers 500 "Error establishing a
+    // database connection" (or 502/503/504 behind LiteSpeed) for a few
+    // seconds. Without this the very first blip throws and aborts the
+    // static export of ~3.4k pages — which is exactly how the 2026-08-08
+    // deploys died. 429 is included for the same reason (rate limiting).
+    TRANSIENT_STATUS_RE.test(msg)
   );
 }
 
@@ -79,7 +89,7 @@ async function wcFetch<T>(
 
   const isGet = !fetchOptions.method || fetchOptions.method === "GET";
   // Only retry idempotent GET requests on transient errors
-  const maxAttempts = isGet ? 3 : 1;
+  const maxAttempts = isGet ? 5 : 1;
   let lastErr: unknown;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -104,8 +114,8 @@ async function wcFetch<T>(
     } catch (err) {
       lastErr = err;
       if (attempt < maxAttempts && isTransientError(err)) {
-        // Exponential backoff: 500ms, 1500ms
-        const delay = 500 * Math.pow(3, attempt - 1);
+        // Exponential backoff, capped: 0.5s, 1.5s, 4.5s, 13.5s
+        const delay = Math.min(500 * Math.pow(3, attempt - 1), 15000);
         console.warn(
           `WC fetch transient error [${endpoint}] attempt ${attempt}/${maxAttempts}, retrying in ${delay}ms`
         );
@@ -142,7 +152,7 @@ async function wcFetchWithHeaders<T>(
     headers.Authorization = authHeader;
   }
 
-  const maxAttempts = 3;
+  const maxAttempts = 5;
   let lastErr: unknown;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -159,7 +169,7 @@ async function wcFetchWithHeaders<T>(
       clearTimeout(timeout);
       lastErr = err;
       if (attempt < maxAttempts && isTransientError(err)) {
-        const delay = 500 * Math.pow(3, attempt - 1);
+        const delay = Math.min(500 * Math.pow(3, attempt - 1), 15000);
         console.warn(
           `WC fetch transient error [${endpoint}] attempt ${attempt}/${maxAttempts}, retrying in ${delay}ms`
         );
@@ -171,7 +181,19 @@ async function wcFetchWithHeaders<T>(
     clearTimeout(timeout);
 
     if (!res.ok) {
-      throw new Error(`WooCommerce API error: ${res.status}`);
+      const statusErr = new Error(`WooCommerce API error: ${res.status}`);
+      // Retry 5xx/429 here too — this throw sits outside the try above, so
+      // without it a single WP DB blip escapes the retry loop entirely.
+      if (attempt < maxAttempts && isTransientError(statusErr)) {
+        lastErr = statusErr;
+        const delay = Math.min(500 * Math.pow(3, attempt - 1), 15000);
+        console.warn(
+          `WC fetch transient status ${res.status} [${endpoint}] attempt ${attempt}/${maxAttempts}, retrying in ${delay}ms`
+        );
+        await new Promise((r) => setTimeout(r, delay));
+        continue;
+      }
+      throw statusErr;
     }
 
     const data = (await res.json()) as T;
