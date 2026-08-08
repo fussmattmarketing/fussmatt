@@ -38,7 +38,14 @@ export async function generateMetadata({
   params: Promise<{ slug: string; brand: string }>;
 }): Promise<Metadata> {
   const { slug, brand: brandSlug } = await params;
-  const category = await getCategoryBySlug(slug);
+  // WP can be briefly unreachable (Hostinger DB blips) — a throw here
+  // fails the whole prerender/build, so degrade to a generic title.
+  let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
+  try {
+    category = await getCategoryBySlug(slug);
+  } catch {
+    return { title: "Nicht gefunden" };
+  }
   const brand = getBrandBySlug(brandSlug);
   if (!category || !brand) return { title: "Nicht gefunden" };
 
@@ -55,18 +62,32 @@ export default async function KategorieBrandPage({
   params: Promise<{ slug: string; brand: string }>;
 }) {
   const { slug, brand: brandSlug } = await params;
-  const category = await getCategoryBySlug(slug);
+  // Same guard as the 4-layer [model] route: a transient WP/DB outage
+  // must not abort the static export of ~3.4k pages. On a category
+  // lookup failure we 404 this one page; on a product-fetch failure we
+  // render the page shell with an empty grid.
+  let category: Awaited<ReturnType<typeof getCategoryBySlug>> = null;
+  try {
+    category = await getCategoryBySlug(slug);
+  } catch {
+    notFound();
+  }
   const brand = getBrandBySlug(brandSlug);
   if (!category || !brand) notFound();
 
   const hierarchy = getVehicleHierarchy();
 
   // Fetch products for this category filtered by brand name in search
-  const products = await getProducts({
-    category: category.id,
-    search: brand.name,
-    per_page: 24,
-  });
+  let products: Awaited<ReturnType<typeof getProducts>> = [];
+  try {
+    products = await getProducts({
+      category: category.id,
+      search: brand.name,
+      per_page: 24,
+    });
+  } catch {
+    products = [];
+  }
 
   // Generate unique pSEO content from template engine
   const pseo = generateCategoryBrandContent(
