@@ -21,9 +21,13 @@ export const maxDuration = 60;
  * kept returning the rewrite's 308. This shorter, dedicated path lives
  * under /feed/ where no other rewrite or route matches it.
  *
- * Cache: 1h browser/edge cache + 24h stale-while-revalidate. Feed PRO
- * regenerates daily; this keeps GMC from seeing more than ~1h of stale
- * XML past a refresh while staying friendly to high-volume fetches.
+ * Cache: 5min edge cache + 1h stale-while-revalidate. Lowered from
+ * 1h/24h (2026-08-08) because feed fields are being actively edited
+ * (brand/material/size) and a 1h CDN HIT kept serving pre-edit XML —
+ * a feed regenerated in Product Feed PRO looked "unchanged" on
+ * fussmatt.com for up to an hour. 5min keeps GMC close to live while
+ * still absorbing high-volume fetches. Raise back toward 1h once the
+ * feed schema settles.
  */
 
 const UPSTREAM =
@@ -78,7 +82,7 @@ export async function GET() {
       headers: {
         "Content-Type": "application/xml; charset=utf-8",
         "Cache-Control":
-          "public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+          "public, max-age=300, s-maxage=300, stale-while-revalidate=3600",
         "X-Proxy-Source": "wp.fussmatt.com",
         "X-Proxy-Rewrite": "wp-to-fussmatt-plus-uploads",
       },
