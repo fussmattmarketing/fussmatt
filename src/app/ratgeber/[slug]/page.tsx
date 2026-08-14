@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import TableOfContents from "@/components/ui/TableOfContents";
 import { JsonLd, breadcrumbSchema, faqSchema as faqJsonLd } from "@/lib/seo";
@@ -180,7 +180,12 @@ export default async function RatgeberPage({
   const brandSlug = parseBrandGuideSlug(slug);
   if (brandSlug) {
     const brand = getBrandBySlug(brandSlug);
-    if (!brand) notFound();
+    // Unknown / retired items redirect to the homepage instead of
+    // calling notFound(): inside these cached dynamic routes the
+    // not-found boundary rendered with HTTP 200, so every invalid
+    // slug (and every drafted product) was a soft 404. redirect()
+    // emits a real 307, matching how other unknown URLs behave.
+    if (!brand) redirect("/");
 
     const hierarchy = getVehicleHierarchy();
     const guide = generateBrandGuideContent(
@@ -387,7 +392,7 @@ export default async function RatgeberPage({
   // ─── Static Article / WordPress Post ─────────────────────────────────────
   const staticArticle = getArticleBySlug(slug);
   const wpPost = !staticArticle ? await getWPPostBySlug(slug) : null;
-  if (!staticArticle && !wpPost) notFound();
+  if (!staticArticle && !wpPost) redirect("/");
 
   const title = staticArticle?.title || wpPost!.title;
   const excerpt = staticArticle?.excerpt || wpPost!.excerpt;
