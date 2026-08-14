@@ -69,6 +69,10 @@ function htmlToPlainText(html: string): string {
   t = t.replace(/<li[^>]*>/gi, "• ").replace(/<\/li>/gi, "\n");
 
   t = t.replace(/<[^>]+>/g, "");
+  // Feed PRO truncates long descriptions and can cut mid-tag, leaving a
+  // dangling "<strong" with no ">" that the rule above (which needs a
+  // closing bracket) walks straight past. Drop any unterminated fragment.
+  t = t.replace(/<[a-zA-Z\/][^>]*$/, "");
   for (const [ent, chr] of Object.entries(ENTITIES)) t = t.split(ent).join(chr);
   t = t.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
 
