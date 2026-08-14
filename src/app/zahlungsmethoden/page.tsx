@@ -37,10 +37,11 @@ export default function ZahlungsmethodenPage() {
         <h2>Währung</h2>
         <p>
           Sämtliche Preise auf fussmatt.com sind in{" "}
-          <strong>Schweizer Franken (CHF)</strong> angegeben und verstehen
-          sich <strong>inklusive Mehrwertsteuer</strong>. Die Belastung
-          Ihrer Zahlung erfolgt ebenfalls in CHF — wir berechnen keine
-          zusätzlichen Wechselkursgebühren.
+          <strong>Schweizer Franken (CHF)</strong> angegeben. Wir sind
+          nicht mehrwertsteuerpflichtig, daher wird auf Preisen und
+          Rechnungen <strong>keine Mehrwertsteuer ausgewiesen</strong>. Die
+          Belastung Ihrer Zahlung erfolgt ebenfalls in CHF — wir berechnen
+          keine zusätzlichen Wechselkursgebühren.
         </p>
 
         <h2>Sicherheit</h2>
@@ -71,11 +72,12 @@ export default function ZahlungsmethodenPage() {
           </li>
         </ol>
 
-        <h2>Rechnung & Mehrwertsteuer</h2>
+        <h2>Rechnung</h2>
         <p>
           Sie erhalten Ihre Rechnung direkt nach Zahlungseingang per
           E-Mail. Die Rechnung enthält alle gesetzlich vorgeschriebenen
-          Angaben inklusive ausgewiesener Mehrwertsteuer.
+          Angaben. Da wir nicht mehrwertsteuerpflichtig sind, wird keine
+          Mehrwertsteuer ausgewiesen.
         </p>
         <p>
           Eine zusätzliche Rechnung wird der Sendung beigelegt. Bei Fragen

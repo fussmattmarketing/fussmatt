@@ -203,7 +203,10 @@ export default async function ProduktPage({
               </>
             )}
           </div>
-          <p className="mt-1 text-xs text-gray-400">Inkl. MwSt. · Kostenloser Versand</p>
+          {/* Royal Road GmbH is not VAT-registered (verified against the
+              federal UID service, 2026-08), so the price line must not
+              claim VAT is included. */}
+          <p className="mt-1 text-xs text-gray-400">Preis in CHF · Kostenloser Versand</p>
 
           {/* Stock */}
           <div className="mt-3 flex items-center gap-2">
