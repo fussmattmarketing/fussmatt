@@ -33,6 +33,85 @@ export const maxDuration = 60;
 const UPSTREAM =
   "https://wp.fussmatt.com/wp-content/uploads/woo-product-feed-pro/xml/zjhlflyous9kyegm29os7o8p9fx8p6xm.xml";
 
+/* ─── Feed hygiene ──────────────────────────────────────────────────
+ * Two things Feed PRO emits that Merchant Center shouldn't receive:
+ *
+ * 1. g:description carries the raw WooCommerce HTML (18k <strong>,
+ *    17k <td>, whole spec tables). Google's description attribute is a
+ *    plain-text field; the tables in particular collapse into an
+ *    unreadable run once the markup is stripped on their side.
+ * 2. g:link keeps WooCommerce's trailing slash (/produkt/slug/?utm=…)
+ *    while the Next.js canonical is slash-less, so every landing page
+ *    answered 308 before serving 200. Google follows it, but the feed
+ *    link should equal the canonical URL.
+ *
+ * Both are fixed on the proxied copy only — the storefront keeps its
+ * rich HTML and WooCommerce is untouched.
+ */
+
+const ENTITIES: Record<string, string> = {
+  "&nbsp;": " ", "&amp;": "&", "&lt;": "<", "&gt;": ">",
+  "&quot;": '"', "&#039;": "'", "&apos;": "'", "&euro;": "€",
+  "&ndash;": "–", "&mdash;": "—", "&hellip;": "…", "&szlig;": "ß",
+};
+
+const GMC_DESCRIPTION_MAX = 4900; // spec allows 5000 — leave headroom
+
+function htmlToPlainText(html: string): string {
+  let t = html;
+  t = t.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, "");
+
+  // Structure → newlines; table cells → " | " so Eigenschaft/Beschreibung
+  // rows stay readable as "key | value".
+  t = t.replace(/<br\s*\/?>/gi, "\n");
+  t = t.replace(/<\/(p|div|h[1-6]|tr|ul|ol|table|thead|tbody|blockquote)>/gi, "\n");
+  t = t.replace(/<\/(td|th)>/gi, " | ");
+  t = t.replace(/<li[^>]*>/gi, "• ").replace(/<\/li>/gi, "\n");
+
+  t = t.replace(/<[^>]+>/g, "");
+  for (const [ent, chr] of Object.entries(ENTITIES)) t = t.split(ent).join(chr);
+  t = t.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
+
+  t = t.replace(/[ \t]*\|[ \t]*(?=\n)/g, "");
+  t = t.replace(/[ \t]{2,}/g, " ");
+  t = t.replace(/\n[ \t]+/g, "\n");
+  t = t.replace(/\n{3,}/g, "\n\n");
+  t = t.split("]]>").join("]] >"); // never terminate the CDATA early
+  t = t.trim();
+
+  if (t.length > GMC_DESCRIPTION_MAX) {
+    t = t.slice(0, GMC_DESCRIPTION_MAX).replace(/\s+\S*$/, "") + "…";
+  }
+  return t;
+}
+
+function flattenDescriptions(xml: string): string {
+  return xml.replace(
+    /<g:description>([\s\S]*?)<\/g:description>/g,
+    (whole, inner: string) => {
+      try {
+        const cdata = inner.match(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/);
+        const plain = htmlToPlainText(cdata ? cdata[1] : inner);
+        if (!plain) return whole; // never emit an empty description
+        return `<g:description><![CDATA[${plain}]]></g:description>`;
+      } catch {
+        return whole; // any failure → leave this item as-is
+      }
+    }
+  );
+}
+
+/** /produkt/slug/?utm=… → /produkt/slug?utm=…  (kills the 308 hop) */
+function dropTrailingSlashOnLinks(xml: string): string {
+  return xml.replace(
+    /(<g:link>(?:<!\[CDATA\[)?)(.*?)((?:\]\]>)?<\/g:link>)/g,
+    (whole, open: string, url: string, close: string) => {
+      const fixed = url.replace(/\/(\?)/, "$1").replace(/\/$/, "");
+      return fixed === url ? whole : `${open}${fixed}${close}`;
+    }
+  );
+}
+
 export async function GET() {
   let res: Response;
   try {
@@ -71,12 +150,14 @@ export async function GET() {
   // response body instead of a silent 500 (previous attempt's pain).
   try {
     const buf = Buffer.from(await res.arrayBuffer());
-    const transformed = buf
+    let transformed = buf
       .toString("utf-8")
       .split("https://wp.fussmatt.com/wp-content/uploads/")
       .join("https://fussmatt.com/uploads/")
       .split("wp.fussmatt.com")
       .join("fussmatt.com");
+    transformed = flattenDescriptions(transformed);
+    transformed = dropTrailingSlashOnLinks(transformed);
     return new NextResponse(transformed, {
       status: 200,
       headers: {
