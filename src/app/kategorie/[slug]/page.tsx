@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getCategoryBySlug, getProductsWithTotal, getCategories } from "@/lib/woocommerce";
 import { getVehicleHierarchy } from "@/lib/vehicle-data";
 import { JsonLd, breadcrumbSchema } from "@/lib/seo";
@@ -55,12 +55,7 @@ export default async function KategoriePage({
   const sp = await searchParams;
   const page = parseInt(sp.seite || "1");
   const category = await getCategoryBySlug(slug);
-  // Unknown / retired items redirect to the homepage instead of
-  // calling notFound(): inside these cached dynamic routes the
-  // not-found boundary rendered with HTTP 200, so every invalid
-  // slug (and every drafted product) was a soft 404. redirect()
-  // emits a real 307, matching how other unknown URLs behave.
-  if (!category) redirect("/");
+  if (!category) notFound();
 
   let products: Awaited<ReturnType<typeof getProductsWithTotal>>["products"] = [];
   let totalPages = 1;

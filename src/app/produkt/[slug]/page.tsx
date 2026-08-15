@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import {
   getProductBySlug,
   getProductVariations,
@@ -58,12 +58,7 @@ export default async function ProduktPage({
 }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-  // Unknown / retired items redirect to the homepage instead of
-  // calling notFound(): inside these cached dynamic routes the
-  // not-found boundary rendered with HTTP 200, so every invalid
-  // slug (and every drafted product) was a soft 404. redirect()
-  // emits a real 307, matching how other unknown URLs behave.
-  if (!product) redirect("/");
+  if (!product) notFound();
 
   const variations =
     product.type === "variable"

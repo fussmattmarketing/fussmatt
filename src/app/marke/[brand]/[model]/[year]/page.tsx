@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getProducts } from "@/lib/woocommerce";
 import { getVehicleHierarchy, getBrandBySlug } from "@/lib/vehicle-data";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/lib/seo";
@@ -51,12 +51,7 @@ export default async function ModelYearPage({
   const brand = getBrandBySlug(bs);
   const model = brand?.models.find((m) => m.slug === ms);
   const yearRange = model?.yearRanges.find((y) => y.slug === ys);
-  // Unknown / retired items redirect to the homepage instead of
-  // calling notFound(): inside these cached dynamic routes the
-  // not-found boundary rendered with HTTP 200, so every invalid
-  // slug (and every drafted product) was a soft 404. redirect()
-  // emits a real 307, matching how other unknown URLs behave.
-  if (!brand || !model || !yearRange) redirect("/");
+  if (!brand || !model || !yearRange) notFound();
 
   const products = await getProducts({
     search: `${brand.name} ${model.name} ${yearRange.label}`,
