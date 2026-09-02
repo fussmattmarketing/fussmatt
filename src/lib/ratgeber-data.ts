@@ -6,15 +6,15 @@
  */
 
 export interface RatgeberArticle {
-  slug: string;
-  title: string;
-  excerpt: string;
-  image: string;
-  date: string;
-  category: string;
-  readTime: string;
-  content: string;
-  faq?: { question: string; answer: string }[];
+ slug: string;
+ title: string;
+ excerpt: string;
+ image: string;
+ date: string;
+ category: string;
+ readTime: string;
+ content: string;
+ faq?: { question: string; answer: string }[];
 }
 
 export const RATGEBER_ARTICLES: RatgeberArticle[] = [];
@@ -23,15 +23,15 @@ export const RATGEBER_ARTICLES: RatgeberArticle[] = [];
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _DRAFT_ARTICLES: RatgeberArticle[] = [
   {
-    slug: "3d-vs-5d-fussmatten-unterschied",
-    title: "3D vs 5D Fussmatten: Unterschiede, Vorteile und Empfehlung",
-    excerpt:
+ slug: "3d-vs-5d-fussmatten-unterschied",
+ title: "3D vs 5D Fussmatten: Unterschiede, Vorteile und Empfehlung",
+ excerpt:
       "Welche Fussmatten bieten mehr Schutz? Wir vergleichen 3D und 5D Modelle in Material, Passform und Preis-Leistung.",
-    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1147.jpg",
-    date: "2026-03-15",
-    category: "Vergleich",
-    readTime: "5 Min",
-    content: `
+ image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1147.jpg",
+ date: "2026-03-15",
+ category: "Vergleich",
+ readTime: "5 Min",
+ content: `
       <p>Beim Kauf von Auto-Fussmatten stehen viele Fahrzeugbesitzer vor der Frage: <strong>3D oder 5D?</strong> Beide Varianten bieten deutlich mehr Schutz als herkömmliche Textilmatten, unterscheiden sich aber in einigen wichtigen Punkten.</p>
 
       <h2>Was sind 3D Fussmatten?</h2>
@@ -56,44 +56,44 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <h2>Unsere Empfehlung</h2>
       <p>Für den <strong>alltäglichen Gebrauch</strong> sind 3D Fussmatten eine ausgezeichnete Wahl mit bestem Preis-Leistungs-Verhältnis. Wer <strong>maximalen Schutz</strong> wünscht — besonders bei Regen, Schnee oder Outdoor-Aktivitäten — sollte zu den 5D Premium Fussmatten greifen.</p>
     `,
-    faq: [
+ faq: [
       {
-        question: "Was ist der Hauptunterschied zwischen 3D und 5D Fussmatten?",
-        answer:
+ question: "Was ist der Hauptunterschied zwischen 3D und 5D Fussmatten?",
+ answer:
           "Der Hauptunterschied liegt in der Randhöhe und dem Schutzbereich. 5D Fussmatten haben höhere Ränder (5-8 cm vs. 3-5 cm) und schützen auch die Seitenbereiche des Fussraums.",
       },
       {
-        question: "Sind 5D Fussmatten den Aufpreis wert?",
-        answer:
+ question: "Sind 5D Fussmatten den Aufpreis wert?",
+ answer:
           "Ja, besonders wenn Sie in Regionen mit viel Regen oder Schnee leben oder häufig Outdoor-Aktivitäten nachgehen. Der zusätzliche Schutz verhindert Schäden am Fahrzeugboden.",
       },
       {
-        question: "Passen 3D und 5D Fussmatten in jedes Auto?",
-        answer:
+ question: "Passen 3D und 5D Fussmatten in jedes Auto?",
+ answer:
           "Beide Varianten werden per 3D-Scan millimetergenau für über 600 Fahrzeugmodelle gefertigt. Wählen Sie einfach Ihre Marke und Ihr Modell.",
       },
     ],
   },
   {
-    slug: "tpe-material-vorteile",
-    title: "TPE-Material: Warum es das beste Material für Fussmatten ist",
-    excerpt:
+ slug: "tpe-material-vorteile",
+ title: "TPE-Material: Warum es das beste Material für Fussmatten ist",
+ excerpt:
       "TPE ist geruchlos, umweltfreundlich und extrem langlebig. Erfahren Sie, warum Premium-Fussmatten auf dieses Material setzen.",
-    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/peugeot-3008-2024-sonrasi-havuzl_MTIzMzY0MTAy_1-1-8.jpg",
-    date: "2026-03-10",
-    category: "Material",
-    readTime: "4 Min",
-    content: `
+ image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/peugeot-3008-2024-sonrasi-havuzl_MTIzMzY0MTAy_1-1-8.jpg",
+ date: "2026-03-10",
+ category: "Material",
+ readTime: "4 Min",
+ content: `
       <p><strong>TPE (Thermoplastisches Elastomer)</strong> hat sich als das führende Material für hochwertige Auto-Fussmatten etabliert. Aber was macht es so besonders?</p>
 
       <h2>Was ist TPE?</h2>
-      <p>TPE ist ein Kunststoff, der die Elastizität von Gummi mit der Verarbeitbarkeit von Thermoplasten verbindet. Es ist <strong>100% recycelbar</strong> und enthält keine schädlichen Weichmacher.</p>
+      <p>TPE ist ein Kunststoff, der die Elastizität von Gummi mit der Verarbeitbarkeit von Thermoplasten verbindet. Es ist <strong>recycelbar</strong> und enthält keine schädlichen Weichmacher.</p>
 
       <h2>Vorteile von TPE gegenüber Gummi</h2>
       <ul>
         <li><strong>Geruchlos:</strong> Kein unangenehmer Gummigeruch im Fahrzeug</li>
         <li><strong>Temperaturbeständig:</strong> Flexibel von -40°C bis +80°C</li>
-        <li><strong>Umweltfreundlich:</strong> 100% recycelbar, keine giftigen Substanzen</li>
+        <li><strong>Umweltfreundlich:</strong> recycelbar, keine giftigen Substanzen</li>
         <li><strong>Langlebig:</strong> Behält Form und Farbe über Jahre</li>
         <li><strong>Pflegeleicht:</strong> Einfach mit Wasser abspülen</li>
         <li><strong>Rutschfest:</strong> Spezielle Unterseite verhindert Verrutschen</li>
@@ -104,7 +104,7 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
         <thead><tr><th>Eigenschaft</th><th>TPE</th><th>PVC</th><th>Gummi</th></tr></thead>
         <tbody>
           <tr><td>Geruch</td><td>Keiner</td><td>Stark</td><td>Mittel</td></tr>
-          <tr><td>Recycelbar</td><td>100%</td><td>Schwer</td><td>Nein</td></tr>
+          <tr><td>Recycelbar</td><td>Ja</td><td>Schwer</td><td>Nein</td></tr>
           <tr><td>Weichmacher</td><td>Keine</td><td>Ja</td><td>Möglich</td></tr>
           <tr><td>Kälteflexibel</td><td>Bis -40°C</td><td>Bis -10°C</td><td>Bis -20°C</td></tr>
           <tr><td>Lebensdauer</td><td>5+ Jahre</td><td>2-3 Jahre</td><td>3-4 Jahre</td></tr>
@@ -114,27 +114,27 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <h2>Fazit</h2>
       <p>TPE ist die klare Empfehlung für alle, die Wert auf <strong>Qualität, Gesundheit und Umwelt</strong> legen. Alle FussMatt-Produkte verwenden ausschliesslich hochwertiges TPE-Material.</p>
     `,
-    faq: [
+ faq: [
       {
-        question: "Ist TPE gesundheitlich unbedenklich?",
-        answer: "Ja, TPE enthält keine Weichmacher, Schwermetalle oder schädlichen Substanzen. Es ist geruchlos und für den Einsatz im Fahrzeuginnenraum zertifiziert.",
+ question: "Ist TPE gesundheitlich unbedenklich?",
+ answer: "Ja, TPE enthält keine Weichmacher, Schwermetalle oder schädlichen Substanzen. Es ist geruchlos und für den Einsatz im Fahrzeuginnenraum zertifiziert.",
       },
       {
-        question: "Wie lange halten TPE-Fussmatten?",
-        answer: "Bei normaler Nutzung halten TPE-Fussmatten mindestens 5 Jahre. Das Material behält seine Form und Farbe auch bei intensiver Beanspruchung.",
+ question: "Wie lange halten TPE-Fussmatten?",
+ answer: "Bei normaler Nutzung halten TPE-Fussmatten mindestens 5 Jahre. Das Material behält seine Form und Farbe auch bei intensiver Beanspruchung.",
       },
     ],
   },
   {
-    slug: "auto-fussmatten-reinigen-pflegen",
-    title: "Fussmatten reinigen und pflegen: Die komplette Anleitung",
-    excerpt:
+ slug: "auto-fussmatten-reinigen-pflegen",
+ title: "Fussmatten reinigen und pflegen: Die komplette Anleitung",
+ excerpt:
       "So bleiben Ihre Auto-Fussmatten wie neu. Tipps zur Reinigung von TPE-, Gummi- und Textilmatten.",
-    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1149.jpg",
-    date: "2026-03-05",
-    category: "Pflege",
-    readTime: "3 Min",
-    content: `
+ image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1149.jpg",
+ date: "2026-03-05",
+ category: "Pflege",
+ readTime: "3 Min",
+ content: `
       <p>Regelmässige Pflege verlängert die Lebensdauer Ihrer Fussmatten erheblich. Hier erfahren Sie, wie Sie verschiedene Mattentypen richtig reinigen.</p>
 
       <h2>TPE-Fussmatten reinigen (3D & 5D)</h2>
@@ -158,35 +158,35 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <h2>Wie oft reinigen?</h2>
       <p>Wir empfehlen eine <strong>gründliche Reinigung alle 2-4 Wochen</strong>. Bei starker Verschmutzung (Schnee, Matsch, Sand) sollten Sie die Matten häufiger reinigen.</p>
     `,
-    faq: [
+ faq: [
       {
-        question: "Kann ich TPE-Fussmatten in die Waschmaschine geben?",
-        answer: "Nein, das ist nicht empfehlenswert. TPE-Fussmatten lassen sich einfach mit Wasser und milder Seife von Hand reinigen.",
+ question: "Kann ich TPE-Fussmatten in die Waschmaschine geben?",
+ answer: "Nein, das ist nicht empfehlenswert. TPE-Fussmatten lassen sich einfach mit Wasser und milder Seife von Hand reinigen.",
       },
       {
-        question: "Wie oft sollte ich meine Fussmatten reinigen?",
-        answer: "Alle 2-4 Wochen eine gründliche Reinigung. Bei starker Verschmutzung durch Schnee oder Matsch häufiger.",
+ question: "Wie oft sollte ich meine Fussmatten reinigen?",
+ answer: "Alle 2-4 Wochen eine gründliche Reinigung. Bei starker Verschmutzung durch Schnee oder Matsch häufiger.",
       },
     ],
   },
   {
-    slug: "faq",
-    title: "Häufig gestellte Fragen",
-    excerpt:
+ slug: "faq",
+ title: "Häufig gestellte Fragen",
+ excerpt:
       "Antworten auf die wichtigsten Fragen zu unseren Auto-Fussmatten: Material, Passform, Lieferung und mehr.",
-    image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1150.jpg",
-    date: "2026-03-01",
-    category: "FAQ",
-    readTime: "3 Min",
-    content: `
+ image: "https://wp.fussmatt.com/wp-content/uploads/2026/03/myfussmatten-3d-infographic-06-1150.jpg",
+ date: "2026-03-01",
+ category: "FAQ",
+ readTime: "3 Min",
+ content: `
       <h2>Welche Materialien werden verwendet?</h2>
-      <p>Unsere Fussmatten bestehen aus hochwertigem TPE (Thermoplastisches Elastomer). Dieses Material ist geruchlos, umweltfreundlich, zu 100% recycelbar und flexibel von -40°C bis +80°C.</p>
+      <p>Unsere Fussmatten bestehen aus hochwertigem TPE (Thermoplastisches Elastomer). Dieses Material ist geruchlos, umweltfreundlich, recycelbar und flexibel von -40°C bis +80°C.</p>
 
       <h2>Wie werden die Fussmatten hergestellt?</h2>
       <p>Jede Fussmatte wird per 3D-Vermessung millimetergenau für das jeweilige Fahrzeugmodell gefertigt. So ist eine perfekte Passform garantiert.</p>
 
       <h2>Sind die Fussmatten wasserdicht?</h2>
-      <p>Ja, alle unsere Fussmatten sind zu 100% wasserdicht. Erhöhte Ränder (3D oder 5D) schützen den Fahrzeugboden zuverlässig vor Schmutz, Wasser und Verschleiss.</p>
+      <p>Ja, alle unsere Fussmatten sind wasserdicht. Erhöhte Ränder (3D oder 5D) schützen den Fahrzeugboden zuverlässig vor Schmutz, Wasser und Verschleiss.</p>
 
       <h2>Was ist der Unterschied zwischen 3D und 5D?</h2>
       <p>3D Fussmatten haben geformte Ränder, die den Boden abdecken. 5D Premium Fussmatten haben zusätzlich erhöhte Seitenränder, die noch mehr Schutz bieten und den gesamten Fussraum abdecken.</p>
@@ -200,23 +200,23 @@ const _DRAFT_ARTICLES: RatgeberArticle[] = [
       <h2>Kann ich die Fussmatten zurückgeben?</h2>
       <p>Ja, Sie haben ein 30-tägiges Rückgaberecht. Die Matten müssen in unbenutztem Zustand und in der Originalverpackung zurückgesendet werden.</p>
     `,
-    faq: [
+ faq: [
       {
-        question: "Welche Materialien werden für die Fussmatten verwendet?",
-        answer: "Hochwertiges TPE (Thermoplastisches Elastomer) — geruchlos, umweltfreundlich, 100% recycelbar und flexibel von -40°C bis +80°C.",
+ question: "Welche Materialien werden für die Fussmatten verwendet?",
+ answer: "Hochwertiges TPE (Thermoplastisches Elastomer) — geruchlos, umweltfreundlich, recycelbar und flexibel von -40°C bis +80°C.",
       },
       {
-        question: "Sind die Fussmatten wasserdicht?",
-        answer: "Ja, alle Fussmatten sind zu 100% wasserdicht mit erhöhten Rändern zum Schutz vor Schmutz und Wasser.",
+ question: "Sind die Fussmatten wasserdicht?",
+ answer: "Ja, alle Fussmatten sind wasserdicht mit erhöhten Rändern zum Schutz vor Schmutz und Wasser.",
       },
       {
-        question: "Wie lange dauert die Lieferung?",
-        answer: "Schweiz: 1–3 Werktage. Kostenloser Versand in der ganzen Schweiz.",
+ question: "Wie lange dauert die Lieferung?",
+ answer: "Schweiz: 1–3 Werktage. Kostenloser Versand in der ganzen Schweiz.",
       },
     ],
   },
 ];
 
 export function getArticleBySlug(slug: string): RatgeberArticle | undefined {
-  return RATGEBER_ARTICLES.find((a) => a.slug === slug);
+ return RATGEBER_ARTICLES.find((a) => a.slug === slug);
 }

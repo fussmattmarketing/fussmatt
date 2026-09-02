@@ -26,6 +26,9 @@ export default function ImpressumPage() {
           Schweiz
         </p>
 
+        <h2>Vertretungsberechtigter Geschäftsführer</h2>
+        <p>Dipl. Ing. Abdurrahman Uyanik</p>
+
         <h2>Kontakt</h2>
         <p>
           Telefon: <a href="tel:+41445052722">+41 44 505 27 22</a>
@@ -36,7 +39,26 @@ export default function ImpressumPage() {
         </p>
 
         <h2>Handelsregister</h2>
-        <p>Eingetragen im Handelsregister des Kantons Zürich.</p>
+        <p>
+          Eingetragen im Handelsregister des Kantons Zürich.
+          <br />
+          Handelsregister-Nr.: CH-020.4.074.049-1
+          <br />
+          UID: CHE-473.347.068
+        </p>
+
+        <h2>Postadresse</h2>
+        <p>
+          Royal Road GmbH
+          <br />
+          Geschäftsstelle
+          <br />
+          Dübendorfstrasse 4
+          <br />
+          8051 Zürich
+          <br />
+          Schweiz
+        </p>
 
         <h2>Verantwortlich für den Inhalt dieser Website</h2>
         <p>Royal Road GmbH, Zürich</p>
